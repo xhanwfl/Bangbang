@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "622295356712",
+    "project_id": "bangbang-4219d",
+    "storage_bucket": "bangbang-4219d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622295356712:android:3faa9fbd3db0f0058b2c1d",
+        "android_client_info": {
+          "package_name": "com.jambosoft.bangbang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622295356712-5nnjkvjrn2b314860gudtru3jo300di5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFTiBVQIclsaJrdBxQH25p8CcNnEXmvZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622295356712-5nnjkvjrn2b314860gudtru3jo300di5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
