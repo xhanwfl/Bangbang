@@ -7,10 +7,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.jambosoft.bangbang.Network.RequestApiTask
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton
@@ -25,9 +27,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         //  네이버 아이디로 로그인
-        val naver_client_id = "tqzR2HCZeAx62cSp1rT7"
-        val naver_client_secret = "IW_kDNnaN4"
-        val naver_client_name = "방방"
+        val naver_client_id = getString(R.string.naver_client_id)
+        val naver_client_secret = getString(R.string.naver_client_secret)
+        val naver_client_name = getString(R.string.naver_client_name)
         mContext = this
         mOAuthLoginInstance = OAuthLogin.getInstance()
         mOAuthLoginInstance.init(mContext, naver_client_id, naver_client_secret, naver_client_name)
@@ -50,6 +52,10 @@ class LoginActivity : AppCompatActivity() {
 //                val expiresAt: Long = mOAuthLoginModule.getExpiresAt(baseContext)
 //                val tokenType: String = mOAuthLoginModule.getTokenType(baseContext)
 //                var intent = Intent(this, )
+                val accessToken = mOAuthLoginInstance.getAccessToken(baseContext)
+                Log.d("Token",accessToken)
+
+                var requestApiTask = RequestApiTask(mContext,mOAuthLoginInstance).execute()
 
                 requestPermission()
             } else {
@@ -62,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
     }
 
 
@@ -101,4 +108,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

@@ -2,4 +2,7 @@
     <string name="app_name">BangBang</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="naver_client_id">tqzR2HCZeAx62cSp1rT7</string>
+    <string name="naver_client_secret">IW_kDNnaN4</string>
+    <string name="naver_client_name">방방</string>
 </resources>
