@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.viewpager.widget.PagerAdapter
 import com.jambosoft.bangbang.R
 
-class SelectedImageAdapter(list : ArrayList<Uri>): PagerAdapter(){
+class SelectedImageAdapter(list : ArrayList<String>): PagerAdapter(){
     private var mContext: Context?=null
-    private var list : ArrayList<Uri>? = null
+    private var list : ArrayList<String>? = null
     init{
         this.list = list
     }
@@ -25,7 +26,7 @@ class SelectedImageAdapter(list : ArrayList<Uri>): PagerAdapter(){
         val view= LayoutInflater.from(container.context).inflate(R.layout.item_putup_room_image,container,false)
 
         var imageView = view.findViewById<ImageView>(R.id.selected_image)
-        imageView.setImageURI(list!![position])
+        imageView.setImageURI(list!![position].toUri())
         container.addView(view)
         return view
     }

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PutUpRoomMoreInfoActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#EBEBEB">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="상세 정보"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/putup_room_back_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="방 종류"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp" />
+        <EditText
+            android:id="@+id/putup_room_more_info_kinds"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:hint="  예)  빌라, 분리형 원룸"
+            android:background="@drawable/edittext_border_square"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="면적"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp" />
+        <EditText
+            android:id="@+id/putup_room_more_info_area"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:hint="  예)  18 (제곱미터)"
+            android:background="@drawable/edittext_border_square"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="옵션"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp" />
+        <EditText
+            android:id="@+id/putup_room_more_info_options"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:hint="  예)  냉장고, 세탁기, 에어컨"
+            android:background="@drawable/edittext_border_square"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="주차"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp" />
+        <EditText
+            android:id="@+id/putup_room_more_info_parking"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:hint="  예)  세대당 1대"
+            android:background="@drawable/edittext_border_square"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="기간"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp" />
+        <EditText
+            android:id="@+id/putup_room_more_info_term"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:hint="  예)  3개월 이상"
+            android:background="@drawable/edittext_border_square"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="입주"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp" />
+        <EditText
+            android:id="@+id/putup_room_more_info_movein"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:hint="  예)  즉시 입주"
+            android:background="@drawable/edittext_border_square"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/putup_room_more_info_apply_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#79CCC8"
+        android:text="적용하기"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>

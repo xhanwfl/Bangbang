@@ -86,8 +86,8 @@ class SearchActivity : AppCompatActivity() {
                 val item = SearchContentDTO(document.place_name,
                     document.road_address_name,
                     document.address_name,
-                    document.x.toDouble(),
-                    document.y.toDouble())
+                    document.x,
+                    document.y)
                 listItems.add(item)
             }
 

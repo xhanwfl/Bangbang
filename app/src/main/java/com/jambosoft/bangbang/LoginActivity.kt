@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    //네이버로그인 핸들러
     val mOAuthLoginHandler: OAuthLoginHandler = @SuppressLint("HandlerLeak")
     object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
@@ -55,6 +56,8 @@ class LoginActivity : AppCompatActivity() {
                 val accessToken = mOAuthLoginInstance.getAccessToken(baseContext)
                 Log.d("Token",accessToken)
 
+
+                //api통신 , 여기서 firebase아이디를 생성하거나 로그인함
                 var requestApiTask = RequestApiTask(mContext,mOAuthLoginInstance).execute()
 
                 requestPermission()

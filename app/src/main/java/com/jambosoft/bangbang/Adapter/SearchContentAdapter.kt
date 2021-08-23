@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jambosoft.bangbang.PutUpRoomActivity
 import com.jambosoft.bangbang.R
 import com.jambosoft.bangbang.model.SearchContentDTO
+import java.io.Serializable
 
 class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerView.Adapter<SearchContentAdapter.ViewHolder>() {
     var context : Activity? = null
@@ -34,18 +35,21 @@ class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerV
         holder.itemView.setOnClickListener {
             Log.e("clicked","${position}+번째 아이템")
             val intent = Intent(context,PutUpRoomActivity::class.java)
-            var array : ArrayList<String> = arrayListOf()
+
+
+            //나중에 클래스나 array로 넘기는거 해야함
+            /* var array : ArrayList<String> = arrayListOf()
             array.add(itemList[position].name)
             array.add(itemList[position].road)
             array.add(itemList[position].address)
             array.add(itemList[position].x.toString())
-            array.add(itemList[position].y.toString())
+            array.add(itemList[position].y.toString())*/
 
             intent.putExtra("name",itemList[position].name)
             intent.putExtra("road",itemList[position].road)
             intent.putExtra("address",itemList[position].address)
-            intent.putExtra("longitude",itemList[position].x)
-            intent.putExtra("latitude",itemList[position].y)
+            intent.putExtra("longitude",itemList[position].x.toString())
+            intent.putExtra("latitude",itemList[position].y.toString())
             context?.setResult(RESULT_OK,intent)
             context?.finish()
         }

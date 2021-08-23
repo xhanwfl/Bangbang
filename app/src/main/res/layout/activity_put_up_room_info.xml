@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PutUpRoomInfoActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#EBEBEB">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="설명 쓰기"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/putup_room_back_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="방 제목"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"/>
+    <EditText
+        android:id="@+id/putup_room_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edittext_border_square"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="15dp"
+        android:hint=" 예) 지하철역 가까운 원룸"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="상세 설명"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"/>
+
+    <EditText
+        android:id="@+id/putup_room_info_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edittext_border_square"
+        android:gravity="top"
+        android:hint=" 예) 지하철역 가까운 원룸"
+        android:lines="10"
+        android:maxLines="20"
+        android:scrollbars="vertical" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/putup_room_info_apply_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#79CCC8"
+        android:text="적용하기"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>
