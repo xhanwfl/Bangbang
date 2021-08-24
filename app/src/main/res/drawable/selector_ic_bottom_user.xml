@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/ic_bottom_location"
+        android:drawable="@drawable/ic_bottom_user"
         android:state_selected="false"/>
 
     <item
-        android:drawable="@drawable/ic_bottom_location_clicked"
+        android:drawable="@drawable/ic_bottom_user"
         android:state_selected="true"/>
 </selector>

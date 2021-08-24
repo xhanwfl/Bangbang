@@ -1,6 +1,5 @@
 package com.jambosoft.bangbang.model
 
-import android.net.Uri
 
 data class RoomDTO(
     var images : ArrayList<String>,

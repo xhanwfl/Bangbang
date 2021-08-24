@@ -21,20 +21,13 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:background="#555555"
         android:id="@+id/tl_ac_main_bottom_menu"
-        android:elevation="5dp"
-        app:tabIndicatorColor="#40D39F"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_alignParentBottom="true">
-    </com.google.android.material.tabs.TabLayout>
-
-
-
-
-
-
+        android:layout_alignParentBottom="true"
+        android:background="#555555"
+        android:elevation="5dp"
+        app:tabIndicatorColor="#40D39F"></com.google.android.material.tabs.TabLayout>
 
 
 </LinearLayout>

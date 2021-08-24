@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WriteContentActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#EBEBEB">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="글쓰기"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/write_content_back_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="제목"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"/>
+    <EditText
+        android:id="@+id/write_content_title_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edittext_border_square"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="15dp"
+        android:hint=" 예) 서울역 근처 자취하기 어떤가요 ?"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="내용"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"/>
+
+    <EditText
+        android:id="@+id/write_content_content_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edittext_border_square"
+        android:gravity="top"
+        android:hint=" 내용을 입력하세요"
+        android:lines="15"
+        android:maxLines="20"
+        android:scrollbars="vertical" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/write_content_write_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#79CCC8"
+        android:text="글 올리기"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"/>
+
+</LinearLayout>

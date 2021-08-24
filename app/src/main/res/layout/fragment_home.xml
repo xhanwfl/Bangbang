@@ -24,19 +24,14 @@
                 android:src="@drawable/ic_logo"/>
             <LinearLayout
                 android:layout_width="210dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"/>
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginRight="15dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_alram"/>
-            <ImageView
-                android:id="@+id/frag_home_menu_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_menu"
-                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <ScrollView
@@ -96,7 +91,7 @@
                     android:background="@drawable/background_main">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/frag_home_sharehouse_imageview"
                         android:layout_width="110dp"
                         android:layout_height="100dp"
                         android:layout_marginTop="44dp"
@@ -117,33 +112,32 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.185"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/frag_home_sharehouse_imageview" />
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/frag_home_oneroom_imageview"
                         android:layout_width="110dp"
-                        android:layout_height="110dp"
+                        android:layout_height="100dp"
                         android:layout_marginStart="68dp"
-                        android:layout_marginTop="36dp"
-                        android:src="@drawable/ic_trade"
+                        android:layout_marginTop="44dp"
+                        android:src="@drawable/ic_oneroom"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.16"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
+                        app:layout_constraintHorizontal_bias="0.125"
+                        app:layout_constraintStart_toEndOf="@+id/frag_home_sharehouse_imageview"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="144dp"
-                        android:text="직거래"
+                        android:text="원,투룸"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.553"
+                        app:layout_constraintHorizontal_bias="0.563"
                         app:layout_constraintStart_toEndOf="@+id/textView"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/frag_home_oneroom_imageview" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,9 +10,9 @@ class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : In
     override fun getItem(position: Int): Fragment {
         when(position){
             0 -> return HomeFragment()
-            1 -> return LocationFragment()
-            2 -> return LikeFragment()
-            3 -> return CommunityFragment()
+            1 -> return LikeFragment()
+            2 -> return CommunityFragment()
+            3 -> return UserFragment()
             else -> return HomeFragment()
         }
     }

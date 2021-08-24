@@ -31,12 +31,14 @@
         app:layout_constraintStart_toEndOf="@+id/search_search_edittext"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="112dp"
+        android:layout_height="650dp"
+        android:layout_marginTop="76dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
