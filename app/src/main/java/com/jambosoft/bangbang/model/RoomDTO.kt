@@ -1,18 +1,19 @@
 package com.jambosoft.bangbang.model
 
 
-data class RoomDTO(
-    var images : ArrayList<String>,
-    var address : RoomLocationInfoDTO,
-    var deposit : String = "",
-    var monthlyFee : String = "",
-    var adminFee : String = "",
+data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올때 오류가 안남
+    var images : ArrayList<String> = arrayListOf(),
+    var address : RoomLocationInfoDTO = RoomLocationInfoDTO(),
+    var deposit : Int = 0,
+    var monthlyFee : Int = 0,
+    var adminFee : Int = 0,
     var floorNumber : String = "",
-    var roomKinds : String = "",
-    var info : RoomInfoDTO,
-    var moreInfo : RoomMoreInfoDTO,
-    var userId : String? = null,
-    var timestamp : Long? = null
+    var roomKinds : Boolean = false,
+    var info : RoomInfoDTO = RoomInfoDTO(),
+    var moreInfo : RoomMoreInfoDTO = RoomMoreInfoDTO(),
+    var userId : String = "",
+    var timestamp : Long = 0,
+    var imageCount : Int = 0
 )
 data class RoomLocationInfoDTO(
     var name : String="",

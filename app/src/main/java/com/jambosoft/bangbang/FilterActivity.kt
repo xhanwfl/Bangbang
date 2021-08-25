@@ -15,11 +15,11 @@ class FilterActivity : AppCompatActivity() {
     var longitude : String? = null
     var depositFee : Int = 0
     var monthlyFee : Int = 0
-    var roomkinds : String = ""
+    var roomkinds : Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-        roomkinds = intent.getStringExtra("roomkinds").toString()
+        roomkinds = intent.getBooleanExtra("roomkinds",false)
 
         //검색 버튼
         var locationButton = findViewById<Button>(R.id.filter_search_btn)

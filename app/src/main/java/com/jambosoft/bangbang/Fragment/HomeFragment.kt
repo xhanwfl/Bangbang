@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         val sharehouseButton = rootView.findViewById<ImageView>(R.id.frag_home_sharehouse_imageview)
         sharehouseButton.setOnClickListener {
             var intent = Intent(rootView.context,FilterActivity::class.java)
-            intent.putExtra("roomkinds","sharehouse")
+            intent.putExtra("roomkinds",true)
             startActivity(intent)
         }
 
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         val oneroomButton = rootView.findViewById<ImageView>(R.id.frag_home_oneroom_imageview)
         oneroomButton.setOnClickListener {
             var intent = Intent(rootView.context,FilterActivity::class.java)
-            intent.putExtra("roomkinds","oneroom")
+            intent.putExtra("roomkinds",false)
             startActivity(intent)
         }
 

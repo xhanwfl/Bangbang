@@ -23,7 +23,7 @@ class PutUpRoomActivity : AppCompatActivity() {
     var roomInfoDTO : RoomInfoDTO? = null
     var roomMoreInfoDTO : RoomMoreInfoDTO? = null
     var roomLocationInfoDTO : RoomLocationInfoDTO? = null
-    var roomkinds : String = ""
+    var roomkinds : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,10 +72,10 @@ class PutUpRoomActivity : AppCompatActivity() {
         radioGroup.setOnCheckedChangeListener{ radioGroup, i ->
             when(i){
                 R.id.putup_room_oneroom_radiobtn ->{
-                    roomkinds = "oneroom"
+                    roomkinds = false
                 }
                 R.id.putup_room_sharehouse_radiobtn ->{
-                    roomkinds = "sharehouse"
+                    roomkinds = true
                 }
             }
         }
@@ -89,22 +89,26 @@ class PutUpRoomActivity : AppCompatActivity() {
         if(listUri!=null&& listUri!!.isNotEmpty()&&roomLocationInfoDTO!=null&&
                 roomInfoDTO!=null&&roomMoreInfoDTO!=null){
             val depositEditText = findViewById<EditText>(R.id.putup_room_deposit_edittext)
-            val deposit = depositEditText.text.toString()
+            val depositText = depositEditText.text.toString()
+            val deposit = depositEditText.text.toString().toInt()
 
             val monthlyfeeEditText = findViewById<EditText>(R.id.putup_room_monthlyfee_edittext)
-            val monthlyfee = monthlyfeeEditText.text.toString()
+            val monthlyfeeText = monthlyfeeEditText.text.toString()
+            val monthlyfee = monthlyfeeEditText.text.toString().toInt()
 
             val adminfeeEditText = findViewById<EditText>(R.id.putup_room_adminfee_edittext)
-            val adminfee = adminfeeEditText.text.toString()
+            val adminfeeText = adminfeeEditText.text.toString()
+            val adminfee = adminfeeEditText.text.toString().toInt()
 
             val floorNumberEditText = findViewById<EditText>(R.id.putup_room_floornumber_edittext)
             val floorNumber = floorNumberEditText.text.toString()
 
-            if(deposit.equals("")||monthlyfee.equals("")||adminfee.equals("")){ //edittext를 입력안할경우
+            if(depositText.equals("")||monthlyfeeText.equals("")||adminfeeText.equals("")){ //edittext를 입력안할경우
                 Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
             }else{ //모두 입력할경우
                 var user = FirebaseAuth.getInstance().currentUser
                 val currentTime = System.currentTimeMillis()
+                val imageCount = listUri!!.size
                 listUrl = arrayListOf()
 
 
@@ -118,11 +122,12 @@ class PutUpRoomActivity : AppCompatActivity() {
 
                         if(listUri!!.size==listUrl!!.size){ //url이 리스트에 다 추가되었을때
                             roomDTO = RoomDTO(listUrl!!,roomLocationInfoDTO!!,deposit,monthlyfee, adminfee, //roomDTO 초기화
-                                floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user?.email,currentTime)
+                                floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user!!.email!!,currentTime,imageCount)
 
                             //firestore에 업로드
-                            var db = FirebaseFirestore.getInstance().collection("rooms")
-                                .document().set(roomDTO!!).addOnSuccessListener {
+                            val db = FirebaseFirestore.getInstance()
+                                db.collection("rooms").document()
+                                    .set(roomDTO!!).addOnSuccessListener {
                                     Log.e("upload","성공")
                                     Toast.makeText(this,"업로드 성공",Toast.LENGTH_SHORT).show()
                                     finish()

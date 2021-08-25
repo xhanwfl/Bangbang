@@ -106,7 +106,8 @@
                     android:layout_height="35dp"
                     android:layout_marginLeft="70dp"
                     android:layout_marginTop="7dp"
-                    android:background="@drawable/edittext_border_square" />
+                    android:background="@drawable/edittext_border_square"
+                    android:inputType="number"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +140,8 @@
                     android:layout_height="35dp"
                     android:layout_marginLeft="70dp"
                     android:layout_marginTop="7dp"
-                    android:background="@drawable/edittext_border_square" />
+                    android:background="@drawable/edittext_border_square"
+                    android:inputType="number"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -173,7 +175,8 @@
                     android:layout_height="35dp"
                     android:layout_marginLeft="70dp"
                     android:layout_marginTop="7dp"
-                    android:background="@drawable/edittext_border_square" />
+                    android:background="@drawable/edittext_border_square"
+                    android:inputType="number"/>
 
                 <TextView
                     android:layout_width="wrap_content"
