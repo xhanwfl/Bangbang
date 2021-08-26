@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/edittext_border_square.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/edittext_border_square2.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/edittext_border_square3.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/edittext_border_square4.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/layout_shape.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/textview_border_sqare.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/textview_border_sqare2.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/textview_border_sqare3.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable-v24/textview_border_sqare4.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/background_main.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/balloon_shape.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/button_shape_write.xml" value="0.38229166666666664" />
@@ -19,9 +27,10 @@
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/selector_radio_button.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/selector_radio_button_none.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/selector_radio_text.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_detail_room.xml" value="0.33" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_detail_view.xml" value="0.5" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_filter.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_kakao_map.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_kakao_map.xml" value="0.25" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_login.xml" value="0.28804347826086957" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_profile_modify.xml" value="0.36614583333333334" />

@@ -113,12 +113,14 @@ class PutUpRoomActivity : AppCompatActivity() {
 
 
                 //스토리지에 업로드
-                val storageRef = FirebaseStorage.getInstance().reference.child("roomImages").child(currentTime.toString())
+                val storageRef = FirebaseStorage.getInstance().reference.child("roomImages/${currentTime}")
                 for(i : Int in 0..listUri!!.size-1){
                     //업로드는 비동기로 처리되어있어서 콜백함수를 사용해야 결과값을 바로 사용할수있다. 단점 : 업로드가 느리다
-                    val uploadTask = storageRef?.child(i.toString()).putFile(listUri!![i].toUri()).addOnSuccessListener {
-                        Log.e("url",it.storage.downloadUrl.toString())
-                        listUrl!!.add(it.storage.downloadUrl.toString())
+                        val ref = storageRef?.child(i.toString()+".jpg")
+                        val uploadTask = ref.putFile(listUri!![i].toUri()).addOnSuccessListener {
+                        Log.e("url",ref.downloadUrl.toString())
+                        listUrl!!.add(ref.downloadUrl.toString())
+
 
                         if(listUri!!.size==listUrl!!.size){ //url이 리스트에 다 추가되었을때
                             roomDTO = RoomDTO(listUrl!!,roomLocationInfoDTO!!,deposit,monthlyfee, adminfee, //roomDTO 초기화
@@ -131,6 +133,8 @@ class PutUpRoomActivity : AppCompatActivity() {
                                     Log.e("upload","성공")
                                     Toast.makeText(this,"업로드 성공",Toast.LENGTH_SHORT).show()
                                     finish()
+
+
                                 }.addOnFailureListener{
                                     Log.e("upload","실패")
                                     Toast.makeText(this,"업로드 실패",Toast.LENGTH_SHORT).show()

@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
 import com.jambosoft.bangbang.model.RoomDTO
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapView
@@ -30,6 +32,8 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var mapView : MapView? = null
     var mapViewContainer : ViewGroup? = null
     var recyclerView : RecyclerView? = null
+    var isMarkerClicked = false
+    var isFirstClicked = false
 
     init{
         roomDTOList = arrayListOf()
@@ -49,6 +53,8 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         roomkinds = intent.getBooleanExtra("roomkinds",false)
 
         recyclerView = findViewById(R.id.kakaomap_content_recycler)
+        recyclerView?.layoutManager = LinearLayoutManager(this)
+
 
 
 
@@ -93,7 +99,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             for(i in 0..roomDTOList!!.size-1){
                 var marker = MapPOIItem()
                 marker?.apply {
-                    itemName = roomDTOList!![i].userId   // 마커 이름
+                    itemName = "${roomDTOList!![i].deposit}/${roomDTOList!![i].monthlyFee}" // 마커 이름
                     marker.tag = 0
                     mapPoint = MapPoint.mapPointWithGeoCoord(roomDTOList!![i].address.latitude.toDouble()//마커 좌표
                         ,roomDTOList!![i].address.longitude.toDouble())
@@ -106,7 +112,13 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 }
                 mapView?.addPOIItem(marker)
             }
+
+            setRecyclerAdapter()
         }
+    }
+
+    fun setRecyclerAdapter(){
+        recyclerView?.adapter = KakaoMapAdapter(roomDTOList!!)
     }
 
     fun getRooms(){
@@ -119,7 +131,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                    var dto = document.toObject(RoomDTO::class.java)
                     if(dto.deposit<=depositFee&&dto.roomKinds==roomkinds){
                         roomDTOList?.add(dto)
-                        Log.e("dto",dto.address.toString())
+                        Log.e("dto","${dto.deposit}/${dto.monthlyFee}")
                     }
                 }
                 setMarkers()
@@ -187,7 +199,24 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
     //마커 클릭이벤트 리스너
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-        Log.e("감지","마커클릭이벤트")
+
+        if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
+            isMarkerClicked = true
+            Log.e("감지","마커클릭이벤트 ${isMarkerClicked}")
+            if(!isFirstClicked){ //초기화는 맨처음 한번만
+                setRecyclerAdapter()
+                isFirstClicked = true
+            }
+            recyclerView?.visibility = View.VISIBLE
+
+        }else if(isMarkerClicked){ //마커를 다시 클릭시 recyclerview 끄기
+            isMarkerClicked = false
+            recyclerView?.visibility = View.GONE
+
+        }
+
+
+
     }
 
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {

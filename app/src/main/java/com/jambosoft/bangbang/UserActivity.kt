@@ -66,6 +66,7 @@ class UserActivity : AppCompatActivity() {
 
                     nameTextView.text = userInfoDTO.name
                     emailTextView.text = userInfoDTO.email
+                    Log.e("url user",userInfoDTO.profileUrl)
                     Glide.with(applicationContext).load(userInfoDTO.profileUrl).thumbnail(0.1f).apply(RequestOptions().centerCrop()).into(profileImageView)
                 }
             }else{

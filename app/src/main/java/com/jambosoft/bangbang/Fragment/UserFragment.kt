@@ -84,6 +84,7 @@ class UserFragment : Fragment() {
 
                     nameTextView.text = userInfoDTO.name
                     emailTextView.text = userInfoDTO.email
+                    Log.e("url",userInfoDTO.profileUrl)
                     Glide.with(context).load(userInfoDTO.profileUrl).thumbnail(0.1f).apply(
                         RequestOptions().centerCrop()).into(profileImageView)
                 }
