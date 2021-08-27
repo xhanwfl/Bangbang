@@ -41,7 +41,7 @@ class DetailViewActivity : AppCompatActivity() {
         val contentTextView = findViewById<TextView>(R.id.detailview_content_textview)
         val userIdTextView = findViewById<TextView>(R.id.detailview_userid_textview)
         val timestampTextView = findViewById<TextView>(R.id.detailview_timestamp_textview)
-
+        val recommandTextView = findViewById<TextView>(R.id.detailview_recommand_textview)
         var timestamp = intent.getLongExtra("timestamp",0)
         Log.e("timestamp"," : ${timestamp}")
 
@@ -58,14 +58,13 @@ class DetailViewActivity : AppCompatActivity() {
             var sdf = SimpleDateFormat("yyyy-MM-dd")
             var time = sdf.format(timestamp)
             timestampTextView.text = time
+            recommandTextView.text = dto.favoriteCount.toString()
 
             commentRecyclerView.layoutManager = LinearLayoutManager(this)
             commentRecyclerView.adapter = DetailViewCommentAdapter()
         }
 
         //추천
-        val recommandTextView = findViewById<TextView>(R.id.detailview_recommand_textview)
-        recommandTextView.text = dto.favorites.size.toString()
         val recommandButton = findViewById<Button>(R.id.detailview_recommand_btn)
         recommandButton.setOnClickListener {
             if(dto.favorites.get(user!!.uid)==null||dto.favorites.get(user!!.uid)==false){ //추천을 한번누를경우
