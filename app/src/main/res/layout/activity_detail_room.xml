@@ -27,8 +27,8 @@
 
             <Button
                 android:id="@+id/detailroom_favorite_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/ic_favorite_white" />
@@ -107,7 +107,7 @@
                             android:gravity="center"
                             android:layout_marginTop="10dp"
                             android:text="하하"
-                            android:textSize="30sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:textColor="#27B2AB"/>
                     </LinearLayout>
@@ -136,7 +136,7 @@
                             android:gravity="center"
                             android:layout_marginTop="10dp"
                             android:text="히히"
-                            android:textSize="30sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:textColor="#27B2AB"/>
                     </LinearLayout>
@@ -159,13 +159,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"/>
                         <TextView
-                            android:id="@+id/detailroom_floar_textview"
+                            android:id="@+id/detailroom_floor_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="10dp"
                             android:text="250층"
-                            android:textSize="30sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:textColor="#27B2AB"/>
                     </LinearLayout>
@@ -393,11 +393,11 @@
 
                 <TextView
                     android:id="@+id/detailroom_userid_textview"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="24dp"
                     android:text="user_name"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cardView2"

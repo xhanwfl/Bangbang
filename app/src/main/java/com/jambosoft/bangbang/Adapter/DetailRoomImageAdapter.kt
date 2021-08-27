@@ -1,19 +1,19 @@
 package com.jambosoft.bangbang.Adapter
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.net.toUri
 import androidx.viewpager.widget.PagerAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.jambosoft.bangbang.R
 
-class DetailRoomImageAdapter(list : ArrayList<String>): PagerAdapter(){
+class DetailRoomImageAdapter(list : ArrayList<Uri>): PagerAdapter(){
     private var mContext: Context?=null
-    private var list : ArrayList<String>? = null
+    private var list : ArrayList<Uri>? = null
     init{
         this.list = list
     }
@@ -23,10 +23,12 @@ class DetailRoomImageAdapter(list : ArrayList<String>): PagerAdapter(){
 
     //position에 해당하는 페이지 생성
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view= LayoutInflater.from(container.context).inflate(R.layout.item_putup_room_image,container,false)
+        val view= LayoutInflater.from(container.context).inflate(R.layout.item_detailroom_pagerimage,container,false)
 
-        var imageView = view.findViewById<ImageView>(R.id.selected_image)
-        //Glide코드 -> 이미지세팅
+        val imageView = view.findViewById<ImageView>(R.id.item_detailroom_image)
+        //imageView.setImageURI(list[position])
+        Glide.with(container.context).load(list!![position]).thumbnail(0.1f).apply(
+           RequestOptions().centerCrop()).into(imageView)
 
         container.addView(view)
         return view
@@ -47,4 +49,5 @@ class DetailRoomImageAdapter(list : ArrayList<String>): PagerAdapter(){
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return (view==`object`)
     }
+
 }

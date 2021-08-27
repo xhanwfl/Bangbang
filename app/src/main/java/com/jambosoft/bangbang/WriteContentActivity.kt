@@ -40,16 +40,16 @@ class WriteContentActivity : AppCompatActivity() {
     fun uploadContent(title : String, content : String){
         val user = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
-
+        val timestamp = System.currentTimeMillis()
         db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { task ->  //userid 가져오기
             if(task != null){
                 var userInfo = task.toObject<UserInfoDTO>()
                 if(userInfo!!.name.equals("")){
                     Log.e("프로필 가져오기","실패")
                 }else{
-                    var contentDTO = ContentDTO(title,content,userInfo.name,System.currentTimeMillis())
+                    var contentDTO = ContentDTO(title,content,userInfo.name,timestamp)
 
-                    db.collection("contents").document().set(contentDTO).addOnSuccessListener {
+                    db.collection("contents").document(timestamp.toString()).set(contentDTO).addOnSuccessListener {
                         Toast.makeText(this,"글쓰기 완료",Toast.LENGTH_SHORT).show()
                         finish()
                     }
