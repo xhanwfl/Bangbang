@@ -4,11 +4,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.Adapter.DetailRoomImageAdapter
 import com.jambosoft.bangbang.model.RoomDTO
@@ -18,15 +22,64 @@ class DetailRoomActivity : AppCompatActivity() {
     var imageViewPager : ViewPager? = null
     var adapter : DetailRoomImageAdapter? = null
     var uriList : ArrayList<Uri>? = null
+    var user : FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_room)
 
         uriList = arrayListOf()
 
+        user = FirebaseAuth.getInstance().currentUser
+
+
+
 
         val dto = intent.getSerializableExtra("dto") as RoomDTO
         Log.e("detailroom", dto.address.toString())
+
+
+        //최근본 사람 저장
+        setRecentView(dto)
+
+        //back버튼
+        val backButton = findViewById<Button>(R.id.detailroom_back_btn)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+        //좋아요버튼
+        val favoriteButton = findViewById<Button>(R.id.detailroom_favorite_btn)
+        if(dto.favorites[user!!.uid] != null){
+            if(dto.favorites[user!!.uid]!!){
+                favoriteButton.setBackgroundResource(R.drawable.ic_favorite)
+            }
+        }
+
+
+        favoriteButton.setOnClickListener {
+            if (dto.favorites[user!!.uid] == null){ //널인경우
+                dto.favorites[user!!.uid] = true
+                dto.favoriteCount++
+                favoriteButton.setBackgroundResource(R.drawable.ic_favorite)
+            }else{ //널이아닐경우
+               if(!dto.favorites[user!!.uid]!!){ //좋아요를 누른 경우
+                   dto.favorites[user!!.uid] = true
+                   dto.favoriteCount++
+                   favoriteButton.setBackgroundResource(R.drawable.ic_favorite)
+               }else{ //좋아요를 한상태에서 한번더 누를경우
+                   dto.favorites[user!!.uid] = false
+                   dto.favoriteCount--
+                   favoriteButton.setBackgroundResource(R.drawable.ic_favorite_white)
+                }
+            }
+
+            FirebaseFirestore.getInstance().collection("rooms").document(dto.timestamp.toString()).set(dto).addOnSuccessListener {
+                Log.e("detailroom" , "좋아요 성공")
+            }.addOnFailureListener {
+                Log.e("detailroom" , "좋아요 실패")
+            }
+
+        }
 
 
 
@@ -106,6 +159,16 @@ class DetailRoomActivity : AppCompatActivity() {
             imageViewPager!!.adapter = adapter
         }, 2000)
 
+    }
+
+    fun setRecentView(dto : RoomDTO){
+        if(dto.recents[user!!.uid]==null){
+            dto.recents.put(user!!.uid,System.currentTimeMillis())
+        }else{
+            dto.recents[user!!.uid] = System.currentTimeMillis()
+        }
+
+        FirebaseFirestore.getInstance().collection("rooms").document(dto.timestamp.toString()).set(dto)
     }
 
     fun getRoomImages(dto : RoomDTO){

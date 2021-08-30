@@ -15,7 +15,10 @@ data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올�
     var moreInfo : RoomMoreInfoDTO = RoomMoreInfoDTO(),
     var userId : String = "",
     var timestamp : Long = 0,
-    var imageCount : Int = 0
+    var imageCount : Int = 0,
+    var favoriteCount : Int = 0,
+    var favorites : MutableMap<String,Boolean> = HashMap(),
+    var recents : MutableMap<String,Long> = HashMap()
 ) : Serializable
 data class RoomLocationInfoDTO(
     var name : String="",

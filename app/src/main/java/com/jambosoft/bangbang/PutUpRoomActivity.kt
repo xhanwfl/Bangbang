@@ -128,7 +128,7 @@ class PutUpRoomActivity : AppCompatActivity() {
 
                             //firestore에 업로드
                             val db = FirebaseFirestore.getInstance()
-                                db.collection("rooms").document()
+                                db.collection("rooms").document(roomDTO!!.timestamp.toString())
                                     .set(roomDTO!!).addOnSuccessListener {
                                     Log.e("upload","성공")
                                     Toast.makeText(this,"업로드 성공",Toast.LENGTH_SHORT).show()
