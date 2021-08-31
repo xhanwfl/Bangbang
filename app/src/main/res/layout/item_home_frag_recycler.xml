@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="130dp"
+        app:cardCornerRadius="15dp">
+        <ImageView
+            android:id="@+id/item_homefrag_recycler_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_refresh"/>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/item_homfrag_price_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="월세 100/20"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/item_homefrag_address_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="서초구 반포동"
+        android:layout_marginLeft="10dp"/>
+
+
+
+</LinearLayout>

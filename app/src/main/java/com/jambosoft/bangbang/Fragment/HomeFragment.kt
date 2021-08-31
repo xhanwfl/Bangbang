@@ -9,18 +9,34 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jambosoft.bangbang.R
-import com.jambosoft.bangbang.Adapter.HomeFragmentRecentAdapter
-import com.jambosoft.bangbang.Adapter.HomeFragmentRecommendAdapter
+import com.jambosoft.bangbang.Adapter.HomeFragmentRecyclerAdapter
+import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
 import com.jambosoft.bangbang.FilterActivity
-import com.jambosoft.bangbang.UserActivity
+import com.jambosoft.bangbang.model.RoomDTO
 
 class HomeFragment : Fragment() {
 
+    var recentItems : ArrayList<RoomDTO>? = null
+    var favoriteItems : ArrayList<RoomDTO>? = null
+    var user : FirebaseUser? = null
+    var db : FirebaseFirestore? = null
+    var recommendView : RecyclerView ? = null
+    var recentView : RecyclerView ? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootView : View = inflater.inflate(R.layout.fragment_home, container, false)
+
+
+        recentItems = arrayListOf()
+        favoriteItems = arrayListOf()
+
+        user = FirebaseAuth.getInstance().currentUser
+        db = FirebaseFirestore.getInstance()
 
         //쉐어하우스버튼
         val sharehouseButton = rootView.findViewById<ImageView>(R.id.frag_home_sharehouse_imageview)
@@ -40,16 +56,15 @@ class HomeFragment : Fragment() {
 
 
         //추천리스트
-        val recommendView = rootView.findViewById<RecyclerView>(R.id.frag_home_recommend_recyclerview)
-        recommendView.adapter = HomeFragmentRecommendAdapter()
-        val recommendLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-        recommendView.layoutManager = recommendLayoutManager
+        recommendView = rootView.findViewById<RecyclerView>(R.id.frag_home_recommend_recyclerview)
+        recommendView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
         //최근에 본 리스트
-        val recentView = rootView.findViewById<RecyclerView>(R.id.frag_home_recent_recyclerview)
-        recentView.adapter = HomeFragmentRecentAdapter()
-        val recentLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-        recentView.layoutManager = recentLayoutManager
+        recentView = rootView.findViewById<RecyclerView>(R.id.frag_home_recent_recyclerview)
+        recentView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+
+        setRecycler()
+
 
 
 
@@ -57,6 +72,46 @@ class HomeFragment : Fragment() {
         return rootView
     }
 
+    fun setRecycler(){
+        db!!.collection("rooms").whereGreaterThan("favoriteCount",0).get().addOnSuccessListener { documents ->
+            favoriteItems!!.clear()
+            for(document in documents){
+                val dto = document.toObject(RoomDTO::class.java)
+                if(dto.favorites[user!!.uid]!!){
+                    favoriteItems!!.add(dto)
+                }
+            }
 
+            recommendView?.adapter = HomeFragmentRecyclerAdapter(favoriteItems!!)
+        }
+
+
+        db!!.collection("rooms").get().addOnSuccessListener { documents ->
+            recentItems!!.clear()
+            for(document in documents){
+                val dto = document.toObject(RoomDTO::class.java)
+                if(dto.recents[user!!.uid]!=null){  //한번이라도 내가 본방을 다 가져옴
+                    recentItems!!.add(dto)
+                }
+            }
+
+            //방을 순서대로 정렬함
+            sortRecentItems()
+            recentView?.adapter = HomeFragmentRecyclerAdapter(recentItems!!)
+        }
+    }
+
+
+    fun sortRecentItems(){
+        //var sortedRecentItems = recentItems!!.sortedWith(compareBy({it.recents[user!!.uid]}))
+        var sortedRecentItems = recentItems!!.sortedWith(compareByDescending({it.recents[user!!.uid]}))
+
+        recentItems!!.clear()
+
+        for(i in 0..sortedRecentItems.size-1){
+            recentItems!!.add(sortedRecentItems[i])
+        }
+
+    }
 
 }

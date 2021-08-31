@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,13 +23,18 @@ class LikeFragment : Fragment() {
     var favoriteItems : ArrayList<RoomDTO>? = null
     var user : FirebaseUser? = null
     var db : FirebaseFirestore? = null
+    var recyclerView : RecyclerView? = null
+    var recyclerView2 : RecyclerView? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         var view = inflater.inflate(R.layout.fragment_like, container, false)
         // Inflate the layout for this fragment
 
         //리사이클러뷰
-        val recyclerView = view.findViewById<RecyclerView>(R.id.frag_like_rooms_recycler)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        recyclerView = view.findViewById(R.id.frag_like_rooms_recycler)
+        recyclerView?.layoutManager = LinearLayoutManager(view.context)
+
+        recyclerView2 = view.findViewById(R.id.frag_recent_rooms_recycler)
+        recyclerView2?.layoutManager = LinearLayoutManager(view.context)
 
         recentItems = arrayListOf()
         favoriteItems = arrayListOf()
@@ -36,24 +42,55 @@ class LikeFragment : Fragment() {
         user = FirebaseAuth.getInstance().currentUser
         db = FirebaseFirestore.getInstance()
 
+        refresh()
+
+
+        //새로고침버튼
+        val refreshButton = view.findViewById<Button>(R.id.frag_like_refresh_btn)
+        refreshButton.setOnClickListener {
+            refresh()
+        }
 
 
         //최근 본 방
         val recentButton = view.findViewById<TextView>(R.id.frag_like_recentrooms_textview)
         recentButton.setOnClickListener {
-            getRecentRooms()
-            recyclerView.adapter = KakaoMapAdapter(recentItems!!)
+            recyclerView?.visibility = View.GONE
+            recyclerView2?.visibility = View.VISIBLE
+            recyclerView2?.adapter!!.notifyDataSetChanged()
         }
 
 
         //찜한 방
         val favoriteButton = view.findViewById<TextView>(R.id.frag_like_favoriterooms_textview)
         favoriteButton.setOnClickListener {
-            recyclerView.adapter = KakaoMapAdapter(favoriteItems!!)
+            recyclerView2?.visibility = View.GONE
+            recyclerView?.visibility = View.VISIBLE
+            recyclerView?.adapter!!.notifyDataSetChanged()
         }
 
 
+
+
+
+        return view
+    }
+
+    fun sortRecentItems(){
+        //var sortedRecentItems = recentItems!!.sortedWith(compareBy({it.recents[user!!.uid]}))
+        var sortedRecentItems = recentItems!!.sortedWith(compareByDescending({it.recents[user!!.uid]}))
+
+        recentItems!!.clear()
+
+        for(i in 0..sortedRecentItems.size-1){
+            recentItems!!.add(sortedRecentItems[i])
+        }
+
+    }
+
+    fun refresh(){
         db!!.collection("rooms").whereGreaterThan("favoriteCount",0).get().addOnSuccessListener { documents ->
+            favoriteItems!!.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
                 if(dto.favorites[user!!.uid]!!){
@@ -61,18 +98,12 @@ class LikeFragment : Fragment() {
                 }
             }
 
-            recyclerView.adapter = KakaoMapAdapter(favoriteItems!!)
+            recyclerView?.adapter = KakaoMapAdapter(favoriteItems!!)
         }
 
 
-
-        return view
-    }
-
-    fun getRecentRooms(){
-
-        //Firestore에서 방을 모두 가져옴
         db!!.collection("rooms").get().addOnSuccessListener { documents ->
+            recentItems!!.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
                 if(dto.recents[user!!.uid]!=null){  //한번이라도 내가 본방을 다 가져옴
@@ -83,20 +114,12 @@ class LikeFragment : Fragment() {
 
             //방을 순서대로 정렬함
             sortRecentItems()
+
+
+
+            recyclerView2?.adapter = KakaoMapAdapter(recentItems!!)
         }
     }
-
-    fun sortRecentItems(){
-        var sortedRecentItems = recentItems!!.sortedWith(compareBy({it.recents[user!!.uid]}))
-
-        recentItems!!.clear()
-
-        for(i in 0..sortedRecentItems.size-1){
-            recentItems!!.add(sortedRecentItems[i])
-        }
-
-    }
-
 
 
 
