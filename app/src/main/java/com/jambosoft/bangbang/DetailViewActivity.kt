@@ -1,5 +1,6 @@
 package com.jambosoft.bangbang
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -43,6 +45,8 @@ class DetailViewActivity : AppCompatActivity() {
         val timestampTextView = findViewById<TextView>(R.id.detailview_timestamp_textview)
         val recommandTextView = findViewById<TextView>(R.id.detailview_recommand_textview)
         var timestamp = intent.getLongExtra("timestamp",0)
+        val modifyTextView = findViewById<TextView>(R.id.detailview_modify_textview)
+        val deleteTextView = findViewById<TextView>(R.id.detailview_delete_textview)
         Log.e("timestamp"," : ${timestamp}")
 
         val db = FirebaseFirestore.getInstance()
@@ -59,10 +63,49 @@ class DetailViewActivity : AppCompatActivity() {
             var time = sdf.format(timestamp)
             timestampTextView.text = time
             recommandTextView.text = dto.favoriteCount.toString()
+            if(dto.uid.equals(user!!.uid)){
+                modifyTextView.visibility = View.VISIBLE
+                deleteTextView.visibility = View.VISIBLE
+            }
 
             commentRecyclerView.layoutManager = LinearLayoutManager(this)
             commentRecyclerView.adapter = DetailViewCommentAdapter()
         }
+
+
+
+        //수정
+        modifyTextView.setOnClickListener {
+            var intent = Intent(this,WriteContentActivity::class.java)
+            intent.putExtra("dto",dto)
+            intent.putExtra("action","modify")
+            startActivity(intent)
+            finish()
+        }
+
+
+        //삭제
+        deleteTextView.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val dialogView = layoutInflater.inflate(R.layout.dialog_delete_content, null)
+
+            builder.setView(dialogView)
+                .setPositiveButton("확인") { dialogInterface, i ->
+                    db.collection("contents").document(dto.timestamp.toString()).delete().addOnSuccessListener {
+                        Toast.makeText(this,"삭제완료",Toast.LENGTH_SHORT).show()
+                        finish()
+                    }.addOnFailureListener {
+                        Toast.makeText(this,"삭제실패",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .setNegativeButton("취소") { dialogInterface, i ->
+                    /* 취소일 때 아무 액션이 없으므로 빈칸 */
+                }
+                .show()
+        }
+
+
+
 
         //추천
         val recommandButton = findViewById<Button>(R.id.detailview_recommand_btn)

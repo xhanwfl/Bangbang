@@ -47,7 +47,9 @@ class CommunityFragment : Fragment() {
         //글쓰기버튼
         val writeButton = rootView.findViewById<Button>(R.id.frag_community_write_btn)
         writeButton.setOnClickListener {
-            startActivity(Intent(rootView.context,WriteContentActivity::class.java))
+            val intent = Intent(rootView.context,WriteContentActivity::class.java)
+            intent.putExtra("action","write")
+            startActivity(intent)
         }
 
         //인기글 버튼

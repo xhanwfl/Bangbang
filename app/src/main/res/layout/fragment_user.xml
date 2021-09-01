@@ -121,9 +121,10 @@
         android:layout_height="2dp"
         android:background="#B7B7B7"/>
     <TextView
+        android:id="@+id/frag_user_myroom_textview"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:text="최근 본 방"
+        android:text="내놓은 방"
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -133,9 +134,10 @@
         android:layout_height="2dp"
         android:background="#B7B7B7"/>
     <TextView
+        android:id="@+id/frag_user_mycontent_textview"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:text="찜한 방"
+        android:text="내가 쓴 글"
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"

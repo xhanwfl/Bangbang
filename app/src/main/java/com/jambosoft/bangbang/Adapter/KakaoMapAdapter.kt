@@ -31,15 +31,14 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_kakaomap_rooms,parent,false)
         context = parent.context as Activity
+
         //firebaseStorage
         storage = FirebaseStorage.getInstance()
 
-
-
-
-
         return CustomViewHolder(view)
     }
+
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as CustomViewHolder).itemView
@@ -81,9 +80,7 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
         return itemList.size
     }
 
-    fun clear(){
-        itemList.clear()
-    }
+
 
 
 }

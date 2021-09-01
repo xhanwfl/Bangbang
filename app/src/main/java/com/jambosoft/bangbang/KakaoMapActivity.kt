@@ -29,14 +29,17 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var monthlyFee : Int = 0
     var roomkinds : Boolean = false
     var roomDTOList : ArrayList<RoomDTO>? = null
+    var roomDTOs : ArrayList<RoomDTO>? = null
     var mapView : MapView? = null
     var mapViewContainer : ViewGroup? = null
     var recyclerView : RecyclerView? = null
     var isMarkerClicked = false
     var isFirstClicked = false
+    var adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
     init{
         roomDTOList = arrayListOf()
+        roomDTOs = arrayListOf()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +103,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 var marker = MapPOIItem()
                 marker?.apply {
                     itemName = "${roomDTOList!![i].deposit}/${roomDTOList!![i].monthlyFee}" // 마커 이름
-                    marker.tag = 0
+                    marker.tag = i
                     mapPoint = MapPoint.mapPointWithGeoCoord(roomDTOList!![i].address.latitude.toDouble()//마커 좌표
                         ,roomDTOList!![i].address.longitude.toDouble())
                     markerType = MapPOIItem.MarkerType.BluePin
@@ -118,7 +121,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     }
 
     fun setRecyclerAdapter(){
-        recyclerView?.adapter = KakaoMapAdapter(roomDTOList!!)
+        recyclerView?.adapter = adapter
     }
 
     fun getRooms(){
@@ -200,13 +203,26 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     //마커 클릭이벤트 리스너
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
 
+        roomDTOList!![p1!!.tag]
+
+
         if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
             isMarkerClicked = true
             Log.e("감지","마커클릭이벤트 ${isMarkerClicked}")
+            roomDTOs?.clear()
+            roomDTOs?.add(roomDTOList!![p1.tag])
+
             if(!isFirstClicked){ //초기화는 맨처음 한번만
+                adapter = KakaoMapAdapter(roomDTOs!!)
                 setRecyclerAdapter()
                 isFirstClicked = true
+            }else{
+                adapter?.notifyDataSetChanged()
             }
+
+
+
+
             recyclerView?.visibility = View.VISIBLE
 
         }else if(isMarkerClicked){ //마커를 다시 클릭시 recyclerview 끄기

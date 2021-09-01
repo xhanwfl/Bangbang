@@ -60,6 +60,13 @@ class UserFragment : Fragment() {
             startActivity(Intent(context, PutUpRoomActivity::class.java))
         }
 
+        //내가 쓴 글 버튼
+        val myRoomButton = rootView?.findViewById<TextView>(R.id.user_putup_room_textview)
+        myRoomButton?.setOnClickListener {
+
+        }
+        //내놓은 방 버튼
+
 
 
         // Inflate the layout for this fragment

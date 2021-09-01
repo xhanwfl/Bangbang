@@ -31,7 +31,7 @@
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/selector_radio_button_none.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/drawable/selector_radio_text.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_detail_room.xml" value="0.33" />
-        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_detail_view.xml" value="0.22" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_detail_view.xml" value="0.33" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_filter.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_kakao_map.xml" value="0.25" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_login.xml" value="0.28804347826086957" />
@@ -47,6 +47,7 @@
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_write_content.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/balloon_layout.xml" value="0.33" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/bottom_navigation_bar.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/dialog_delete_content.xml" value="0.322463768115942" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/fragment_blank.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/fragment_community.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/fragment_home.xml" value="0.2046875" />
