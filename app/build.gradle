@@ -5,12 +5,20 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\A\\keystore\\bangbangkey.jks')
+            storePassword 'andpf3719!'
+            keyAlias 'bangbangkey'
+            keyPassword 'andpf3719!'
+        }
+    }
     compileSdk 30
 
     defaultConfig {
         applicationId "com.jambosoft.bangbang"
         minSdk 28
-        targetSdk 29
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
