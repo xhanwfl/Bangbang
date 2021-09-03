@@ -8,8 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -150,7 +148,7 @@ class DetailRoomActivity : AppCompatActivity() {
 
 
         //방 이미지 페이저
-        imageViewPager = findViewById<ViewPager>(R.id.detailroom_image_pager)
+        imageViewPager = findViewById(R.id.detailroom_image_pager)
         getRoomImages(dto)
 
         val handler = android.os.Handler()

@@ -12,6 +12,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jambosoft.bangbang.PutUpRoomActivity
 import com.jambosoft.bangbang.R
+import com.jambosoft.bangbang.model.RoomDTO
+import com.jambosoft.bangbang.model.RoomLocationInfoDTO
 import com.jambosoft.bangbang.model.SearchContentDTO
 import java.io.Serializable
 
@@ -44,12 +46,15 @@ class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerV
             array.add(itemList[position].address)
             array.add(itemList[position].x.toString())
             array.add(itemList[position].y.toString())*/
+            val dto = RoomLocationInfoDTO(
+                itemList[position].name
+                ,itemList[position].road
+                ,itemList[position].address
+                ,itemList[position].x,
+                itemList[position].y)
 
-            intent.putExtra("name",itemList[position].name)
-            intent.putExtra("road",itemList[position].road)
-            intent.putExtra("address",itemList[position].address)
-            intent.putExtra("longitude",itemList[position].x.toString())
-            intent.putExtra("latitude",itemList[position].y.toString())
+            intent.putExtra("dto",dto)
+
             context?.setResult(RESULT_OK,intent)
             context?.finish()
         }

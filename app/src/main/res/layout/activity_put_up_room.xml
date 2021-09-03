@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="70dp">
                 <TextView
-                    android:id="@+id/user_logout_textview"
+                    android:id="@+id/putup_room_findaddress_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
@@ -70,6 +70,21 @@
                     android:text="주소 찾기"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/putup_room_address_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="-2dp"
+                    android:layout_toEndOf="@+id/putup_room_findaddress_textview"
+                    android:gravity="center_vertical"
+                    android:text="address"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/putup_room_location_btn"
@@ -294,6 +309,7 @@
                 android:layout_height="70dp">
 
                 <TextView
+                    android:id="@+id/putup_room_explain_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
@@ -301,6 +317,22 @@
                     android:text="설명 쓰기"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/putup_room_title_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="-2dp"
+                    android:layout_toEndOf="@+id/putup_room_explain_textview"
+                    android:gravity="center_vertical"
+                    android:text="address"
+                    android:visibility="gone"
+                    />
 
                 <Button
                     android:id="@+id/putup_room_info_btn"
@@ -322,6 +354,7 @@
                 android:layout_height="70dp">
 
                 <TextView
+                    android:id="@+id/putup_room_info_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
@@ -329,6 +362,23 @@
                     android:text="상세 정보"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/putup_room_moreinfo_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="-2dp"
+                    android:layout_toEndOf="@+id/putup_room_info_textview"
+                    android:gravity="center_vertical"
+                    android:text="address"
+                    android:visibility="gone"
+                    />
+
+
 
                 <Button
                     android:id="@+id/putup_room_more_info_btn"

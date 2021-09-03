@@ -24,7 +24,7 @@
             app:layout_constraintVertical_bias="0.387" />
 
         <ImageView
-            android:id="@+id/user_alram_btn"
+            android:id="@+id/frag_user_alram_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="12dp"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/user_profile_imageview"
+                android:id="@+id/frag_user_profile_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_user_profile" />
@@ -108,7 +108,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/user_putup_room_textview"
+        android:id="@+id/frag_user_putuproom_textview"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:text="방 내놓기"

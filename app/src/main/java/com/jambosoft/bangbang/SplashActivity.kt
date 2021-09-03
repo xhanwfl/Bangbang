@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        getHashKey()
+
 
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
@@ -40,6 +40,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
 
+
+    //릴리즈 해시키 얻기
     private fun getHashKey() {
         var packageInfo: PackageInfo? = null
         try {

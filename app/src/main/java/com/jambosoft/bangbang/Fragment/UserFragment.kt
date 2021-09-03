@@ -12,12 +12,14 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.LoginActivity
 import com.jambosoft.bangbang.ProfileModifyActivity
 import com.jambosoft.bangbang.PutUpRoomActivity
@@ -55,13 +57,13 @@ class UserFragment : Fragment() {
         }
 
         //방 내놓기 버튼
-        val putUpRoomButton = rootView?.findViewById<TextView>(R.id.user_putup_room_textview)
+        val putUpRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_putuproom_textview)
         putUpRoomButton?.setOnClickListener {
             startActivity(Intent(context, PutUpRoomActivity::class.java))
         }
 
         //내가 쓴 글 버튼
-        val myRoomButton = rootView?.findViewById<TextView>(R.id.user_putup_room_textview)
+        val myRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_mycontent_textview)
         myRoomButton?.setOnClickListener {
 
         }
@@ -87,13 +89,25 @@ class UserFragment : Fragment() {
                 }else{ //이름이 null이 아닐경우
                     val nameTextView = rootView.findViewById<TextView>(R.id.user_name)
                     val emailTextView = rootView.findViewById<TextView>(R.id.user_email)
-                    val profileImageView = rootView.findViewById<ImageView>(R.id.user_profile_imageview)
+                    val profileImageView = rootView.findViewById<ImageView>(R.id.frag_user_profile_imageview)
 
                     nameTextView.text = userInfoDTO.name
                     emailTextView.text = userInfoDTO.email
-                    Log.e("url",userInfoDTO.profileUrl)
-                    Glide.with(context).load(userInfoDTO.profileUrl).thumbnail(0.1f).apply(
-                        RequestOptions().centerCrop()).into(profileImageView)
+                    Log.e("url profileUrl",userInfoDTO.profileUrl)
+
+
+
+                    //프로필이미지 가져오기
+                    val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
+                    storageRef.downloadUrl.addOnSuccessListener {  //storage에 이미지를 저장해둔경우
+                        Glide.with(context).load(it).thumbnail(0.1f).apply(
+                            RequestOptions().centerCrop()).into(profileImageView)
+                    }.addOnFailureListener{ //storage에 없을경우 네이버프로필을 가져옴
+                        Glide.with(context).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f).apply(
+                            RequestOptions().centerCrop()).into(profileImageView)
+                    }
+
+
                 }
             }else{
                 Log.e("프로필", "프로필이 없습니다.")
@@ -114,9 +128,18 @@ class UserFragment : Fragment() {
             val db = FirebaseFirestore.getInstance()
             var name = data?.getStringExtra("name")
             var hp = data?.getStringExtra("hp")
+            var uri = data?.getStringExtra("uri")
+
             db.collection("userInfo").document(user!!.uid).update("name",name)
-            db.collection("userInfo").document(user!!.uid).update("hp",hp).addOnSuccessListener {
-                setProfile(requireContext(),rootView!!)
+            db.collection("userInfo").document(user!!.uid).update("hp",hp)
+
+            if(!uri.equals("")){
+                val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
+                val uploadTask = storageRef.putFile(uri!!.toUri()).addOnSuccessListener {
+                    db.collection("userInfo").document(user.uid).update("profileUrl",storageRef.downloadUrl.toString())
+                    Log.e("url업로드 성공","제발~~")
+
+                }
             }
         }
     }

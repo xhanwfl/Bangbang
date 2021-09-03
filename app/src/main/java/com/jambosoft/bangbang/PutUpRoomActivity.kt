@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
 import androidx.viewpager.widget.ViewPager
@@ -151,10 +152,24 @@ class PutUpRoomActivity : AppCompatActivity() {
     }
 
     fun getInfo(){
-        startActivityForResult(Intent(this,PutUpRoomInfoActivity::class.java), 400)
+        var intent = Intent(this,PutUpRoomInfoActivity::class.java)
+        if(roomInfoDTO!=null){
+            intent.putExtra("dto",roomInfoDTO)
+        }else{
+            roomInfoDTO = RoomInfoDTO()
+            intent.putExtra("dto",roomInfoDTO)
+        }
+        startActivityForResult(intent, 400)
     }
     fun getMoreInfo(){
-        startActivityForResult(Intent(this,PutUpRoomMoreInfoActivity::class.java), 500)
+        var intent = Intent(this,PutUpRoomMoreInfoActivity::class.java)
+        if(roomMoreInfoDTO!=null){
+            intent.putExtra("dto",roomMoreInfoDTO)
+        }else{
+            roomMoreInfoDTO = RoomMoreInfoDTO()
+            intent.putExtra("dto",roomMoreInfoDTO)
+        }
+        startActivityForResult(intent, 500)
     }
 
 
@@ -209,38 +224,32 @@ class PutUpRoomActivity : AppCompatActivity() {
 
         //주소 검색 이벤트
         if(resultCode == RESULT_OK && requestCode == 300){
-            val name = data?.getStringExtra("name")
-            val road = data?.getStringExtra("road")
-            val address = data?.getStringExtra("address")
-            val latitude = data?.getStringExtra("latitude")
-            val longitude = data?.getStringExtra("longitude")
+            roomLocationInfoDTO = data?.getSerializableExtra("dto") as RoomLocationInfoDTO
 
-            roomLocationInfoDTO = RoomLocationInfoDTO(name!!,road!!,address!!,latitude!!,longitude!!)
-            Log.e("data", name!!)
+            val addressTextView = findViewById<TextView>(R.id.putup_room_address_textview)
+            addressTextView.text = roomLocationInfoDTO!!.address
+            addressTextView.visibility = View.VISIBLE
+
         }
 
         //설명 쓰기 이벤트
         if(resultCode==RESULT_OK && requestCode == 400){
-            val title = data?.getStringExtra("title")
-            val explain = data?.getStringExtra("explain")
-            roomInfoDTO = RoomInfoDTO(title!!,explain!!)
+            roomInfoDTO = data?.getSerializableExtra("dto") as RoomInfoDTO
 
-            Log.e("data", title!!)
+            val titleTextView = findViewById<TextView>(R.id.putup_room_title_textview)
+            titleTextView.text = roomInfoDTO!!.title
+            titleTextView.visibility = View.VISIBLE
         }
 
         //상세 정보 이벤트
         if(resultCode==RESULT_OK && requestCode == 500){
-            val kinds = data?.getStringExtra("kinds")
-            val area = data?.getStringExtra("area")
-            val options = data?.getStringExtra("options")
-            val parking = data?.getStringExtra("parking")
-            val term = data?.getStringExtra("term")
-            val movein = data?.getStringExtra("movein")
-
-            roomMoreInfoDTO = RoomMoreInfoDTO(kinds!!,area!!,options!!,parking!!,term!!,movein!!)
+            roomMoreInfoDTO = data?.getSerializableExtra("dto") as RoomMoreInfoDTO
+            val infoTextView = findViewById<TextView>(R.id.putup_room_moreinfo_textview)
+            infoTextView.text = roomMoreInfoDTO!!.kinds
+            infoTextView.visibility = View.VISIBLE
 
 
-            Log.e("data", kinds!!)
+            Log.e("data", roomMoreInfoDTO!!.kinds)
 
         }
 
