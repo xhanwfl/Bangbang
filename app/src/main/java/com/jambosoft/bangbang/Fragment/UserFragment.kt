@@ -17,23 +17,26 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
-import com.jambosoft.bangbang.LoginActivity
-import com.jambosoft.bangbang.ProfileModifyActivity
-import com.jambosoft.bangbang.PutUpRoomActivity
-import com.jambosoft.bangbang.R
+import com.jambosoft.bangbang.*
 import com.jambosoft.bangbang.model.UserInfoDTO
 import com.nhn.android.naverlogin.OAuthLogin
 import net.daum.mf.map.api.MapView
 
 class UserFragment : Fragment() {
     var rootView : View ? = null
-
+    lateinit var user : FirebaseUser
+    lateinit var db : FirebaseFirestore
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         rootView = inflater.inflate(R.layout.fragment_user, container, false)
+        user = FirebaseAuth.getInstance().currentUser!!
+        db = FirebaseFirestore.getInstance()
+
+        //프로필설정
         var context : Context = requireContext()
         setProfile(requireContext(),rootView!!)
 
@@ -63,11 +66,19 @@ class UserFragment : Fragment() {
         }
 
         //내가 쓴 글 버튼
-        val myRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_mycontent_textview)
-        myRoomButton?.setOnClickListener {
-
+        val myContentButton = rootView?.findViewById<TextView>(R.id.frag_user_mycontent_textview)
+        myContentButton?.setOnClickListener {
+            var intent = Intent(requireContext(),MyContentActivity::class.java)
+            intent.putExtra("kind","contents")
+            startActivity(intent)
         }
         //내놓은 방 버튼
+        val myRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_myroom_textview)
+        myRoomButton?.setOnClickListener {
+            var intent = Intent(requireContext(),MyContentActivity::class.java)
+            intent.putExtra("kind","rooms")
+            startActivity(intent)
+        }
 
 
 
@@ -78,8 +89,7 @@ class UserFragment : Fragment() {
 
     //프로필 가져오기
     fun setProfile(context : Context, rootView : View){
-        val user = FirebaseAuth.getInstance().currentUser
-        val db = FirebaseFirestore.getInstance()
+
         db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { document ->
             if(document!=null){
                 Log.e("프로필","가져오기 성공")

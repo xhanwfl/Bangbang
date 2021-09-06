@@ -16,6 +16,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyContentActivity"
+            android:exported="true" />
+        <activity
             android:name=".DetailRoomActivity"
             android:exported="true" />
         <activity

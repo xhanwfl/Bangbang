@@ -11,13 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#EBEBEB">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="개인정보 변경"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:textStyle="bold" />
         <Button
             android:id="@+id/profile_modify_close_btn"
             android:layout_width="30dp"
