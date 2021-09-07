@@ -30,7 +30,23 @@ android {
         }
     }
 
+    splits{
+        abi{
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a','x86_64'
+            universalApk true
+        }
+    }
 
+    signingConfigs {
+        release {
+            storeFile file('bangbangkey.jks') // 기준은 App 폴더 기준이다.
+            storePassword "andpf3719!"
+            keyAlias "bangbangkey"
+            keyPassword "andpf3719!"
+        }
+    }
 
 
 
@@ -38,6 +54,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

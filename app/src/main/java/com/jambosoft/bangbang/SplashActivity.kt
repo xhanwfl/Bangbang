@@ -19,9 +19,12 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
 
+        getDebugHashKey()
+        getHashKey()
 
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+
 
 
         Handler().postDelayed({
@@ -60,4 +63,24 @@ class SplashActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun getDebugHashKey() {
+        var packageInfo: PackageInfo? = null
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        if (packageInfo == null) Log.e("KeyHash2", "KeyHash:null")
+        for (signature in packageInfo!!.signatures) {
+            try {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.d("KeyHash2", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            } catch (e: NoSuchAlgorithmException) {
+                Log.e("KeyHash2", "Unable to get MessageDigest. signature=$signature", e)
+            }
+        }
+    }
+
 }

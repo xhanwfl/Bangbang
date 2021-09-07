@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.jambosoft.bangbang.Adapter.DetailRoomImageAdapter
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
 import com.jambosoft.bangbang.model.RoomDTO
 import net.daum.mf.map.api.CalloutBalloonAdapter
@@ -36,6 +37,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var isMarkerClicked = false
     var isFirstClicked = false
     var adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+    var mapPoint : MapPoint? = null
 
     init{
         roomDTOList = arrayListOf()
@@ -49,6 +51,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         mapViewContainer = findViewById(R.id.map_view)
 
 
+
         latitude = intent.getStringExtra("latitude")!!.toDouble()
         longitude = intent.getStringExtra("longitude")!!.toDouble()
         depositFee = intent.getIntExtra("depositFee",0)
@@ -57,9 +60,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
         recyclerView = findViewById(R.id.kakaomap_content_recycler)
         recyclerView?.layoutManager = LinearLayoutManager(this)
-
-
-
 
         Log.e("wow","latitude : ${latitude}\nlongitude : ${longitude}\ndepositFee : ${depositFee}\nmonthlyFee : ${monthlyFee}\nroomkinds : ${roomkinds}\n")
 
@@ -70,7 +70,8 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
        // val myMapViewEventListener = MyMapViewEventListener()
         mapView?.apply {
             //중심점변경 + 줌레벨 변경
-            setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(latitude, longitude),4,true)
+            mapView?.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(latitude,longitude),4,true)
+
             //줌 인
             zoomIn(true)
             //줌 아웃
@@ -106,6 +107,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                     marker.tag = i
                     mapPoint = MapPoint.mapPointWithGeoCoord(roomDTOList!![i].address.latitude.toDouble()//마커 좌표
                         ,roomDTOList!![i].address.longitude.toDouble())
+                    Log.e("lati",roomDTOList!![i].address.latitude+"\t"+roomDTOList!![i].address.longitude)
                     markerType = MapPOIItem.MarkerType.BluePin
                     //customImageResourceId = R.drawable.ic_marker
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
@@ -212,6 +214,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             roomDTOs?.clear()
             roomDTOs?.add(roomDTOList!![p1.tag])
 
+            mapView?.setMapCenterPoint(p1.mapPoint,true)
             if(!isFirstClicked){ //초기화는 맨처음 한번만
                 adapter = KakaoMapAdapter(roomDTOs!!)
                 setRecyclerAdapter()

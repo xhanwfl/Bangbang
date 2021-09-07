@@ -50,8 +50,8 @@ class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerV
                 itemList[position].name
                 ,itemList[position].road
                 ,itemList[position].address
-                ,itemList[position].x,
-                itemList[position].y)
+                ,itemList[position].y,
+                itemList[position].x)
 
             intent.putExtra("dto",dto)
 

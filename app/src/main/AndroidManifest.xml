@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -46,18 +47,13 @@
             android:name=".ProfileModifyActivity"
             android:exported="true" />
         <activity
-            android:name=".UserActivity"
-            android:exported="true" />
-        <activity
             android:name=".SearchActivity"
             android:exported="true" />
-
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="27cc22e68942260b075871653164ec4f" />
-
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
@@ -68,9 +64,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+        <meta-data android:name="com.kakao.sdk.AppKey"
+            android:value="1a145164da633c2ee6b0ea21d2802049"/>
     </application>
 
 </manifest>

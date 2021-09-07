@@ -112,8 +112,9 @@ class FilterActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         //주소 검색 이벤트
         if(resultCode == RESULT_OK && requestCode == 300){
-            latitude = data?.getStringExtra("latitude")
-            longitude = data?.getStringExtra("longitude")
+            var dto = data?.getSerializableExtra("dto") as RoomLocationInfoDTO
+            latitude = dto.latitude
+            longitude = dto.longitude
 
         }
     }
