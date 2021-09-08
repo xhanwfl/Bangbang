@@ -37,7 +37,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var isMarkerClicked = false
     var isFirstClicked = false
     var adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-    var mapPoint : MapPoint? = null
 
     init{
         roomDTOList = arrayListOf()
@@ -178,7 +177,8 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     }
 
     override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
-
+        isMarkerClicked = false
+        recyclerView?.visibility = View.GONE
     }
 
     override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {

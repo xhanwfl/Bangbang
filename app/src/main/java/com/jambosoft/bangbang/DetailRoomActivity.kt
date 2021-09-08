@@ -11,9 +11,11 @@ import androidx.viewpager.widget.ViewPager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.Adapter.DetailRoomImageAdapter
 import com.jambosoft.bangbang.model.RoomDTO
+import com.jambosoft.bangbang.model.UserInfoDTO
 import java.text.SimpleDateFormat
 
 class DetailRoomActivity : AppCompatActivity() {
@@ -21,12 +23,15 @@ class DetailRoomActivity : AppCompatActivity() {
     var adapter : DetailRoomImageAdapter? = null
     var uriList : ArrayList<Uri>? = null
     var user : FirebaseUser? = null
+    var inquireClicked = false
+    lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_room)
 
+        //초기화
+        db = FirebaseFirestore.getInstance()
         uriList = arrayListOf()
-
         user = FirebaseAuth.getInstance().currentUser
 
 
@@ -52,6 +57,30 @@ class DetailRoomActivity : AppCompatActivity() {
                 favoriteButton.setBackgroundResource(R.drawable.ic_favorite)
             }
         }
+
+        //문의하기버튼
+        val inquireButton = findViewById<Button>(R.id.detailroom_inquire_btn)
+        inquireButton.setOnClickListener {
+            var userInfoDTO = UserInfoDTO()
+
+
+            if(!inquireClicked){
+                inquireClicked = true
+                db.collection("userInfo").whereEqualTo("email",dto.userId).get().addOnSuccessListener {
+                    for(document in it){
+                        userInfoDTO = document.toObject(UserInfoDTO::class.java)
+                    }
+
+                    inquireButton.setText(userInfoDTO.hp)
+                }
+
+
+
+            }else if(inquireClicked){
+                inquireClicked = false
+                inquireButton.setText("문의하기")
+            }
+       }
 
 
         favoriteButton.setOnClickListener {
@@ -133,7 +162,7 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //이용 기간
         val termTextView = findViewById<TextView>(R.id.detailroom_term_textview)
-        parkingTextView.text = "  ${dto.moreInfo.term}"
+        termTextView.text = "  ${dto.moreInfo.term}"
 
         //입주 가능 날짜
         val moveInTextView = findViewById<TextView>(R.id.detailroom_movein_textview)

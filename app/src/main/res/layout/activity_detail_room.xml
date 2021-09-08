@@ -427,6 +427,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-
+    <Button
+        android:id="@+id/detailroom_inquire_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="문의하기"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="#565656"/>
 
 </LinearLayout>

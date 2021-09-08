@@ -31,7 +31,6 @@ class FilterActivity : AppCompatActivity() {
         var applyButton = findViewById<Button>(R.id.filter_apply_btn)
         applyButton.setOnClickListener {
             applyFilter()
-
         }
 
         //뒤로가기 버튼

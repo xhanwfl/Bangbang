@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -30,6 +27,7 @@ class UserFragment : Fragment() {
     var rootView : View ? = null
     lateinit var user : FirebaseUser
     lateinit var db : FirebaseFirestore
+    lateinit var userInfoDTO : UserInfoDTO
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         rootView = inflater.inflate(R.layout.fragment_user, container, false)
@@ -37,7 +35,6 @@ class UserFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         //프로필설정
-        var context : Context = requireContext()
         setProfile(requireContext(),rootView!!)
 
         //프로필수정 버튼
@@ -62,7 +59,11 @@ class UserFragment : Fragment() {
         //방 내놓기 버튼
         val putUpRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_putuproom_textview)
         putUpRoomButton?.setOnClickListener {
-            startActivity(Intent(context, PutUpRoomActivity::class.java))
+            if(userInfoDTO.hp.equals("")){
+                Toast.makeText(requireContext(),"전화번호를 먼저 등록해주세요",Toast.LENGTH_SHORT).show()
+            }else{
+                startActivity(Intent(requireContext(), PutUpRoomActivity::class.java))
+            }
         }
 
         //내가 쓴 글 버튼
@@ -93,7 +94,7 @@ class UserFragment : Fragment() {
         db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { document ->
             if(document!=null){
                 Log.e("프로필","가져오기 성공")
-                var userInfoDTO = document.toObject<UserInfoDTO>()
+                userInfoDTO = document.toObject<UserInfoDTO>()!!
                 if(userInfoDTO!!.name.equals("")){ //이름이 null일경우
                     startActivityForResult(Intent(context, ProfileModifyActivity::class.java),200)
                 }else{ //이름이 null이 아닐경우

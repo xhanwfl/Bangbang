@@ -87,15 +87,66 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/edittext_border"
         android:hint="    닉네임"/>
-
-    <EditText
-        android:id="@+id/profile_modify_hp_edittext"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp">
+        <EditText
+            android:id="@+id/profile_modify_hp_edittext"
+            android:layout_width="270dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_border"
+            android:hint="    핸드폰 번호"/>
+        <TextView
+            android:id="@+id/profile_modify_requireauth_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="인증요청"
+            android:textColor="#79CCC8"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/profile_modify_auth_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_border"
-        android:hint="    핸드폰 번호"/>
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 번호 입력"/>
+        <EditText
+            android:id="@+id/profile_modify_auth_number"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_border_square"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/profile_modify_reauth_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 번호 재전송"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textColor="#79CCC8"/>
+        <Button
+            android:id="@+id/profile_modify_auth_btn"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape_write"
+            android:text="인증하기"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#79CCC8"
+            android:gravity="center"/>
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="90dp">
@@ -111,7 +162,6 @@
             android:text="변경"
             android:textColor="#FFFFFF" />
     </RelativeLayout>
-
 
 
 </LinearLayout>
