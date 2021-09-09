@@ -4,5 +4,7 @@ data class UserInfoDTO(
     var email : String = "",
     var profileUrl : String = "",
     var name : String = "",
-    var hp : String =""
+    var hp : String ="",
+    var hpAuth : Boolean = false,
+    var token : String = ""
 )

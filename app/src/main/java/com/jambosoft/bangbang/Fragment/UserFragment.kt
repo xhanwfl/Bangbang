@@ -62,7 +62,14 @@ class UserFragment : Fragment() {
             if(userInfoDTO.hp.equals("")){
                 Toast.makeText(requireContext(),"전화번호를 먼저 등록해주세요",Toast.LENGTH_SHORT).show()
             }else{
-                startActivity(Intent(requireContext(), PutUpRoomActivity::class.java))
+                if(!userInfoDTO.hpAuth){ //전화번호 인증이 안되었을경우
+                    var intent = Intent(requireContext(),HpAuthActivity::class.java)
+                    startActivity(intent)
+
+                }else{ //인증 완료
+                    var intent = Intent(requireContext(),PutUpRoomActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 
@@ -138,18 +145,15 @@ class UserFragment : Fragment() {
             val user = FirebaseAuth.getInstance().currentUser
             val db = FirebaseFirestore.getInstance()
             var name = data?.getStringExtra("name")
-            var hp = data?.getStringExtra("hp")
             var uri = data?.getStringExtra("uri")
 
             db.collection("userInfo").document(user!!.uid).update("name",name)
-            db.collection("userInfo").document(user!!.uid).update("hp",hp)
 
             if(!uri.equals("")){
                 val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
                 val uploadTask = storageRef.putFile(uri!!.toUri()).addOnSuccessListener {
                     db.collection("userInfo").document(user.uid).update("profileUrl",storageRef.downloadUrl.toString())
-                    Log.e("url업로드 성공","제발~~")
-
+                    Log.e("!userFragment","url업로드 성공~~")
                 }
             }
         }

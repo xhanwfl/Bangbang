@@ -58,12 +58,12 @@ class RequestApiTask(mContext: Context, mOAuthLoginModule: OAuthLogin) : AsyncTa
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     //아이디 생성이 성공했을 경우
-                        Log.e("Login","회원가입 성공")
-                    uploadUserProfile(auth,email,profileUrl)
+                        Log.e("!Login","회원가입 성공")
+                    uploadUserProfile(auth,email,profileUrl,password)
                     //다음페이지 호출
                 } else if (task.exception?.message.isNullOrEmpty()) {
                     //회원가입 에러가 발생했을 경우
-                    Log.e("Login","회원가입 실패")
+                    Log.e("!Login","회원가입 실패")
 
                 } else {
                     //아이디 생성도 안되고 에러도 발생되지 않았을 경우 로그인
@@ -81,17 +81,17 @@ class RequestApiTask(mContext: Context, mOAuthLoginModule: OAuthLogin) : AsyncTa
                     //로그인 성공 및 다음페이지 호출
                 } else {
                     //로그인 실패
-                    Log.e("Login","로그인성공")
+                    Log.e("Login","로그인실패")
                 }
             }
     }
 
-    fun uploadUserProfile(auth: FirebaseAuth, email : String, profileUrl : String){
+    fun uploadUserProfile(auth: FirebaseAuth, email : String, profileUrl : String, token : String){
         val db = FirebaseFirestore.getInstance()
-        db.collection("userInfo").document(auth.currentUser!!.uid).set(UserInfoDTO(email,profileUrl)).addOnSuccessListener {
-            Log.e("profile","등록성공")
+        db.collection("userInfo").document(auth.currentUser!!.uid).set(UserInfoDTO(email,profileUrl,"이름을 변경해주세요","",false,token)).addOnSuccessListener {
+            Log.e("!profile","등록성공")
         }.addOnFailureListener{
-            Log.e("profile","등록실패")
+            Log.e("!profile","등록실패")
         }
     }
 

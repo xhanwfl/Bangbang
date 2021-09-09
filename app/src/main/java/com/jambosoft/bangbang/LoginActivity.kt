@@ -32,8 +32,16 @@ class LoginActivity : AppCompatActivity() {
         val naver_client_name = getString(R.string.naver_client_name)
         mContext = this
         mOAuthLoginInstance = OAuthLogin.getInstance()
+
+        //로그아웃
+        mOAuthLoginInstance.logout(this)
+        mOAuthLoginInstance.logoutAndDeleteToken(this)
+
+
+        //로그인
         mOAuthLoginInstance.init(mContext, naver_client_id, naver_client_secret, naver_client_name)
 
+        //네이버아이디로 로그인 버튼
         val buttonOAuthLoginImg = findViewById<OAuthLoginButton>(R.id.buttonOAuthLoginImg)
         buttonOAuthLoginImg.setOAuthLoginHandler(mOAuthLoginHandler)
 

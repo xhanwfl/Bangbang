@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HpAuthActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#EBEBEB">
+        <TextView
+            android:id="@+id/mycontent_kind_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="본인인증"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="방을 올리기위해 본인인증이 필요합니다."
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#79CCC8"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:text="휴대전화번호 8글자 (예시 82821515)"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="40dp">
+        <EditText
+            android:id="@+id/hpauth_hp_edittext"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_border_square"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/hpauth_requireauth_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증요청"
+            android:textStyle="bold"
+            android:textColor="#79CCC8"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/profile_modify_auth_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 번호 입력"/>
+        <EditText
+            android:id="@+id/hpauth_authnumber_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_border_square"
+            android:layout_marginTop="5dp"/>
+        <Button
+            android:id="@+id/hpauth_auth_btn"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape_write"
+            android:text="인증하기"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#79CCC8"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>

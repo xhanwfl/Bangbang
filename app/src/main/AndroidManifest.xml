@@ -17,6 +17,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".HpAuthActivity"
+            android:exported="true" />
+        <activity
             android:name=".MyContentActivity"
             android:exported="true" />
         <activity
@@ -64,8 +67,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.kakao.sdk.AppKey"
-            android:value="1a145164da633c2ee6b0ea21d2802049"/>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="1a145164da633c2ee6b0ea21d2802049" />
     </application>
 
 </manifest>
