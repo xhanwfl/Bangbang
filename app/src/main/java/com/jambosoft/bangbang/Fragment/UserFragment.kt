@@ -24,23 +24,31 @@ import com.nhn.android.naverlogin.OAuthLogin
 import net.daum.mf.map.api.MapView
 
 class UserFragment : Fragment() {
-    var rootView : View ? = null
-    lateinit var user : FirebaseUser
-    lateinit var db : FirebaseFirestore
-    lateinit var userInfoDTO : UserInfoDTO
+    var rootView: View? = null
+    lateinit var mContext: Context
+    lateinit var user: FirebaseUser
+    lateinit var db: FirebaseFirestore
+    lateinit var userInfoDTO: UserInfoDTO
+    lateinit var nameTextView: TextView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         rootView = inflater.inflate(R.layout.fragment_user, container, false)
         user = FirebaseAuth.getInstance().currentUser!!
         db = FirebaseFirestore.getInstance()
+        mContext = requireContext()
+        nameTextView = rootView!!.findViewById(R.id.user_name)
 
         //프로필설정
-        setProfile(requireContext(),rootView!!)
+        setProfile()
 
         //프로필수정 버튼
         val profileModifyButton = rootView?.findViewById<Button>(R.id.user_profile_modify_btn)
         profileModifyButton?.setOnClickListener {
-            startActivityForResult(Intent(requireContext(),ProfileModifyActivity::class.java),200)
+            startActivityForResult(Intent(requireContext(), ProfileModifyActivity::class.java), 200)
         }
 
         //로그아웃 버튼
@@ -51,7 +59,7 @@ class UserFragment : Fragment() {
 
             mOAuthInstance.logoutAndDeleteToken(requireContext())
 
-            Log.e("logout","클릭함")
+            Log.e("logout", "클릭함")
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
@@ -59,15 +67,15 @@ class UserFragment : Fragment() {
         //방 내놓기 버튼
         val putUpRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_putuproom_textview)
         putUpRoomButton?.setOnClickListener {
-            if(userInfoDTO.hp.equals("")){
-                Toast.makeText(requireContext(),"전화번호를 먼저 등록해주세요",Toast.LENGTH_SHORT).show()
-            }else{
-                if(!userInfoDTO.hpAuth){ //전화번호 인증이 안되었을경우
-                    var intent = Intent(requireContext(),HpAuthActivity::class.java)
-                    startActivity(intent)
+            if (!userInfoDTO.hpAuth) { //전화번호 인증이 안되었을경우
+                var intent = Intent(requireContext(), HpAuthActivity::class.java)
+                startActivityForResult(intent, 300)
 
-                }else{ //인증 완료
-                    var intent = Intent(requireContext(),PutUpRoomActivity::class.java)
+            } else { //인증 완료
+                if(userInfoDTO.name.equals("이름을 변경해주세요")) { //아직 이름을 변경하지 않음
+                    Toast.makeText(requireContext(),"이름을 먼저 변경해주세요.",Toast.LENGTH_SHORT).show()
+                }else{ //아무이상없을때
+                    var intent = Intent(requireContext(), PutUpRoomActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -76,18 +84,17 @@ class UserFragment : Fragment() {
         //내가 쓴 글 버튼
         val myContentButton = rootView?.findViewById<TextView>(R.id.frag_user_mycontent_textview)
         myContentButton?.setOnClickListener {
-            var intent = Intent(requireContext(),MyContentActivity::class.java)
-            intent.putExtra("kind","contents")
+            var intent = Intent(requireContext(), MyContentActivity::class.java)
+            intent.putExtra("kind", "contents")
             startActivity(intent)
         }
         //내놓은 방 버튼
         val myRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_myroom_textview)
         myRoomButton?.setOnClickListener {
-            var intent = Intent(requireContext(),MyContentActivity::class.java)
-            intent.putExtra("kind","rooms")
+            var intent = Intent(requireContext(), MyContentActivity::class.java)
+            intent.putExtra("kind", "rooms")
             startActivity(intent)
         }
-
 
 
         // Inflate the layout for this fragment
@@ -96,43 +103,47 @@ class UserFragment : Fragment() {
 
 
     //프로필 가져오기
-    fun setProfile(context : Context, rootView : View){
+    fun setProfile() {
 
         db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { document ->
-            if(document!=null){
-                Log.e("프로필","가져오기 성공")
+            if (document != null) {
+                Log.e("프로필", "가져오기 성공")
                 userInfoDTO = document.toObject<UserInfoDTO>()!!
-                if(userInfoDTO!!.name.equals("")){ //이름이 null일경우
-                    startActivityForResult(Intent(context, ProfileModifyActivity::class.java),200)
-                }else{ //이름이 null이 아닐경우
-                    val nameTextView = rootView.findViewById<TextView>(R.id.user_name)
-                    val emailTextView = rootView.findViewById<TextView>(R.id.user_email)
-                    val profileImageView = rootView.findViewById<ImageView>(R.id.frag_user_profile_imageview)
+                if (userInfoDTO!!.name.equals("이름을 변경해주세요")) { //이름이 null일경우 이름수정이벤트
+                    startActivityForResult(Intent(mContext, ProfileModifyActivity::class.java), 200)
+                } else { //이름이 null이 아닐경우
 
-                    nameTextView.text = userInfoDTO.name
-                    emailTextView.text = userInfoDTO.email
-                    Log.e("url profileUrl",userInfoDTO.profileUrl)
+                    val emailTextView = rootView?.findViewById<TextView>(R.id.user_email)
+                    val profileImageView =
+                        rootView?.findViewById<ImageView>(R.id.frag_user_profile_imageview)
 
+                    nameTextView?.text = userInfoDTO.name
+                    emailTextView?.text = userInfoDTO.email
+                    Log.e("url profileUrl", userInfoDTO.profileUrl)
 
 
                     //프로필이미지 가져오기
-                    val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
+                    val storageRef =
+                        FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
                     storageRef.downloadUrl.addOnSuccessListener {  //storage에 이미지를 저장해둔경우
-                        Glide.with(context).load(it).thumbnail(0.1f).apply(
-                            RequestOptions().centerCrop()).into(profileImageView)
-                    }.addOnFailureListener{ //storage에 없을경우 네이버프로필을 가져옴
-                        Glide.with(context).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f).apply(
-                            RequestOptions().centerCrop()).into(profileImageView)
+                        Glide.with(mContext).load(it).thumbnail(0.1f).apply(
+                            RequestOptions().centerCrop()
+                        ).into(profileImageView!!)
+                    }.addOnFailureListener { //storage에 없을경우 네이버프로필을 가져옴
+                        Glide.with(mContext).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f)
+                            .apply(
+                                RequestOptions().centerCrop()
+                            ).into(profileImageView!!)
                     }
 
 
                 }
-            }else{
+            } else {
                 Log.e("프로필", "프로필이 없습니다.")
             }
 
         }.addOnFailureListener {
-            Log.e("프로필","가져오기 실패")
+            Log.e("프로필", "가져오기 실패")
         }
     }
 
@@ -141,22 +152,35 @@ class UserFragment : Fragment() {
 
 
         //프로필 수정
-        if(resultCode== AppCompatActivity.RESULT_OK &&requestCode==200){
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 200) {
             val user = FirebaseAuth.getInstance().currentUser
             val db = FirebaseFirestore.getInstance()
             var name = data?.getStringExtra("name")
             var uri = data?.getStringExtra("uri")
 
-            db.collection("userInfo").document(user!!.uid).update("name",name)
+            db.collection("userInfo").document(user!!.uid).update("name", name)
+                .addOnSuccessListener {
+                    nameTextView.text = name
+                }
 
-            if(!uri.equals("")){
-                val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
+            if (!uri.equals("")) { //uri가 있을경우 이미지 업로드
+                val storageRef =
+                    FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
                 val uploadTask = storageRef.putFile(uri!!.toUri()).addOnSuccessListener {
-                    db.collection("userInfo").document(user.uid).update("profileUrl",storageRef.downloadUrl.toString())
-                    Log.e("!userFragment","url업로드 성공~~")
+                    db.collection("userInfo").document(user.uid)
+                        .update("profileUrl", storageRef.downloadUrl.toString())
+                        .addOnSuccessListener {
+                            Log.e("!userFragment", "url업로드 성공~~")
+                            setProfile()
+                        }
+
                 }
             }
         }
+        //전화번호인증
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 300) {
+            userInfoDTO.hpAuth = true
+            Toast.makeText(requireContext(),"전화번호 인증 완료.",Toast.LENGTH_SHORT).show()
+        }
     }
-
 }

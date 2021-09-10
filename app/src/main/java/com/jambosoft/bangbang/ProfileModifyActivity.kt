@@ -43,15 +43,12 @@ class ProfileModifyActivity : AppCompatActivity() {
 
         //이름
         val nameEditText = findViewById<EditText>(R.id.profile_modify_name_edittext)
-        //전화번호
-        val hpEditText = findViewById<EditText>(R.id.profile_modify_hp_edittext)
 
         //변경하기 버튼
         val modifyButton = findViewById<Button>(R.id.profile_modify_modify_btn)
         modifyButton.setOnClickListener {
 
             val name = nameEditText.text.toString()
-            val hp = hpEditText.text.toString()
 
             if(name.equals("")){ //이름을 입력하지 않을경우
                 Toast.makeText(this,"이름을 입력하세요",Toast.LENGTH_SHORT).show()

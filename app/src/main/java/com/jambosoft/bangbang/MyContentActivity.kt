@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jambosoft.bangbang.Adapter.CommunityFragmentRecentAdapter
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
+import com.jambosoft.bangbang.Adapter.MyRoomAdapter
 import com.jambosoft.bangbang.model.ContentDTO
 import com.jambosoft.bangbang.model.RoomDTO
 
@@ -53,7 +54,7 @@ class MyContentActivity : AppCompatActivity() {
 
             }
 
-            recyclerView.adapter = KakaoMapAdapter(roomDTOList)
+            recyclerView.adapter = MyRoomAdapter(roomDTOList)
         }
     }
 

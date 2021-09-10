@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="15dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_bottom_home_clicked"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="담당자가 확인 후연락드립니다"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#27B2AB"/>
+    </LinearLayout>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#EFEFEF"/>
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="휴대폰 번호(필수)"
+        android:textStyle="bold"
+        android:textSize="17sp"/>
+    <EditText
+        android:id="@+id/dialog_inquire_hp_edittext"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edittext_border_square"
+        android:layout_marginHorizontal="30dp"
+        android:inputType="number"
+        android:hint="   답장 받을 휴대폰 번호"/>
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문의 내용"
+        android:textStyle="bold"
+        android:textSize="17sp"/>
+    <EditText
+        android:id="@+id/dialog_inquire_message_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edittext_border_square"
+        android:gravity="top"
+        android:hint="  방 관련 문의사항 입력\n  ex) 반려동물을 키워도 되나요 ?"
+        android:lines="7"
+        android:maxLines="12"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="30dp"/>
+</LinearLayout>

@@ -34,8 +34,9 @@ class LoginActivity : AppCompatActivity() {
         mOAuthLoginInstance = OAuthLogin.getInstance()
 
         //로그아웃
+        /*
         mOAuthLoginInstance.logout(this)
-        mOAuthLoginInstance.logoutAndDeleteToken(this)
+        mOAuthLoginInstance.logoutAndDeleteToken(this)*/
 
 
         //로그인

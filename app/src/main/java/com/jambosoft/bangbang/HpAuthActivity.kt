@@ -1,5 +1,6 @@
 package com.jambosoft.bangbang
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,20 +12,22 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.jambosoft.bangbang.model.UserInfoDTO
 import java.util.concurrent.TimeUnit
 import kotlin.math.sign
 
 class HpAuthActivity : AppCompatActivity() {
-    lateinit var user : FirebaseUser
+    lateinit var uid : String
     lateinit var auth : FirebaseAuth
+    var hp = ""
     lateinit var callbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hp_auth)
 
         auth = FirebaseAuth.getInstance()
-        user = FirebaseAuth.getInstance().currentUser!!
+        uid = FirebaseAuth.getInstance().currentUser!!.uid
 
         //전화번호
         val hpEditText = findViewById<EditText>(R.id.hpauth_hp_edittext)
@@ -40,17 +43,21 @@ class HpAuthActivity : AppCompatActivity() {
             if(hpText.equals("")){
                 Toast.makeText(this,"전화번호를 입력해주세요",Toast.LENGTH_SHORT).show()
             }else{
-                var hp = "+8210${hpText}"
-                val options = PhoneAuthOptions.newBuilder()
-                    .setPhoneNumber(hp)       // Phone number to verify
-                    .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                    .setActivity(this@HpAuthActivity)                 // Activity (for callback binding)
-                    .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-                    .build()
+                if(hpText.length!=8){ //8글자가 아닐경우
+                    Toast.makeText(this,"8글자로 입력해주세요",Toast.LENGTH_SHORT).show()
+                }else{
+                    hp = "+8210${hpText}"
+                    val options = PhoneAuthOptions.newBuilder()
+                        .setPhoneNumber(hp)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this@HpAuthActivity)                 // Activity (for callback binding)
+                        .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
+                        .build()
 
-                PhoneAuthProvider.verifyPhoneNumber(options)
+                    PhoneAuthProvider.verifyPhoneNumber(options)
 
-                Log.d("!HpAuthActivity","인증요청 보냄 ${hp}")
+                    Log.d("!HpAuthActivity","인증요청 보냄 ${hp}")
+                }
             }
         }
 
@@ -91,6 +98,7 @@ class HpAuthActivity : AppCompatActivity() {
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
                 Log.d("!HpAuthActivity", "onCodeSent:$verificationId")
+                Toast.makeText(applicationContext,"인증번호를 보냈습니다.",Toast.LENGTH_SHORT).show()
 
                 // Save verification ID and resending token so we can use them later
                 authButton.setOnClickListener {
@@ -108,12 +116,23 @@ class HpAuthActivity : AppCompatActivity() {
                 if (task.isSuccessful) { //인증번호 일치
                     Log.d("!HpAuthActivity", "로그인 인증 성공")
                     val db = FirebaseFirestore.getInstance()
-                    db.collection("userInfo").document(user.uid).get().addOnSuccessListener {
-                        val dto = it.toObject(UserInfoDTO::class.java)
-                        auth.signInWithEmailAndPassword(dto!!.email,dto.token).addOnSuccessListener {
-                            dto.hpAuth = true
-                            db.collection("userInfo").document(user.uid).set(dto)
-                            Log.d("!HpAuthActivity","재로그인 성공 | hpAuth = ${dto.hpAuth} ")
+
+                    db.collection("userInfo").document(uid).get().addOnSuccessListener { document ->
+                        if (document != null) {
+                            Log.e("프로필", "가져오기 성공")
+                            var userInfoDTO = document.toObject<UserInfoDTO>()!!
+                            auth.signInWithEmailAndPassword(userInfoDTO!!.email,userInfoDTO.token).addOnSuccessListener {
+                                userInfoDTO.hpAuth = true
+                                userInfoDTO.hp = hp
+                                db.collection("userInfo").document(uid).set(userInfoDTO)
+                                Log.d("!HpAuthActivity","재로그인 성공 | hpAuth = ${userInfoDTO.hpAuth} ")
+
+                                val intent = Intent(this@HpAuthActivity,MainActivity::class.java)
+                                setResult(RESULT_OK,intent)
+                                finish()
+                            }
+                        } else {
+                            Log.d("!HpAuthActivity", "userInfoDTO : null")
                         }
                     }
 

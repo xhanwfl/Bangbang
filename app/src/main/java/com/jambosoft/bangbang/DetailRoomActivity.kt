@@ -1,12 +1,12 @@
 package com.jambosoft.bangbang
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,7 +23,6 @@ class DetailRoomActivity : AppCompatActivity() {
     var adapter : DetailRoomImageAdapter? = null
     var uriList : ArrayList<Uri>? = null
     var user : FirebaseUser? = null
-    var inquireClicked = false
     lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,28 +60,50 @@ class DetailRoomActivity : AppCompatActivity() {
         //문의하기버튼
         val inquireButton = findViewById<Button>(R.id.detailroom_inquire_btn)
         inquireButton.setOnClickListener {
-            var userInfoDTO = UserInfoDTO()
 
+            //dialog 띄우기
+                val builder = AlertDialog.Builder(this)
+                val dialogView = layoutInflater.inflate(R.layout.dialog_inquest_room, null)
+                builder.setView(dialogView)
+                    .setPositiveButton("보내기") { dialogInterface, i ->  //보내기버튼
+                        val messageEditText = dialogView.findViewById<EditText>(R.id.dialog_inquire_message_edittext)
+                        var message = messageEditText.text.toString()
+                        val hpEditText = dialogView.findViewById<EditText>(R.id.dialog_inquire_hp_edittext)
+                        var hp = hpEditText.text.toString()
+                        if(message.equals("")||hp.equals("")){ //입력 안할경우
+                            Toast.makeText(this,"내용과 전화번호를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
+                        }else{  //모두 입력했을경우 메세지 보내기
+                            db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { document -> //currentUser의 userId를 가져온다
+                                if (document != null) {
+                                    Log.e("프로필", "가져오기 성공")
+                                    var userInfoDTO = document.toObject<UserInfoDTO>()!!
 
-            if(!inquireClicked){
-                inquireClicked = true
-                db.collection("userInfo").whereEqualTo("email",dto.userId).get().addOnSuccessListener {
-                    for(document in it){
-                        userInfoDTO = document.toObject(UserInfoDTO::class.java)
+                                    var inquire = RoomDTO.Inquire()
+                                    inquire.hp = hp
+                                    inquire.message = message
+                                    inquire.uid = user!!.uid
+                                    inquire.userId = userInfoDTO.name
+                                    db.collection("rooms").document(dto.timestamp.toString()).collection("inquire")
+                                        .document().set(inquire).addOnSuccessListener {
+                                            dto.inquireCount++
+                                            db.collection("rooms").document(dto.timestamp.toString()).set(dto)
+                                        Toast.makeText(this,"문의 완료",Toast.LENGTH_SHORT).show()
+                                    }.addOnFailureListener{
+                                        Toast.makeText(this,"전송 실패",Toast.LENGTH_SHORT).show()
+                                    }
+                                } else {  //document가 null
+                                    Log.d("!DetailRoomActivity", "userInfoDTO : null")
+                                }
+                            }
+                        }
                     }
-
-                    inquireButton.setText(userInfoDTO.hp)
-                }
-
-
-
-            }else if(inquireClicked){
-                inquireClicked = false
-                inquireButton.setText("문의하기")
-            }
+                    .setNegativeButton("취소") { dialogInterface, i ->  //취소버튼
+                        Toast.makeText(this,"취소",Toast.LENGTH_SHORT).show()
+                    }
+                    .show()
        }
 
-
+        //좋아요버튼
         favoriteButton.setOnClickListener {
             if (dto.favorites[user!!.uid] == null){ //널인경우
                 dto.favorites[user!!.uid] = true
