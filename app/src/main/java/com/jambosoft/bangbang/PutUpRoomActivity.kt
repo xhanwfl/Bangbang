@@ -125,7 +125,7 @@ class PutUpRoomActivity : AppCompatActivity() {
 
                         if(listUri!!.size==listUrl!!.size){ //url이 리스트에 다 추가되었을때
                             roomDTO = RoomDTO(listUrl!!,roomLocationInfoDTO!!,deposit,monthlyfee, adminfee, //roomDTO 초기화
-                                floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user!!.email!!,currentTime,imageCount)
+                                floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user!!.email!!,user.uid,currentTime,imageCount)
 
                             //firestore에 업로드
                             val db = FirebaseFirestore.getInstance()

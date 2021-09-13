@@ -6,5 +6,6 @@ data class UserInfoDTO(
     var name : String = "",
     var hp : String ="",
     var hpAuth : Boolean = false,
-    var token : String = ""
+    var token : String = "",
+    var alramCount : Int = 0
 )

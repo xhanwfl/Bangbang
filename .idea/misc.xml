@@ -34,6 +34,7 @@
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_detail_view.xml" value="0.33" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_filter.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_hp_auth.xml" value="0.18020833333333333" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_inquire_list.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_kakao_map.xml" value="0.25" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_login.xml" value="0.28804347826086957" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
@@ -65,6 +66,7 @@
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_home_frag_recent.xml" value="0.2694746376811594" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_home_frag_recommend.xml" value="0.2635416666666667" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_home_frag_recycler.xml" value="0.1947463768115942" />
+        <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_inquire_list_inquire.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_kakaomap_rooms.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_mycontent_room.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/A/AndroidStudioProjects/BangBang/app/src/main/res/layout/item_putup_room_image.xml" value="0.36614583333333334" />

@@ -20,8 +20,20 @@ class PutUpRoomInfoActivity : AppCompatActivity() {
         titleEditText = findViewById(R.id.putup_room_info_title)
         explainEditText = findViewById(R.id.putup_room_info_explain)
 
+
+
+
+
         setting()
 
+        //뒤로가기버튼
+        val backButton = findViewById<Button>(R.id.putup_room_info_back_btn)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+
+        //적용하기버튼
         val applyButton = findViewById<Button>(R.id.putup_room_info_apply_btn)
         applyButton.setOnClickListener {
             getInfo()

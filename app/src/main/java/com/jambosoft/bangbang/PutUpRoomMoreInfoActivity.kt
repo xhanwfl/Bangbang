@@ -29,6 +29,14 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
 
         setting()
 
+        //뒤로가기버튼
+        val backButton = findViewById<Button>(R.id.putup_room_more_info_back_btn)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+
+        //적용하기버튼
         val applyButton = findViewById<Button>(R.id.putup_room_more_info_apply_btn)
         applyButton.setOnClickListener {
             getMoreInfo()

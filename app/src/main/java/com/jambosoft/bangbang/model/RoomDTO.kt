@@ -14,6 +14,7 @@ data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올�
     var info : RoomInfoDTO = RoomInfoDTO(),
     var moreInfo : RoomMoreInfoDTO = RoomMoreInfoDTO(),
     var userId : String = "",
+    var uid : String = "",
     var timestamp : Long = 0,
     var imageCount : Int = 0,
     var favoriteCount : Int = 0,
@@ -29,7 +30,10 @@ data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올�
         var uid : String = "",
         var userId : String = "",
         var hp : String = "",
-        var message : String = ""
+        var message : String = "",
+        var roomId : String = "",
+        var timestamp : Long = 0,
+        var isChecked : Boolean = false
     ) : Serializable
 }
 

@@ -61,13 +61,24 @@
             android:id="@+id/item_mycontentroom_inquire_btn"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/button_shape_write"
             android:text="문의"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_comment_btn"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_roominfo_textview"
             app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/item_mycontentroom_delete_btn"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape_write"
+            android:text="삭제"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_inquire_btn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.125" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
