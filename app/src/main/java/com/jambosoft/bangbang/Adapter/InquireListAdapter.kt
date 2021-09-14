@@ -19,10 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.R
+import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
 
-class InquireListAdapter(val itemList : ArrayList<RoomDTO.Inquire>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class InquireListAdapter(val itemList : ArrayList<InquireDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var storage : FirebaseStorage
     lateinit var context : Context
     lateinit var db : FirebaseFirestore
@@ -62,15 +63,15 @@ class InquireListAdapter(val itemList : ArrayList<RoomDTO.Inquire>) : RecyclerVi
             if(!isConfig){
                 configHpButton.setText(itemList[position].hp)
                 isConfig = true
-                if(!itemList[position].isChecked){ //아직 확인안된 알람이라면
+                if(!itemList[position].checked){ //아직 확인안된 알람이라면
                     db.collection("userInfo").document(user.uid).get().addOnSuccessListener {  //현재유저 info 가져와서
                         var userInfoDTO = it.toObject<UserInfoDTO>()
                         userInfoDTO!!.alramCount--
                         db.collection("userInfo").document(user.uid).set(userInfoDTO).addOnSuccessListener {  // alramCount 하나 줄이고
-                            db.collection("rooms").document(itemList[position].roomId)
-                                .collection("inquire").document(itemList[position].timestamp.toString()).update("isChecked",true) //isChecked = true
+                            db.collection("inquire").document(itemList[position].timestamp.toString()).update("checked",true) //isChecked = true
                                 .addOnSuccessListener {
-                                    itemList[position].isChecked = true
+                                    itemList[position].checked = true
+                                    notifyDataSetChanged()
                                 }
                         }
                     }

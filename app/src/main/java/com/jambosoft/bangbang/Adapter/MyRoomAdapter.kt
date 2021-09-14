@@ -50,7 +50,7 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
         inquireButton.setText("문의 ${itemList[position].inquireCount}")
         inquireButton.setOnClickListener {
             var intent = Intent(context,InquireListActivity::class.java)
-            intent.putExtra("timestamp",itemList[position].timestamp.toString())
+            intent.putExtra("timestamp",itemList[position].timestamp.toString())  //방의 timestamp를 넘김
             context.startActivity(intent)
 
             //알람..관련....

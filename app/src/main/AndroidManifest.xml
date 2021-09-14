@@ -17,6 +17,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyInquireActivity"
+            android:exported="true" />
+        <activity
             android:name=".InquireListActivity"
             android:exported="true" />
         <activity

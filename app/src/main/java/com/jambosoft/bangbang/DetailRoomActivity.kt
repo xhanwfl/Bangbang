@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.Adapter.DetailRoomImageAdapter
+import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
 import java.text.SimpleDateFormat
@@ -188,9 +189,8 @@ class DetailRoomActivity : AppCompatActivity() {
                             val userInfoDTO = document.toObject<UserInfoDTO>()!!
                             val timestamp = System.currentTimeMillis()
 
-                            val inquire = RoomDTO.Inquire(user!!.uid,userInfoDTO.name,hp,message,dto!!.timestamp.toString(),timestamp)
-                            db.collection("rooms").document(dto!!.timestamp.toString()).collection("inquire")
-                                .document(inquire.timestamp.toString()).set(inquire).addOnSuccessListener {
+                            val inquire =   InquireDTO(user!!.uid,userInfoDTO.name,hp,message,dto!!.timestamp.toString(),dto!!.uid,timestamp)
+                            db.collection("inquire").document(inquire.timestamp.toString()).set(inquire).addOnSuccessListener {
                                     dto!!.inquireCount++
                                     db.collection("rooms").document(dto!!.timestamp.toString()).set(dto!!) // roomdto에 문의 count 설정
                                     db.collection("userInfo").document(dto!!.uid).get().addOnSuccessListener { //방올린사람 정보 가져와서

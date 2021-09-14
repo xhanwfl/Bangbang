@@ -113,6 +113,7 @@ class UserFragment : Fragment() {
                     startActivityForResult(Intent(mContext, ProfileModifyActivity::class.java), 200)
                 } else { //이름이 null이 아닐경우
 
+                    //email, profile 설정
                     val emailTextView = rootView?.findViewById<TextView>(R.id.user_email)
                     val profileImageView =
                         rootView?.findViewById<ImageView>(R.id.frag_user_profile_imageview)
@@ -136,6 +137,17 @@ class UserFragment : Fragment() {
                             ).into(profileImageView!!)
                     }
 
+                    //알람 설정
+                    val alramImageView = rootView?.findViewById<ImageView>(R.id.frag_user_alram_imageview)
+                    if(userInfoDTO.alramCount>0){
+                        alramImageView?.setImageResource(R.drawable.ic_favorite) //아이콘 받아서 변경해야함
+                    }
+
+                    alramImageView?.setOnClickListener{
+                        var intent = Intent(requireContext(), MyContentActivity::class.java)
+                        intent.putExtra("kind", "rooms")
+                        startActivity(intent)
+                    }
 
                 }
             } else {

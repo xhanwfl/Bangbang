@@ -26,15 +26,6 @@ data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올�
                        var userId : String = "",
                        var comment : String = "",
                        var timestamp : Long = 0) : Serializable
-    data class Inquire(
-        var uid : String = "",
-        var userId : String = "",
-        var hp : String = "",
-        var message : String = "",
-        var roomId : String = "",
-        var timestamp : Long = 0,
-        var isChecked : Boolean = false
-    ) : Serializable
 }
 
 data class RoomLocationInfoDTO(

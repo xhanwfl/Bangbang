@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jambosoft.bangbang.Adapter.InquireListAdapter
+import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 
 class InquireListActivity : AppCompatActivity() {
@@ -16,8 +17,8 @@ class InquireListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inquire_list)
 
-        val timestamp = intent.getStringExtra("timestamp").toString()
-        var itemList : ArrayList<RoomDTO.Inquire> = arrayListOf()
+        val timestamp = intent.getStringExtra("timestamp").toString()  //방 id를 가져옴
+        var itemList : ArrayList<InquireDTO> = arrayListOf()
 
         //닫기버튼
         val closeButton = findViewById<Button>(R.id.inquirelist_close_btn)
@@ -28,9 +29,9 @@ class InquireListActivity : AppCompatActivity() {
         //recyclerView
         val recyclerView = findViewById<RecyclerView>(R.id.inquirelist_recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        FirebaseFirestore.getInstance().collection("rooms").document(timestamp).collection("inquire").get().addOnSuccessListener { documents ->
+        FirebaseFirestore.getInstance().collection("inquire").whereEqualTo("roomId",timestamp).get().addOnSuccessListener { documents ->
             for(document in documents){
-                var inquire = document.toObject(RoomDTO.Inquire::class.java)
+                var inquire = document.toObject(InquireDTO::class.java)
                 itemList.add(inquire)
             }
             recyclerView.adapter = InquireListAdapter(itemList)
