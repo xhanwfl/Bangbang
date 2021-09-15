@@ -62,6 +62,7 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
         val imageView = viewHolder.findViewById<ImageView>(R.id.item_kakaomap_room_imageview)
         val ref = storage.reference.child("roomImages/${itemList[position].timestamp.toString()}")
         ref.child("0.jpg").downloadUrl.addOnSuccessListener {
+            Log.d("!KakaoMapAdapter",it.toString())
             Glide.with(holder.itemView.context).load(it).thumbnail(0.1f).apply(
                 RequestOptions().centerCrop()).into(imageView)
         }.addOnFailureListener {

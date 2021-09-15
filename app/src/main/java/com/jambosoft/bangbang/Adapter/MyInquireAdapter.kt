@@ -2,6 +2,7 @@ package com.jambosoft.bangbang.Adapter
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.R
 import com.jambosoft.bangbang.model.InquireDTO
+import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
 
 class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -29,7 +31,7 @@ class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Ada
     inner class CustomViewHolder(view : View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_inquire_list_inquire,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_inquire_room,parent,false)
         context = parent.context as Activity
         db = FirebaseFirestore.getInstance()
         user = FirebaseAuth.getInstance().currentUser!!
@@ -43,6 +45,35 @@ class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as CustomViewHolder).itemView
+
+        //방정보
+        val roomImageView = viewHolder.findViewById<ImageView>(R.id.item_myinquire_room_imageview)
+        val roomInfoTextView = viewHolder.findViewById<TextView>(R.id.item_myinquire_roominfo_textview)
+        val roomPriceTextView = viewHolder.findViewById<TextView>(R.id.item_myinquire_price_textview)
+
+        db.collection("rooms").document(itemList[position].roomId).get().addOnSuccessListener { document ->
+            val roomDTO = document.toObject<RoomDTO>()
+            roomInfoTextView.text = roomDTO?.info?.title
+            roomPriceTextView.text = "${roomDTO?.deposit}/${roomDTO?.monthlyFee}"
+
+            //방 이미지
+            Glide.with(context).load(roomDTO!!.images[0].toUri()).thumbnail(0.1f).apply(
+                RequestOptions().centerCrop()).into(roomImageView)
+        }
+
+        //inquire
+        val inquireMessageTextView = viewHolder.findViewById<TextView>(R.id.item_myinquire_message_textview)
+        inquireMessageTextView.text = itemList[position].message
+        val checkTextView = viewHolder.findViewById<TextView>(R.id.item_myinquire_check_textview)
+        if(itemList[position].checked){
+            checkTextView.text = "열람"
+        }else{
+            checkTextView.text = "미열람"
+        }
+
+
+
+
 
     }
 

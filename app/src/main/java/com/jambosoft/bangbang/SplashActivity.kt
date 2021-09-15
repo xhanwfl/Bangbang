@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Base64
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -19,8 +21,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
 
-        getDebugHashKey()
-        getHashKey()
+        //getDebugHashKey()
+        //getHashKey()
 
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
@@ -28,14 +30,21 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({
-            startActivity(intent)
-            finish()
+            setContentView(R.layout.activity_splash_loading)
+            val imageView = findViewById<ImageView>(R.id.splash_loading_imageview)
+            Glide.with(this).load(R.raw.loading).override(200,200).into(imageView)
+            Handler().postDelayed({
+                startActivity(intent)
+                finish()
+            },DURATION)
         },DURATION)
+
+
 
 
     }
     companion object {
-        private const val DURATION : Long = 2000
+        private const val DURATION : Long = 1500
     }
 
     override fun onBackPressed() {
@@ -60,25 +69,6 @@ class SplashActivity : AppCompatActivity() {
                 Log.e("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
             } catch (e: NoSuchAlgorithmException) {
                 Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
-            }
-        }
-    }
-
-    private fun getDebugHashKey() {
-        var packageInfo: PackageInfo? = null
-        try {
-            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-        if (packageInfo == null) Log.e("KeyHash2", "KeyHash:null")
-        for (signature in packageInfo!!.signatures) {
-            try {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                Log.d("KeyHash2", Base64.encodeToString(md.digest(), Base64.DEFAULT))
-            } catch (e: NoSuchAlgorithmException) {
-                Log.e("KeyHash2", "Unable to get MessageDigest. signature=$signature", e)
             }
         }
     }

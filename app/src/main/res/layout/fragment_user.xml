@@ -85,7 +85,7 @@
         android:background="#40ADA7">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/frag_user_myinquire_btn"
             android:layout_width="25dp"
             android:layout_height="20dp"
             android:background="@drawable/ic_move"

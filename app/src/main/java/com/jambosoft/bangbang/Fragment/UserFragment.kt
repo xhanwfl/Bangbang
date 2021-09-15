@@ -64,6 +64,13 @@ class UserFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
 
+        //문의한방 버튼
+        val myInquireButton = rootView?.findViewById<Button>(R.id.frag_user_myinquire_btn)
+        myInquireButton?.setOnClickListener {
+            var intent = Intent(mContext,MyInquireActivity::class.java)
+            startActivity(intent)
+        }
+
         //방 내놓기 버튼
         val putUpRoomButton = rootView?.findViewById<TextView>(R.id.frag_user_putuproom_textview)
         putUpRoomButton?.setOnClickListener {

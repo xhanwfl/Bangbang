@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.DetailRoomActivity
 import com.jambosoft.bangbang.InquireListActivity
 import com.jambosoft.bangbang.R
+import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 
 class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -26,6 +27,7 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
     lateinit var context : Context
     inner class CustomViewHolder(view : View) : RecyclerView.ViewHolder(view)
     lateinit var dialogView : View
+    lateinit var db : FirebaseFirestore
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_mycontent_room,parent,false)
@@ -33,6 +35,7 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
         dialogView = LayoutInflater.from(parent.context).inflate(R.layout.dialog_delete_content, null)
         //firebaseStorage
         storage = FirebaseStorage.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         return CustomViewHolder(view)
     }
@@ -89,9 +92,21 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
 
             builder.setView(dialogView)
                 .setPositiveButton("확인") { dialogInterface, i ->
-                    FirebaseFirestore.getInstance().collection("rooms").document(itemList[position].timestamp.toString()).delete().addOnSuccessListener {
+                    db.collection("rooms").document(itemList[position].timestamp.toString()).delete().addOnSuccessListener { //roomDTO 삭제
                         Toast.makeText(context,"삭제완료", Toast.LENGTH_SHORT).show()
-                        notifyDataSetChanged()
+
+
+                        db.collection("inquire").whereEqualTo("roomId",itemList[position].timestamp.toString()) // 해당 방의 inquire 모두 삭제
+                            .get().addOnSuccessListener { documents ->
+                            for(document in documents){
+                                val inquire = document.toObject(InquireDTO::class.java)
+                                db.collection("inquire").document(inquire.timestamp.toString()).delete()
+                            }
+                        }
+
+
+                        itemList.removeAt(position)
+                        notifyItemRemoved(position)
                     }.addOnFailureListener {
                         Toast.makeText(context,"삭제실패", Toast.LENGTH_SHORT).show()
                     }
