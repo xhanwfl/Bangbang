@@ -29,10 +29,11 @@ class SplashActivity : AppCompatActivity() {
 
 
 
+
         Handler().postDelayed({
             setContentView(R.layout.activity_splash_loading)
             val imageView = findViewById<ImageView>(R.id.splash_loading_imageview)
-            Glide.with(this).load(R.raw.loading).override(200,200).into(imageView)
+            Glide.with(this).load(R.raw.loading).override(250,250).centerCrop().into(imageView)
             Handler().postDelayed({
                 startActivity(intent)
                 finish()

@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -157,17 +160,23 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //유저 프로필이미지
         val userProfileImageView = findViewById<ImageView>(R.id.detailroom_profile_imageview)
+        db.collection("userInfo").document(dto!!.uid).get().addOnSuccessListener { document ->
+            var userDTO = document.toObject<UserInfoDTO>()
+            Glide.with(this).load(userDTO!!.profileUrl.toUri()).thumbnail(0.1f).apply(
+                RequestOptions().centerCrop()).into(userProfileImageView)
+        }
+
 
 
         //방 이미지 페이저
         imageViewPager = findViewById(R.id.detailroom_image_pager)
-        getRoomImages(dto!!)
+        //getRoomImages(dto!!)
+        for(i in 0 until dto!!.imageCount){
+            uriList!!.add(dto!!.images[i].toUri())
+        }
 
-        val handler = android.os.Handler()
-        handler.postDelayed({
-            adapter = DetailRoomImageAdapter(uriList!!)
-            imageViewPager!!.adapter = adapter
-        }, 2000)
+        adapter = DetailRoomImageAdapter(uriList!!)
+        imageViewPager!!.adapter = adapter
 
     }
 
@@ -223,22 +232,5 @@ class DetailRoomActivity : AppCompatActivity() {
         }
 
         FirebaseFirestore.getInstance().collection("rooms").document(dto.timestamp.toString()).set(dto)
-    }
-
-    fun getRoomImages(dto : RoomDTO){
-        val storage = FirebaseStorage.getInstance()
-        val ref = storage.reference.child("roomImages/${dto.timestamp}")
-        uriList!!.clear()
-
-            for(i in 0..dto.imageCount-1){
-                ref.child("${i}.jpg").downloadUrl.addOnSuccessListener {
-                    uriList!!.add(it)
-                    Log.e("getRoomImages",it.toString())
-
-
-                }.addOnFailureListener {
-                    Log.e("getRoomImages","onFailureListener")
-                }
-            }
     }
 }

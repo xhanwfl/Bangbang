@@ -3,6 +3,7 @@ package com.jambosoft.bangbang.Adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -70,13 +72,8 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
 
         //방사진
         val imageView = viewHolder.findViewById<ImageView>(R.id.item_mycontentroom_room_imageview)
-        val ref = storage.reference.child("roomImages/${itemList[position].timestamp}")
-        ref.child("0.jpg").downloadUrl.addOnSuccessListener {
-            Glide.with(holder.itemView.context).load(it).thumbnail(0.1f).apply(
-                RequestOptions().centerCrop()).into(imageView)
-        }.addOnFailureListener {
-
-        }
+        Glide.with(holder.itemView.context).load(itemList[position].images[0].toUri()).thumbnail(0.1f).apply(
+            RequestOptions().centerCrop()).into(imageView)
 
         //이미지클릭이벤트
         imageView.setOnClickListener {
@@ -101,6 +98,14 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
                             for(document in documents){
                                 val inquire = document.toObject(InquireDTO::class.java)
                                 db.collection("inquire").document(inquire.timestamp.toString()).delete()
+                            }
+                        }
+
+                        for(i in 0 until itemList[position].imageCount){ //storage에 있는 이미지 모두 삭제
+                            storage.reference.child("roomImages/${itemList[position].timestamp}/${i}.jpg").delete().addOnSuccessListener {
+                                Log.d("!MyRoomAdapter","storage 삭제 완료")
+                            }.addOnFailureListener {
+                                Log.d("!MyRoomAdapter","storage 삭제 실패 ${it}")
                             }
                         }
 

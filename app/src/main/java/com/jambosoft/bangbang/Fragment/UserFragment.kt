@@ -45,6 +45,14 @@ class UserFragment : Fragment() {
         //프로필설정
         setProfile()
 
+        //알람 설정
+        val alramImageView = rootView?.findViewById<ImageView>(R.id.frag_user_alram_imageview)
+        alramImageView?.setOnClickListener{
+            var intent = Intent(requireContext(), MyContentActivity::class.java)
+            intent.putExtra("kind", "rooms")
+            startActivity(intent)
+        }
+
         //프로필수정 버튼
         val profileModifyButton = rootView?.findViewById<Button>(R.id.user_profile_modify_btn)
         profileModifyButton?.setOnClickListener {
@@ -131,30 +139,11 @@ class UserFragment : Fragment() {
 
 
                     //프로필이미지 가져오기
-                    val storageRef =
-                        FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
-                    storageRef.downloadUrl.addOnSuccessListener {  //storage에 이미지를 저장해둔경우
-                        Glide.with(mContext).load(it).thumbnail(0.1f).apply(
-                            RequestOptions().centerCrop()
-                        ).into(profileImageView!!)
-                    }.addOnFailureListener { //storage에 없을경우 네이버프로필을 가져옴
-                        Glide.with(mContext).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f)
-                            .apply(
-                                RequestOptions().centerCrop()
-                            ).into(profileImageView!!)
-                    }
+                    Glide.with(mContext).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f).apply(
+                        RequestOptions().centerCrop()
+                    ).into(profileImageView!!)
 
-                    //알람 설정
-                    val alramImageView = rootView?.findViewById<ImageView>(R.id.frag_user_alram_imageview)
-                    if(userInfoDTO.alramCount>0){
-                        alramImageView?.setImageResource(R.drawable.ic_favorite) //아이콘 받아서 변경해야함
-                    }
 
-                    alramImageView?.setOnClickListener{
-                        var intent = Intent(requireContext(), MyContentActivity::class.java)
-                        intent.putExtra("kind", "rooms")
-                        startActivity(intent)
-                    }
 
                 }
             } else {
@@ -183,15 +172,16 @@ class UserFragment : Fragment() {
                 }
 
             if (!uri.equals("")) { //uri가 있을경우 이미지 업로드
-                val storageRef =
-                    FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
-                val uploadTask = storageRef.putFile(uri!!.toUri()).addOnSuccessListener {
-                    db.collection("userInfo").document(user.uid)
-                        .update("profileUrl", storageRef.downloadUrl.toString())
-                        .addOnSuccessListener {
-                            Log.e("!userFragment", "url업로드 성공~~")
-                            setProfile()
-                        }
+                val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")
+                storageRef.putFile(uri!!.toUri()).addOnSuccessListener {
+                    storageRef.downloadUrl.addOnSuccessListener {
+                        db.collection("userInfo").document(user.uid)
+                            .update("profileUrl",it.toString())
+                            .addOnSuccessListener {
+                                Log.e("!userFragment", "url업로드 성공~~")
+                                setProfile()
+                            }
+                    }
 
                 }
             }

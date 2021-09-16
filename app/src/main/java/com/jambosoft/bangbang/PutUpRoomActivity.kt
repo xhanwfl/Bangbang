@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -11,10 +12,12 @@ import android.widget.*
 import androidx.core.net.toUri
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.Adapter.SelectedImageAdapter
+import com.jambosoft.bangbang.Dialog.LoadingDialog
 import com.jambosoft.bangbang.model.*
 
 class PutUpRoomActivity : AppCompatActivity() {
@@ -64,8 +67,10 @@ class PutUpRoomActivity : AppCompatActivity() {
         //방 올리기 버튼
         var putUpRoomButton = findViewById<TextView>(R.id.putup_room_btn)
         putUpRoomButton.setOnClickListener {
+            LoadingDialog(this).show()
             putUpRoom()
         }
+
 
 
         //라디오 버튼
@@ -138,6 +143,7 @@ class PutUpRoomActivity : AppCompatActivity() {
                                         }.addOnFailureListener{
                                             Log.d("!PutUpRoomActivity","실패")
                                             Toast.makeText(this,"업로드 실패",Toast.LENGTH_SHORT).show()
+
                                         }
 
                                     Log.e("dto","${roomDTO!!.info.title} \n ${roomDTO!!.moreInfo.movein} \n ${roomkinds}")

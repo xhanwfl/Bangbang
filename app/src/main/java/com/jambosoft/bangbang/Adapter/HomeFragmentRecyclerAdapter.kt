@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -44,12 +45,8 @@ class HomeFragmentRecyclerAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerV
 
         //방사진
         val imageView = viewHolder.findViewById<ImageView>(R.id.item_homefrag_recycler_imageview)
-        val ref = storage.reference.child("roomImages/${itemList[position].timestamp.toString()}")
-        ref.child("0.jpg").downloadUrl.addOnSuccessListener {
-            Glide.with(holder.itemView.context).load(it).thumbnail(0.1f).apply(
-                RequestOptions().centerCrop()).into(imageView)
-        }.addOnFailureListener {
-        }
+        Glide.with(holder.itemView.context).load(itemList[position].images[0].toUri()).thumbnail(0.1f).apply(
+            RequestOptions().centerCrop()).into(imageView)
 
         //이미지 클릭 이벤트
         imageView.setOnClickListener {

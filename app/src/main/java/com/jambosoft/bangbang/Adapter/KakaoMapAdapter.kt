@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -60,13 +61,8 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
         infoTextView.text = "${roomkinds} | 관리비 ${itemList[position].adminFee}만"
         //방사진
         val imageView = viewHolder.findViewById<ImageView>(R.id.item_kakaomap_room_imageview)
-        val ref = storage.reference.child("roomImages/${itemList[position].timestamp.toString()}")
-        ref.child("0.jpg").downloadUrl.addOnSuccessListener {
-            Log.d("!KakaoMapAdapter",it.toString())
-            Glide.with(holder.itemView.context).load(it).thumbnail(0.1f).apply(
-                RequestOptions().centerCrop()).into(imageView)
-        }.addOnFailureListener {
-        }
+        Glide.with(holder.itemView.context).load(itemList[position].images[0].toUri()).thumbnail(0.1f).apply(
+            RequestOptions().centerCrop()).into(imageView)
 
         imageView.setOnClickListener {
             var intent = Intent(context,DetailRoomActivity::class.java)
