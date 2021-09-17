@@ -93,6 +93,7 @@ class DetailViewActivity : AppCompatActivity() {
                 .setPositiveButton("확인") { dialogInterface, i ->
                     db.collection("contents").document(dto.timestamp.toString()).delete().addOnSuccessListener {
                         Toast.makeText(this,"삭제완료",Toast.LENGTH_SHORT).show()
+
                         finish()
                     }.addOnFailureListener {
                         Toast.makeText(this,"삭제실패",Toast.LENGTH_SHORT).show()

@@ -71,13 +71,16 @@ class CommunityFragment : Fragment() {
 
         setContent()
 
-
-
-
+        //refresh버튼
+        val refreshButton = rootView.findViewById<Button>(R.id.frag_community_refresh_btn)
+        refreshButton.setOnClickListener {
+            setContent()
+        }
 
 
         return rootView
     }
+
 
     fun setContent(){
         db.collection("contents").orderBy("timestamp",Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
