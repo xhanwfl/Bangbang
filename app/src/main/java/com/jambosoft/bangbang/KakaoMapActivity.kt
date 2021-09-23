@@ -1,14 +1,22 @@
 package com.jambosoft.bangbang
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -37,6 +45,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var isMarkerClicked = false
     var isFirstClicked = false
     var adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+    val myLocMarkerTag = 1000
 
     init{
         roomDTOList = arrayListOf()
@@ -83,6 +92,25 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             //setCalloutBalloonAdapter(CustomBalloonAdapter())
         }
 
+        //내위치 버튼
+        var myLocMarker = MapPOIItem()
+        val myLocationButton = findViewById<Button>(R.id.kakaomap_mylocation_btn)
+        myLocationButton.setOnClickListener {
+            val loc = getCurrentLatLng()
+            if(loc!=null){
+                val myMapPoint = MapPoint.mapPointWithGeoCoord(loc.latitude,loc.longitude)
+                mapView?.setMapCenterPoint(myMapPoint,true)
+                myLocMarker.apply {
+                    mapPoint = myMapPoint
+                    itemName = "내 위치"
+                    tag = myLocMarkerTag //마커 구분하는 태그값
+                    markerType = MapPOIItem.MarkerType.BluePin
+                    selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                }
+                mapView?.addPOIItem(myLocMarker)
+            }
+        }
+
 
 
 
@@ -96,6 +124,22 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
     }
 
+    //현재위치 얻기
+    private fun getCurrentLatLng(): Location? {
+        var currentLatLng: Location? = null
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locatioNProvider = LocationManager.NETWORK_PROVIDER
+        val hasFineLocationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
+            currentLatLng = locationManager.getLastKnownLocation(locatioNProvider)
+            return currentLatLng!!
+        }
+
+        return currentLatLng
+    }
+
     fun setMarkers(){
         //마커 추가
         if(roomDTOList!!.size>0){
@@ -107,12 +151,14 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                     mapPoint = MapPoint.mapPointWithGeoCoord(roomDTOList!![i].address.latitude.toDouble()//마커 좌표
                         ,roomDTOList!![i].address.longitude.toDouble())
                     Log.e("lati",roomDTOList!![i].address.latitude+"\t"+roomDTOList!![i].address.longitude)
-                    markerType = MapPOIItem.MarkerType.BluePin
-                    //customImageResourceId = R.drawable.ic_marker
-                    selectedMarkerType = MapPOIItem.MarkerType.RedPin
-                    //customSelectedImageResourceId = R.drawable.ic_marker_clicked
-                    //isCustomImageAutoscale = false
-                    //setCustomImageAnchor(0.5f, 1.0f)
+                    /*markerType = MapPOIItem.MarkerType.BluePin
+                    selectedMarkerType = MapPOIItem.MarkerType.RedPin*/
+                    markerType = MapPOIItem.MarkerType.CustomImage
+                    customImageResourceId = R.drawable.ic_marker
+                    selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                    customSelectedImageResourceId = R.drawable.ic_marker_selected
+                    isCustomImageAutoscale = false
+                    setCustomImageAnchor(0.5f, 1.0f)
                 }
                 mapView?.addPOIItem(marker)
             }
@@ -205,35 +251,34 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     //마커 클릭이벤트 리스너
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
 
-        roomDTOList!![p1!!.tag]
+        if (p1 != null) {
+            if(p1.tag==myLocMarkerTag){ //내위치 마커일경우
 
+            }else{ //내위치 마커가 아닐경우
+                roomDTOList!![p1!!.tag]
 
-        if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
-            isMarkerClicked = true
-            Log.e("감지","마커클릭이벤트 ${isMarkerClicked}")
-            roomDTOs?.clear()
-            roomDTOs?.add(roomDTOList!![p1.tag])
+                if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
+                    isMarkerClicked = true
+                    Log.e("감지","마커클릭이벤트 ${isMarkerClicked}")
+                    roomDTOs?.clear()
+                    roomDTOs?.add(roomDTOList!![p1.tag])
 
-            mapView?.setMapCenterPoint(p1.mapPoint,true)
-            if(!isFirstClicked){ //초기화는 맨처음 한번만
-                adapter = KakaoMapAdapter(roomDTOs!!)
-                setRecyclerAdapter()
-                isFirstClicked = true
-            }else{
-                adapter?.notifyDataSetChanged()
+                    mapView?.setMapCenterPoint(p1.mapPoint,true)
+                    if(!isFirstClicked){ //초기화는 맨처음 한번만
+                        adapter = KakaoMapAdapter(roomDTOs!!)
+                        setRecyclerAdapter()
+                        isFirstClicked = true
+                    }else{
+                        adapter?.notifyDataSetChanged()
+                    }
+                    recyclerView?.visibility = View.VISIBLE
+
+                }else if(isMarkerClicked){ //마커를 다시 클릭시 recyclerview 끄기
+                    isMarkerClicked = false
+                    recyclerView?.visibility = View.GONE
+                }
             }
-
-
-
-
-            recyclerView?.visibility = View.VISIBLE
-
-        }else if(isMarkerClicked){ //마커를 다시 클릭시 recyclerview 끄기
-            isMarkerClicked = false
-            recyclerView?.visibility = View.GONE
-
         }
-
 
 
     }

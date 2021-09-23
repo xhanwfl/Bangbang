@@ -67,7 +67,6 @@ class PutUpRoomActivity : AppCompatActivity() {
         //방 올리기 버튼
         var putUpRoomButton = findViewById<TextView>(R.id.putup_room_btn)
         putUpRoomButton.setOnClickListener {
-            LoadingDialog(this).show()
             putUpRoom()
         }
 
@@ -111,12 +110,13 @@ class PutUpRoomActivity : AppCompatActivity() {
 
             if(depositText.equals("")||monthlyfeeText.equals("")||adminfeeText.equals("")){ //edittext를 입력안할경우
                 Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
+
             }else{ //모두 입력할경우
+                LoadingDialog(this).show() //로딩 보여주기
                 var user = FirebaseAuth.getInstance().currentUser
                 val currentTime = System.currentTimeMillis()
                 val imageCount = listUri!!.size
                 listUrl = arrayListOf()
-
 
                 //스토리지에 업로드
                 val storageRef = FirebaseStorage.getInstance().reference.child("roomImages/${currentTime}")

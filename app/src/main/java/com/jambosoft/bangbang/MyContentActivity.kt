@@ -2,10 +2,13 @@ package com.jambosoft.bangbang
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -40,6 +43,14 @@ class MyContentActivity : AppCompatActivity() {
         val kind = intent.getStringExtra("kind").toString()
         if(kind.equals("rooms")){
             kindTextView.text = "내가 올린 방"
+            val putupRoomLayout = findViewById<ConstraintLayout>(R.id.mycontent_putup_room_layout)
+            putupRoomLayout.visibility = View.VISIBLE
+
+            val putupRoomImageView = findViewById<ImageView>(R.id.mycontent_putup_room_imageview)
+            putupRoomImageView.setOnClickListener {
+                finish()
+            }
+
             setRooms()
         }else if(kind.equals("contents")){
             kindTextView.text = "내 게시물"

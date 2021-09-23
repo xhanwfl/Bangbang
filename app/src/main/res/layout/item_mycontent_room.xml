@@ -3,21 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="122dp"
+    android:layout_height="127dp"
     android:orientation="vertical"
     android:background="#FFFFFF">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp">
-        <ImageView
-            android:id="@+id/item_mycontentroom_room_imageview"
-            android:layout_width="120dp"
+        <androidx.cardview.widget.CardView
+            android:layout_marginLeft="15dp"
+            android:id="@+id/item_mycontentroom_room_cardview"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/balloon_shape"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="20dp">
+            <ImageView
+                android:id="@+id/item_mycontentroom_room_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/item_mycontentroom_price_textview"
@@ -29,7 +37,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_imageview"
+            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.177" />
 
@@ -41,7 +49,7 @@
             android:layout_marginTop="8dp"
             android:text="여러가지여러가지여러가지"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_imageview"
+            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_price_textview"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -50,10 +58,10 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:background="@drawable/button_shape_write"
+            android:background="@drawable/button_shape_gray"
             android:text="댓글"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_imageview"
+            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_roominfo_textview"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -62,7 +70,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:background="@drawable/button_shape_write"
+            android:background="@drawable/button_shape_gray"
             android:text="문의"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_comment_btn"
@@ -73,7 +81,7 @@
             android:id="@+id/item_mycontentroom_delete_btn"
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:background="@drawable/button_shape_write"
+            android:background="@drawable/button_shape_gray"
             android:text="삭제"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_inquire_btn"
@@ -84,6 +92,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#B7B7B7"/>

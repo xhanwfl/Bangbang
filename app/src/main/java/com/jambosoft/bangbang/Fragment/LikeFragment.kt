@@ -53,8 +53,12 @@ class LikeFragment : Fragment() {
 
 
         //최근 본 방
+        val favoriteButton = view.findViewById<TextView>(R.id.frag_like_favoriterooms_textview)
         val recentButton = view.findViewById<TextView>(R.id.frag_like_recentrooms_textview)
         recentButton.setOnClickListener {
+            refresh()
+            recentButton.setBackgroundColor(requireContext().resources.getColor(R.color.gray))
+            favoriteButton.setBackgroundColor(requireContext().resources.getColor(R.color.white))
             recyclerView?.visibility = View.GONE
             recyclerView2?.visibility = View.VISIBLE
             recyclerView2?.adapter!!.notifyDataSetChanged()
@@ -62,8 +66,10 @@ class LikeFragment : Fragment() {
 
 
         //찜한 방
-        val favoriteButton = view.findViewById<TextView>(R.id.frag_like_favoriterooms_textview)
         favoriteButton.setOnClickListener {
+            refresh()
+            recentButton.setBackgroundColor(requireContext().resources.getColor(R.color.white))
+            favoriteButton.setBackgroundColor(requireContext().resources.getColor(R.color.gray))
             recyclerView2?.visibility = View.GONE
             recyclerView?.visibility = View.VISIBLE
             recyclerView?.adapter!!.notifyDataSetChanged()

@@ -114,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }else{
-                   Toast.makeText(this,"권한을 허용으로 설정해주세요",Toast.LENGTH_SHORT).show()
+                   Toast.makeText(this,"위치 권한을 허용으로 설정해주세요",Toast.LENGTH_SHORT).show()
                 }
                 return
             }

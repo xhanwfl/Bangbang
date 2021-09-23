@@ -41,21 +41,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="3dp"
             android:text="다음주 토요일까지 입주 가능할까요 ?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/inquirelist_profile_cardview"
             app:layout_constraintTop_toBottomOf="@+id/inquirelist_userid_textview" />
 
         <Button
             android:id="@+id/inquirelist_confighp_btn"
             android:layout_width="220dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_shape_gray"
             android:text="userId님 연락처 확인"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/inquirelist_profile_cardview"
             app:layout_constraintTop_toBottomOf="@+id/inquirelist_message_textview" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View

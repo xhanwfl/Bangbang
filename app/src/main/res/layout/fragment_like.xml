@@ -14,20 +14,21 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#EBEBEB">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="관심목록"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/frag_like_refresh_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/ic_refresh" />
         </RelativeLayout>
@@ -35,7 +36,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#FFFFFF">
             <TextView
                 android:id="@+id/frag_like_favoriterooms_textview"
                 android:layout_width="wrap_content"

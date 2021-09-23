@@ -30,6 +30,7 @@ class UserFragment : Fragment() {
     lateinit var db: FirebaseFirestore
     lateinit var userInfoDTO: UserInfoDTO
     lateinit var nameTextView: TextView
+    lateinit var alramImageView : ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +47,9 @@ class UserFragment : Fragment() {
         setProfile()
 
         //알람 설정
-        val alramImageView = rootView?.findViewById<ImageView>(R.id.frag_user_alram_imageview)
-        alramImageView?.setOnClickListener{
-            var intent = Intent(requireContext(), MyContentActivity::class.java)
+        alramImageView = rootView!!.findViewById(R.id.frag_user_alram_imageview)
+        alramImageView.setOnClickListener{
+            val intent = Intent(requireContext(), MyContentActivity::class.java)
             intent.putExtra("kind", "rooms")
             startActivity(intent)
         }
@@ -136,6 +137,10 @@ class UserFragment : Fragment() {
                     nameTextView?.text = userInfoDTO.name
                     emailTextView?.text = userInfoDTO.email
                     Log.e("url profileUrl", userInfoDTO.profileUrl)
+
+                    if(userInfoDTO.alramCount>0){//알람이 있을경우 알람 아이콘 변경
+                        alramImageView.setImageResource(R.drawable.ic_favorite)
+                    }
 
 
                     //프로필이미지 가져오기

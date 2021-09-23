@@ -119,7 +119,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:background="#B7B7B7"
+        android:layout_marginHorizontal="15dp"/>
     <TextView
         android:id="@+id/frag_user_myroom_textview"
         android:layout_width="wrap_content"
@@ -132,7 +133,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:background="#B7B7B7"
+        android:layout_marginHorizontal="15dp"/>
     <TextView
         android:id="@+id/frag_user_mycontent_textview"
         android:layout_width="wrap_content"
@@ -145,7 +147,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:background="#B7B7B7"
+        android:layout_marginHorizontal="15dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="70dp"
@@ -157,7 +160,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:background="#B7B7B7"
+        android:layout_marginHorizontal="15dp"/>
     <TextView
         android:id="@+id/user_logout_textview"
         android:layout_width="wrap_content"
@@ -170,7 +174,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:background="#B7B7B7"
+        android:layout_marginHorizontal="15dp"/>
 
 
 </LinearLayout>

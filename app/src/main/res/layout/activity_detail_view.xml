@@ -69,10 +69,12 @@
                         android:text="timestamp"/>
                 </LinearLayout>
                 <TextView
+                    android:layout_marginTop="30dp"
                     android:id="@+id/detailview_content_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="내용 \n 아주 많아요"/>
+                    android:text="내용 \n 아주 많아요"
+                    android:minHeight="150dp"/>
             </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -136,18 +138,21 @@
 
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
-                <TextView
+                android:layout_height="180dp">
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="배너자리"
-                    android:gravity="center"
-                    android:background="#50a4"/>
+                    android:src="@drawable/banner_bangbang"/>
             </LinearLayout>
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#080808"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
                 android:id="@+id/detailview_comment_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

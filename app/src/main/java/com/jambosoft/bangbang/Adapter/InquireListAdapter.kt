@@ -48,11 +48,11 @@ class InquireListAdapter(val itemList : ArrayList<InquireDTO>) : RecyclerView.Ad
 
         //유저 아이디
         val userIdTextView = viewHolder.findViewById<TextView>(R.id.inquirelist_userid_textview)
-        userIdTextView.text = itemList[position].userId
+        userIdTextView.text = "${itemList[position].userId} :"
 
         //메세지
         val messageTextView = viewHolder.findViewById<TextView>(R.id.inquirelist_message_textview)
-        messageTextView.text = itemList[position].message
+        messageTextView.text = " ${itemList[position].message}"
 
         //번호 확인 버튼
         val configHpButton = viewHolder.findViewById<Button>(R.id.inquirelist_confighp_btn)
