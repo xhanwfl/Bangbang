@@ -54,6 +54,7 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
+
         //프로필수정 버튼
         val profileModifyButton = rootView?.findViewById<Button>(R.id.user_profile_modify_btn)
         profileModifyButton?.setOnClickListener {
@@ -61,7 +62,7 @@ class UserFragment : Fragment() {
         }
 
         //로그아웃 버튼
-        val logoutButton = rootView?.findViewById<TextView>(R.id.user_logout_textview)
+        val logoutButton = rootView?.findViewById<TextView>(R.id.frag_user_logout_textview)
         logoutButton?.setOnClickListener {
             var mOAuthInstance = OAuthLogin.getInstance()
             mOAuthInstance.logout(requireContext())
@@ -111,6 +112,11 @@ class UserFragment : Fragment() {
             intent.putExtra("kind", "rooms")
             startActivity(intent)
         }
+        //설정 버튼
+        val settingButton = rootView?.findViewById<TextView>(R.id.frag_user_setting_textview)
+        settingButton?.setOnClickListener {
+            Toast.makeText(requireContext(),"준비중입니다.",Toast.LENGTH_SHORT).show()
+        }
 
 
         // Inflate the layout for this fragment
@@ -144,9 +150,11 @@ class UserFragment : Fragment() {
 
 
                     //프로필이미지 가져오기
-                    Glide.with(mContext).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f).apply(
-                        RequestOptions().centerCrop()
-                    ).into(profileImageView!!)
+                    if(!userInfoDTO.profileUrl.equals("")){
+                        Glide.with(mContext).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f).apply(
+                            RequestOptions().centerCrop()
+                        ).into(profileImageView!!)
+                    }
 
 
 
