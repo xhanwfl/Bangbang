@@ -2,6 +2,7 @@ package com.jambosoft.bangbang
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,19 +13,32 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.jambosoft.bangbang.Network.RequestApiTask
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton
+import org.json.JSONObject
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     lateinit var mOAuthLoginInstance: OAuthLogin
     lateinit var mContext: Context
+    lateinit var callbackManager : CallbackManager
+    lateinit var auth : FirebaseAuth
+    val TAG = "!LoginActivity"
     val PERMISSIONS_REQUEST_CODE = 100
     var REQUIRED_PERMISSIONS = arrayOf<String>( Manifest.permission.ACCESS_FINE_LOCATION)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        auth = FirebaseAuth.getInstance()
 
         //  네이버 아이디로 로그인
         val naver_client_id = getString(R.string.naver_client_id)
@@ -32,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
         val naver_client_name = getString(R.string.naver_client_name)
         mContext = this
         mOAuthLoginInstance = OAuthLogin.getInstance()
+
 
         //로그아웃
         /*
@@ -46,10 +61,54 @@ class LoginActivity : AppCompatActivity() {
         val buttonOAuthLoginImg = findViewById<OAuthLoginButton>(R.id.buttonOAuthLoginImg)
         buttonOAuthLoginImg.setOAuthLoginHandler(mOAuthLoginHandler)
 
-
-
+        //페이스북으로 로그인
+        callbackManager = CallbackManager.Factory.create()
+        val facebookLoginButton = findViewById<Button>(R.id.facebook_login_btn)
+        facebookLoginButton.setOnClickListener {
+            facebookLogin()
+        }
 
     }
+
+    fun facebookLogin(){
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this,Arrays.asList("public_profile","email"))
+
+        LoginManager.getInstance()
+            .registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
+                override fun onSuccess(result: LoginResult?) {
+                    handleFacebookAccessToken(result?.accessToken)
+                }
+
+                override fun onCancel() {
+
+                }
+
+                override fun onError(error: FacebookException?) {
+
+                }
+
+            })
+    }
+    fun handleFacebookAccessToken(token : AccessToken?){
+        val credential = FacebookAuthProvider.getCredential(token?.token!!)
+        auth.signInWithCredential(credential).addOnSuccessListener {
+            Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show()
+            Log.d(TAG,"email : ${it.user?.email} \t uid : ${it.user?.uid}")
+
+            //updateUI
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager?.onActivityResult(requestCode,resultCode,data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+
+
 
 
     //네이버로그인 핸들러

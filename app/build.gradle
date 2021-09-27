@@ -105,5 +105,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    //Facebook아이디로 로그인
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 
 }

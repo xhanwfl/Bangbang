@@ -189,13 +189,12 @@ class UserFragment : Fragment() {
                 storageRef.putFile(uri!!.toUri()).addOnSuccessListener {
                     storageRef.downloadUrl.addOnSuccessListener {
                         db.collection("userInfo").document(user.uid)
-                            .update("profileUrl",it.toString())
+                            .update("profileUrl", it.toString())
                             .addOnSuccessListener {
                                 Log.e("!userFragment", "url업로드 성공~~")
                                 setProfile()
                             }
                     }
-
                 }
             }
         }
