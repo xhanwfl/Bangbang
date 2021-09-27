@@ -19,7 +19,10 @@ import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.jambosoft.bangbang.Network.RequestApiTask
+import com.jambosoft.bangbang.model.UserInfoDTO
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton
@@ -31,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mContext: Context
     lateinit var callbackManager : CallbackManager
     lateinit var auth : FirebaseAuth
+    lateinit var db : FirebaseFirestore
     val TAG = "!LoginActivity"
     val PERMISSIONS_REQUEST_CODE = 100
     var REQUIRED_PERMISSIONS = arrayOf<String>( Manifest.permission.ACCESS_FINE_LOCATION)
@@ -39,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         //  네이버 아이디로 로그인
         val naver_client_id = getString(R.string.naver_client_id)
@@ -85,20 +90,36 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException?) {
-
+                    Toast.makeText(applicationContext,"네트워크에 접속할 수 없습니다.",Toast.LENGTH_SHORT).show()
                 }
-
             })
     }
+
     fun handleFacebookAccessToken(token : AccessToken?){
         val credential = FacebookAuthProvider.getCredential(token?.token!!)
-        auth.signInWithCredential(credential).addOnSuccessListener {
+        auth.signInWithCredential(credential).addOnSuccessListener { result ->
             Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show()
-            Log.d(TAG,"email : ${it.user?.email} \t uid : ${it.user?.uid}")
 
-            //updateUI
+            db.collection("userInfo").document(result.user!!.uid).get().addOnSuccessListener { document ->
+                if(!document.exists()){ //문서가 존재하지 않을 경우
+
+                    val userInfoDTO = UserInfoDTO()
+                    userInfoDTO.email = result.user!!.email.toString()
+                    userInfoDTO.token = token.token
+                    userInfoDTO.tokenType = "f"
+
+                    db.collection("userInfo").document(result.user!!.uid).set(userInfoDTO).addOnSuccessListener {
+                        Toast.makeText(this,"유저등록 성공",Toast.LENGTH_SHORT).show()
+                        requestPermission() //permission check 후 MainActivity 실행
+                    }.addOnFailureListener {
+                        Toast.makeText(this,"유저등록 실패",Toast.LENGTH_SHORT).show()
+                    }
+                }else{// 문서가 존재할 경우
+                    requestPermission()
+                }
+            }
+
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -124,7 +145,6 @@ class LoginActivity : AppCompatActivity() {
                 val accessToken = mOAuthLoginInstance.getAccessToken(baseContext)
                 Log.d("Token",accessToken)
 
-
                 //api통신 , 여기서 firebase아이디를 생성하거나 로그인함
                 var requestApiTask = RequestApiTask(mContext,mOAuthLoginInstance).execute()
 
@@ -143,6 +163,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    //권한 요청 후 mainActivity 실행
     private fun requestPermission(){
         var permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if(permissionCheck != PackageManager.PERMISSION_GRANTED){

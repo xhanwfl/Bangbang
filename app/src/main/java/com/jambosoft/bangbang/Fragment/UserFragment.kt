@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.*
 import com.jambosoft.bangbang.model.UserInfoDTO
@@ -64,14 +65,32 @@ class UserFragment : Fragment() {
         //로그아웃 버튼
         val logoutButton = rootView?.findViewById<TextView>(R.id.frag_user_logout_textview)
         logoutButton?.setOnClickListener {
-            var mOAuthInstance = OAuthLogin.getInstance()
-            mOAuthInstance.logout(requireContext())
+            when(userInfoDTO.tokenType){
+                "n" ->{
+                    var mOAuthInstance = OAuthLogin.getInstance()
+                    mOAuthInstance.logout(requireContext())
 
-            mOAuthInstance.logoutAndDeleteToken(requireContext())
+                    mOAuthInstance.logoutAndDeleteToken(requireContext())
 
-            Log.e("logout", "클릭함")
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+                    Log.e("logout", "클릭함")
+                    startActivity(Intent(requireContext(), LoginActivity::class.java))
+                }
+                "f" -> {
+                    FirebaseAuth.getInstance().signOut()
+                }
+            }
+            /*if (userInfoDTO.tokenType.equals("n")){
+                var mOAuthInstance = OAuthLogin.getInstance()
+                mOAuthInstance.logout(requireContext())
+
+                mOAuthInstance.logoutAndDeleteToken(requireContext())
+
+                Log.e("logout", "클릭함")
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            }else if(userInfoDTO.tokenType.equals("f")){
+
+            }*/
         }
 
         //문의한방 버튼
@@ -87,7 +106,6 @@ class UserFragment : Fragment() {
             if (!userInfoDTO.hpAuth) { //전화번호 인증이 안되었을경우
                 var intent = Intent(requireContext(), HpAuthActivity::class.java)
                 startActivityForResult(intent, 300)
-
             } else { //인증 완료
                 if(userInfoDTO.name.equals("이름을 변경해주세요")) { //아직 이름을 변경하지 않음
                     Toast.makeText(requireContext(),"이름을 먼저 변경해주세요.",Toast.LENGTH_SHORT).show()
@@ -192,6 +210,7 @@ class UserFragment : Fragment() {
                             .update("profileUrl", it.toString())
                             .addOnSuccessListener {
                                 Log.e("!userFragment", "url업로드 성공~~")
+                                Toast.makeText(requireContext(),"프로필사진 변경 완료",Toast.LENGTH_SHORT).show()
                                 setProfile()
                             }
                     }

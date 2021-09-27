@@ -99,8 +99,10 @@ class LikeFragment : Fragment() {
             favoriteItems!!.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
-                if(dto.favorites[user!!.uid]!!){
-                    favoriteItems!!.add(dto)
+                if(dto.favorites[user!!.uid]!=null){
+                    if(dto.favorites[user!!.uid]!!){
+                        favoriteItems!!.add(dto)
+                    }
                 }
             }
 

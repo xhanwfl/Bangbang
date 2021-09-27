@@ -118,19 +118,34 @@ class HpAuthActivity : AppCompatActivity() {
                     val db = FirebaseFirestore.getInstance()
 
                     db.collection("userInfo").document(uid).get().addOnSuccessListener { document ->
-                        if (document != null) {
-                            Log.e("프로필", "가져오기 성공")
-                            var userInfoDTO = document.toObject<UserInfoDTO>()!!
-                            auth.signInWithEmailAndPassword(userInfoDTO!!.email,userInfoDTO.token).addOnSuccessListener {
-                                userInfoDTO.hpAuth = true
-                                userInfoDTO.hp = hp
-                                db.collection("userInfo").document(uid).set(userInfoDTO)
-                                Log.d("!HpAuthActivity","재로그인 성공 | hpAuth = ${userInfoDTO.hpAuth} ")
+                        if (document.exists()) {
+                            val userInfoDTO = document.toObject<UserInfoDTO>()!!
 
-                                val intent = Intent(this@HpAuthActivity,MainActivity::class.java)
-                                setResult(RESULT_OK,intent)
-                                finish()
+                            if(userInfoDTO.tokenType.equals("f")){ //facebook로그인일 경우
+                                val credential = FacebookAuthProvider.getCredential(userInfoDTO.token)
+                                auth.signInWithCredential(credential).addOnSuccessListener{
+                                    userInfoDTO.hpAuth = true
+                                    userInfoDTO.hp = hp
+                                    db.collection("userInfo").document(uid).set(userInfoDTO)
+                                    Log.d("!HpAuthActivity","재로그인 성공 | hpAuth = ${userInfoDTO.hpAuth} ")
+
+                                    val intent = Intent(this@HpAuthActivity,MainActivity::class.java)
+                                    setResult(RESULT_OK,intent)
+                                    finish()
+                                }
+                            }else{ //naver로그인일 경우
+                                auth.signInWithEmailAndPassword(userInfoDTO!!.email,userInfoDTO.token).addOnSuccessListener {
+                                    userInfoDTO.hpAuth = true
+                                    userInfoDTO.hp = hp
+                                    db.collection("userInfo").document(uid).set(userInfoDTO)
+                                    Log.d("!HpAuthActivity","재로그인 성공 | hpAuth = ${userInfoDTO.hpAuth} ")
+
+                                    val intent = Intent(this@HpAuthActivity,MainActivity::class.java)
+                                    setResult(RESULT_OK,intent)
+                                    finish()
+                                }
                             }
+
                         } else {
                             Log.d("!HpAuthActivity", "userInfoDTO : null")
                         }
