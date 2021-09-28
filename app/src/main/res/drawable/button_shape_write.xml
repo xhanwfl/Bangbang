@@ -6,11 +6,11 @@
            android:color = "#FFFFFF"
            />
        <stroke
-           android:width = "3dp"
-           android:color = "#55F1F3"
+           android:width = "2dp"
+           android:color = "#AA55F1F3"
            />
        <size
-           android:width="270dp"
+           android:width="240dp"
            android:height="60dp"
            />
        <padding

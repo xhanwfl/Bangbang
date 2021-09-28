@@ -12,7 +12,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="28dp"
         android:text="title"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +43,8 @@
 
     <View
         android:layout_width="404dp"
-        android:layout_height="3dp"
-        android:background="#B7B7B7"
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

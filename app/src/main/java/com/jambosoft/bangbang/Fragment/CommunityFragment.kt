@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,30 +53,28 @@ class CommunityFragment : Fragment() {
             startActivity(intent)
         }
 
-        //인기글 버튼
-        val radioGroup = rootView.findViewById<RadioGroup>(R.id.content_radiogroup)
-        radioGroup.setOnCheckedChangeListener{ radioGroup, i ->
-            when(i){
-                R.id.frag_community_recent_btn ->{
-                    favoriteView.visibility = View.GONE
-                    recentView.visibility = View.VISIBLE
-                }
-                R.id.frag_community_favorite_btn ->{
-                    recentView.visibility = View.GONE
-                    favoriteView.visibility = View.VISIBLE
-                }
-            }
+        //최신글, 인기글
+        val recentTextView = rootView.findViewById<TextView>(R.id.frag_community_recent_textview)
+        val favoriteTextView = rootView.findViewById<TextView>(R.id.frag_community_favorite_textview)
+        recentTextView.setOnClickListener {
+            setContent()
+            favoriteTextView.setBackgroundColor(requireContext().resources.getColor(R.color.white))
+            recentTextView.setBackgroundColor(requireContext().resources.getColor(R.color.gray))
+            favoriteView.visibility = View.GONE
+            recentView.visibility = View.VISIBLE
+        }
+
+        favoriteTextView.setOnClickListener {
+            setContent()
+            favoriteTextView.setBackgroundColor(requireContext().resources.getColor(R.color.gray))
+            recentTextView.setBackgroundColor(requireContext().resources.getColor(R.color.white))
+            recentView.visibility = View.GONE
+            favoriteView.visibility = View.VISIBLE
         }
 
 
 
         setContent()
-
-        //refresh버튼
-        val refreshButton = rootView.findViewById<Button>(R.id.frag_community_refresh_btn)
-        refreshButton.setOnClickListener {
-            setContent()
-        }
 
 
         return rootView

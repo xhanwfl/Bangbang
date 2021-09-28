@@ -2,10 +2,10 @@
     <string name="app_name">BangBang</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-   <!-- <string name="naver_client_id">tqzR2HCZeAx62cSp1rT7</string>
-    <string name="naver_client_secret">IW_kDNnaN4</string>-->
-    <string name="naver_client_id">faykUMBds2sOHrqxMgpY</string>
-    <string name="naver_client_secret">MzkOCj6BEZ</string>
+    <string name="naver_client_id">tqzR2HCZeAx62cSp1rT7</string>
+    <string name="naver_client_secret">IW_kDNnaN4</string>
+    <!--<string name="naver_client_id">faykUMBds2sOHrqxMgpY</string>
+    <string name="naver_client_secret">MzkOCj6BEZ</string>   회사 네이버 아이디 -->
     <string name="naver_client_name">방방</string>
     <string name="facebook_app_id">3020286638220990</string>
     <string name="fb_login_protocol_scheme">fb3020286638220990</string>

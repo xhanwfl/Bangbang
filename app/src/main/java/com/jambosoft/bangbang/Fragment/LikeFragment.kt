@@ -46,10 +46,10 @@ class LikeFragment : Fragment() {
 
 
         //새로고침버튼
-        val refreshButton = view.findViewById<Button>(R.id.frag_like_refresh_btn)
+        /*val refreshButton = view.findViewById<Button>(R.id.frag_like_refresh_btn)
         refreshButton.setOnClickListener {
             refresh()
-        }
+        }*/
 
 
         //최근 본 방

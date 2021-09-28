@@ -7,8 +7,8 @@
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_height="130dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_height="125dp"
         app:cardCornerRadius="15dp">
         <ImageView
             android:id="@+id/item_homefrag_recycler_imageview"
@@ -20,16 +20,18 @@
         android:id="@+id/item_homfrag_price_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:text="월세 100/20"
-        android:layout_marginLeft="10dp"
-        android:textSize="20sp"/>
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#000000"
+        android:textSize="16sp"/>
     <TextView
         android:id="@+id/item_homefrag_address_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="서초구 반포동"
-        android:layout_marginLeft="10dp"/>
+        android:textSize="12sp"
+        android:layout_marginLeft="16dp"/>
 
 
 

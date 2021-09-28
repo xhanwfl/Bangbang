@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SearchActivity : AppCompatActivity() {
     companion object {
         const val BASE_URL = "https://dapi.kakao.com/"
-        const val API_KEY = "KakaoAK 328c0bfec6e4895e208a859dc7c9d91e"  // REST API 키
+        const val API_KEY = "KakaoAK 9caad1fd8e5a7e2b755af618aca29901"  // REST API 키
     }
 
     private val listItems = arrayListOf<SearchContentDTO>()   // 리사이클러 뷰 아이템
@@ -92,6 +92,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             listAdapter.notifyDataSetChanged()
+
 
         }
     }

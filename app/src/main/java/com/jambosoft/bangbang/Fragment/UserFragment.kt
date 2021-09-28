@@ -13,6 +13,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,6 +33,7 @@ class UserFragment : Fragment() {
     lateinit var userInfoDTO: UserInfoDTO
     lateinit var nameTextView: TextView
     lateinit var alramImageView : ImageView
+    val TAG = "!UserFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,16 +69,20 @@ class UserFragment : Fragment() {
         logoutButton?.setOnClickListener {
             when(userInfoDTO.tokenType){
                 "n" ->{
-                    var mOAuthInstance = OAuthLogin.getInstance()
+                    val mOAuthInstance = OAuthLogin.getInstance()
                     mOAuthInstance.logout(requireContext())
 
                     mOAuthInstance.logoutAndDeleteToken(requireContext())
 
-                    Log.e("logout", "클릭함")
+                    Log.e(TAG, "네이버 로그아웃")
                     startActivity(Intent(requireContext(), LoginActivity::class.java))
+                    activity?.finish()
                 }
                 "f" -> {
-                    FirebaseAuth.getInstance().signOut()
+                    LoginManager.getInstance().logOut()
+                    Log.d(TAG,"페이스북로그아웃")
+                    startActivity(Intent(requireContext(), LoginActivity::class.java))
+                    activity?.finish()
                 }
             }
             /*if (userInfoDTO.tokenType.equals("n")){

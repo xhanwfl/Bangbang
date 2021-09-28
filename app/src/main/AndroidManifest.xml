@@ -77,7 +77,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="1a145164da633c2ee6b0ea21d2802049" />
+            android:value="dbc54b829f606248f354610294d03755" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -68,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
 
         //페이스북으로 로그인
         callbackManager = CallbackManager.Factory.create()
-        val facebookLoginButton = findViewById<Button>(R.id.facebook_login_btn)
+        val facebookLoginButton = findViewById<TextView>(R.id.facebook_login_textview)
         facebookLoginButton.setOnClickListener {
             facebookLogin()
         }
@@ -118,7 +119,6 @@ class LoginActivity : AppCompatActivity() {
                     requestPermission()
                 }
             }
-
         }
     }
 

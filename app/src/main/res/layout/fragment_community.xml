@@ -20,69 +20,49 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="게시판"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/frag_community_refresh_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/ic_refresh" />
+                android:textSize="24sp"/>
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
-            <RadioGroup
-                android:id="@+id/content_radiogroup"
-                android:layout_width="wrap_content"
+           <TextView
+               android:id="@+id/frag_community_recent_textview"
+               android:layout_width="80dp"
+               android:layout_height="match_parent"
+               android:gravity="center"
+               android:text="최신글"
+               android:textSize="16sp"
+               android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/frag_community_favorite_textview"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp">
-                <RadioButton
-                    android:id="@+id/frag_community_recent_btn"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/selector_radio_button_none"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="최신글"
-                    android:textStyle="bold"
-                    android:textColor="@drawable/selector_radio_text" />
-                <RadioButton
-                    android:id="@+id/frag_community_favorite_btn"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/selector_radio_button_none"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="인기글"
-                    android:textStyle="bold"
-                    android:textColor="@drawable/selector_radio_text" />
-            </RadioGroup>
+                android:layout_marginLeft="80dp"
+                android:gravity="center"
+                android:text="인기글"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/frag_community_write_btn"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_width="70dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="7dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/button_shape_write"
                 android:text="글쓰기"
-                android:textColor="#28C3C5"
+                android:textColor="#8828C3C5"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
         <View
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#B7B7B7"/>
+            android:layout_height="1dp"
+            android:background="#EFEFEF"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

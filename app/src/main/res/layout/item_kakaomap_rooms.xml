@@ -9,7 +9,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp">
+    android:paddingTop="5dp"
+    android:background="#FFFFFF">
     <androidx.cardview.widget.CardView
         android:id="@+id/item_kakaomap_room_cardview"
         android:layout_width="120dp"
@@ -57,6 +58,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:text="!!!여러가지여러가지여러가지!!!"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_kakaomap_room_cardview"
         app:layout_constraintTop_toBottomOf="@+id/item_kakaomap_roominfo_textview"
@@ -67,8 +69,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
         android:layout_marginTop="5dp"/>
 
 </LinearLayout>

@@ -11,41 +11,45 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--상단 바-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#79CCC8"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/ic_logo"/>
-            <LinearLayout
-                android:layout_width="210dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="#EFEFEF">
+                <!--상단 바-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#79CCC8"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/ic_logo"/>
+                    <LinearLayout
+                        android:layout_width="210dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="#FFFFFF">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="22dp"
                         android:src="@drawable/ic_search2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.867"
@@ -60,10 +64,9 @@
                         android:text="동네 검색하기"
                         android:textColor="#858888"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="33dp"
                         android:layout_marginBottom="5dp"/>
 
                     <Button
@@ -88,12 +91,11 @@
 
                     <ImageView
                         android:id="@+id/frag_home_sharehouse_imageview"
-                        android:layout_width="110dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="44dp"
+                        android:layout_width="130dp"
+                        android:layout_height="110dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="32dp"
                         android:src="@drawable/ic_sharehouse"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.169"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,24 +103,23 @@
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
                         android:text="쉐어하우스"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.185"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/frag_home_sharehouse_imageview" />
 
                     <ImageView
                         android:id="@+id/frag_home_oneroom_imageview"
-                        android:layout_width="110dp"
-                        android:layout_height="100dp"
+                        android:layout_width="130dp"
+                        android:layout_height="110dp"
                         android:layout_marginStart="68dp"
-                        android:layout_marginTop="44dp"
+                        android:layout_marginTop="32dp"
                         android:src="@drawable/ic_oneroom"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.125"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/frag_home_sharehouse_imageview"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -131,7 +132,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.563"
+                        app:layout_constraintHorizontal_bias="0.624"
                         app:layout_constraintStart_toEndOf="@+id/textView"
                         app:layout_constraintTop_toBottomOf="@+id/frag_home_oneroom_imageview" />
 
@@ -143,10 +144,11 @@
                     android:layout_height="wrap_content"
                     android:text="이 구역 인기 매물 :)"
                     android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:textColor="#7e7e7e"
+                    android:textSize="18sp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginBottom="15dp"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/frag_home_recommend_recyclerview"
                     android:layout_width="match_parent"
@@ -154,7 +156,8 @@
                     android:scrollbars="none"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="180dp">
+                    android:layout_height="180dp"
+                    android:background="#000000">
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -166,10 +169,11 @@
                     android:layout_height="wrap_content"
                     android:text="최근 본 공간"
                     android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:textColor="#7e7e7e"
+                    android:textSize="18sp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginBottom="15dp"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/frag_home_recent_recyclerview"
                     android:layout_width="match_parent"

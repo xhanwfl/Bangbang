@@ -7,29 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:background="#79CCC8">
 
         <Button
             android:id="@+id/user_profile_modify_btn"
             android:layout_width="25dp"
             android:layout_height="20dp"
+            android:layout_marginTop="46dp"
             android:background="@drawable/ic_move"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_name"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.387" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/frag_user_alram_imageview"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.956"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_alram" />
@@ -39,11 +37,11 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             app:cardCornerRadius="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.082"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp">
 
             <ImageView
                 android:id="@+id/frag_user_profile_imageview"
@@ -57,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:text="userName"
+            android:textColor="#AA000000"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -88,8 +87,8 @@
             android:id="@+id/frag_user_myinquire_btn"
             android:layout_width="25dp"
             android:layout_height="20dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/ic_move"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,6 +99,7 @@
             android:text="문의한 방"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="#AA000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.882"
@@ -114,13 +114,12 @@
         android:text="방 내놓기"
         android:gravity="center"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
+        android:layout_marginHorizontal="5dp"/>
     <TextView
         android:id="@+id/frag_user_myroom_textview"
         android:layout_width="wrap_content"
@@ -128,13 +127,12 @@
         android:text="내놓은 방"
         android:gravity="center"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
+        android:layout_marginHorizontal="5dp"/>
     <TextView
         android:id="@+id/frag_user_mycontent_textview"
         android:layout_width="wrap_content"
@@ -142,13 +140,12 @@
         android:text="내가 쓴 글"
         android:gravity="center"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
+        android:layout_marginHorizontal="5dp"/>
     <TextView
         android:id="@+id/frag_user_setting_textview"
         android:layout_width="wrap_content"
@@ -156,13 +153,12 @@
         android:text="설정"
         android:gravity="center"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
+        android:layout_marginHorizontal="5dp"/>
     <TextView
         android:id="@+id/frag_user_logout_textview"
         android:layout_width="wrap_content"
@@ -170,13 +166,12 @@
         android:text="로그아웃"
         android:gravity="center"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
+        android:layout_marginHorizontal="5dp"/>
 
 
 </LinearLayout>
