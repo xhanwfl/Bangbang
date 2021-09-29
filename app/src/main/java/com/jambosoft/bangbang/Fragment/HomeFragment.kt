@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.jambosoft.bangbang.R
 import com.jambosoft.bangbang.Adapter.HomeFragmentRecyclerAdapter
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
@@ -73,15 +74,11 @@ class HomeFragment : Fragment() {
     }
 
     fun setRecycler(){
-        db!!.collection("rooms").whereGreaterThan("favoriteCount",0).get().addOnSuccessListener { documents ->
+        db!!.collection("rooms").orderBy("favoriteCount",Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
             favoriteItems!!.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
-                if(dto.favorites[user!!.uid]!=null){
-                    if(dto.favorites[user!!.uid]!!){
-                        favoriteItems!!.add(dto)
-                    }
-                }
+                favoriteItems!!.add(dto)
             }
 
             recommendView?.adapter = HomeFragmentRecyclerAdapter(favoriteItems!!)

@@ -111,12 +111,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
         }
 
-
-
-
-
-
-
         //방 정보 가져와서 roomDTOList에 추가
         getRooms()
 

@@ -54,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
         mOAuthLoginInstance = OAuthLogin.getInstance()
 
 
+
         //로그아웃
         /*
         mOAuthLoginInstance.logout(this)
@@ -159,7 +160,6 @@ class LoginActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
     }
 
 
