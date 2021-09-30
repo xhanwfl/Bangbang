@@ -3,19 +3,15 @@ package com.jambosoft.bangbang
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jambosoft.bangbang.Adapter.CommunityFragmentRecentAdapter
-import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
+import com.jambosoft.bangbang.Adapter.CommunityFragmentContentAdapter
 import com.jambosoft.bangbang.Adapter.MyRoomAdapter
 import com.jambosoft.bangbang.model.ContentDTO
 import com.jambosoft.bangbang.model.RoomDTO
@@ -84,7 +80,7 @@ class MyContentActivity : AppCompatActivity() {
                 contentDTOList.add(dto)
             }
 
-            recyclerView.adapter = CommunityFragmentRecentAdapter(contentDTOList)
+            recyclerView.adapter = CommunityFragmentContentAdapter(contentDTOList)
         }
     }
 }

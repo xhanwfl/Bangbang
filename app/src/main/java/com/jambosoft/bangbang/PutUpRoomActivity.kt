@@ -112,7 +112,8 @@ class PutUpRoomActivity : AppCompatActivity() {
                 Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
 
             }else{ //모두 입력할경우
-                LoadingDialog(this).show() //로딩 보여주기
+                val loadingDialog = LoadingDialog(this) //로딩 보여주기
+                loadingDialog.show()
                 var user = FirebaseAuth.getInstance().currentUser
                 val currentTime = System.currentTimeMillis()
                 val imageCount = listUri!!.size
@@ -139,6 +140,7 @@ class PutUpRoomActivity : AppCompatActivity() {
                                         .set(roomDTO!!).addOnSuccessListener {
                                             Log.d("!PutUpRoomActivity","성공")
                                             Toast.makeText(this,"업로드 성공",Toast.LENGTH_SHORT).show()
+                                            loadingDialog.cancel()
                                             finish()
                                         }.addOnFailureListener{
                                             Log.d("!PutUpRoomActivity","실패")

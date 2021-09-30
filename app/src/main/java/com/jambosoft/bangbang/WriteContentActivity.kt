@@ -37,7 +37,6 @@ class WriteContentActivity : AppCompatActivity() {
             dto = ContentDTO()
         }
 
-
         //뒤로가기버튼
         val backButton = findViewById<Button>(R.id.write_content_back_btn)
         backButton.setOnClickListener {
@@ -46,9 +45,9 @@ class WriteContentActivity : AppCompatActivity() {
 
         //글쓰기버튼
         val writeButton = findViewById<Button>(R.id.write_content_write_btn)
-
-        if(dto.content.equals("")){
-            writeButton.setOnClickListener {
+        writeButton.setOnClickListener{
+            writeButton.isClickable = false
+            if(dto.content.equals("")){ //처음 글쓰는경우
                 var title = titleEditText.text.toString()
                 var content = contentEditText.text.toString()
                 if(title.equals("")||content.equals("")){ //제대로 입력하지 않은경우
@@ -56,9 +55,7 @@ class WriteContentActivity : AppCompatActivity() {
                 }else{ //제대로 입력한경우
                     uploadContent(title,content)
                 }
-            }
-        }else{
-            writeButton.setOnClickListener{
+            }else{ //글을 수정하는경우
                 dto.title = titleEditText.text.toString()
                 dto.content = contentEditText.text.toString()
                 if(dto.title.equals("")||dto.content.equals("")){ //제대로 입력하지 않은경우
@@ -68,10 +65,6 @@ class WriteContentActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
-
     }
 
     fun modifyContent(){
@@ -82,8 +75,6 @@ class WriteContentActivity : AppCompatActivity() {
     }
 
     fun uploadContent(title : String, content : String){
-
-
         val timestamp = System.currentTimeMillis()
         db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { task ->  //userid 가져오기
             if(task != null){
@@ -100,8 +91,5 @@ class WriteContentActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
     }
 }

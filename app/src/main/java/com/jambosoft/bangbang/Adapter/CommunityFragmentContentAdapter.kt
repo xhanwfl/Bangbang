@@ -14,7 +14,7 @@ import com.jambosoft.bangbang.R
 import com.jambosoft.bangbang.model.ContentDTO
 import java.text.SimpleDateFormat
 
-class CommunityFragmentRecentAdapter(itemList : ArrayList<ContentDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CommunityFragmentContentAdapter(itemList : ArrayList<ContentDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var itemList : ArrayList<ContentDTO>? = null
     var context : Context? = null
     init{
