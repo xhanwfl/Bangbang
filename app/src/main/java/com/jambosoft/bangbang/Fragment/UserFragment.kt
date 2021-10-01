@@ -152,7 +152,7 @@ class UserFragment : Fragment() {
     fun setProfile() {
 
         db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { document ->
-            if (document != null) {
+            if (document.exists()) {
                 Log.e("프로필", "가져오기 성공")
                 userInfoDTO = document.toObject<UserInfoDTO>()!!
                 if (userInfoDTO!!.name.equals("이름을 변경해주세요")) { //이름이 null일경우 이름수정이벤트
@@ -172,21 +172,16 @@ class UserFragment : Fragment() {
                         alramImageView.setImageResource(R.drawable.ic_favorite)
                     }
 
-
                     //프로필이미지 가져오기
                     if(!userInfoDTO.profileUrl.equals("")){
                         Glide.with(mContext).load(userInfoDTO.profileUrl.toUri()).thumbnail(0.1f).apply(
                             RequestOptions().centerCrop()
                         ).into(profileImageView!!)
                     }
-
-
-
                 }
             } else {
                 Log.e("프로필", "프로필이 없습니다.")
             }
-
         }.addOnFailureListener {
             Log.e("프로필", "가져오기 실패")
         }
@@ -202,11 +197,18 @@ class UserFragment : Fragment() {
             val db = FirebaseFirestore.getInstance()
             var name = data?.getStringExtra("name")
             var uri = data?.getStringExtra("uri")
+            val email = data?.getStringExtra("email")
 
             db.collection("userInfo").document(user!!.uid).update("name", name)
                 .addOnSuccessListener {
                     nameTextView.text = name
                 }
+            if(!email.equals("")){ //이메일이 입력됐을경우 업데이트
+                db.collection("userInfo").document(user!!.uid).update("email", email)
+                    .addOnSuccessListener {
+                        nameTextView.text = name
+                    }
+            }
 
             if (!uri.equals("")) { //uri가 있을경우 이미지 업로드
                 val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${user!!.uid}")

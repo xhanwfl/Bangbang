@@ -92,8 +92,6 @@ class SearchActivity : AppCompatActivity() {
             }
 
             listAdapter.notifyDataSetChanged()
-
-
         }
     }
 }

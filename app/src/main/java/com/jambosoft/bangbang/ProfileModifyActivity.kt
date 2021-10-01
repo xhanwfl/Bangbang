@@ -10,16 +10,19 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.jambosoft.bangbang.model.UserInfoDTO
 import java.util.concurrent.TimeUnit
 
 class ProfileModifyActivity : AppCompatActivity() {
     var imageUri = ""
-    lateinit var auth : FirebaseAuth
+    lateinit var user : FirebaseUser
+    lateinit var db : FirebaseFirestore
     lateinit var callbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
     //lateinit var callbacks : PhoneAuthProvider
@@ -27,7 +30,11 @@ class ProfileModifyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_modify)
 
-        auth = FirebaseAuth.getInstance()
+        user = FirebaseAuth.getInstance().currentUser!!
+        db = FirebaseFirestore.getInstance()
+
+
+
         //프로필 이미지버튼
         val profileImageView = findViewById<ImageView>(R.id.profile_modify_profile_imageview)
         profileImageView.setOnClickListener {
@@ -44,11 +51,28 @@ class ProfileModifyActivity : AppCompatActivity() {
         //이름
         val nameEditText = findViewById<EditText>(R.id.profile_modify_name_edittext)
 
+        //이메일
+        val emailEditText = findViewById<EditText>(R.id.profile_modify_email_edittext)
+
+        db.collection("userInfo").document(user.uid).get().addOnSuccessListener { document ->
+            val userInfoDTO = document.toObject<UserInfoDTO>()
+
+            if(userInfoDTO!!.email.equals("")){
+                emailEditText.visibility = View.VISIBLE
+
+            }
+
+        }
+
         //변경하기 버튼
         val modifyButton = findViewById<Button>(R.id.profile_modify_modify_btn)
         modifyButton.setOnClickListener {
 
             val name = nameEditText.text.toString()
+            var email = ""
+            if(emailEditText.isVisible){
+                email = emailEditText.text.toString()
+            }
 
             if(name.equals("")){ //이름을 입력하지 않을경우
                 Toast.makeText(this,"이름을 입력하세요",Toast.LENGTH_SHORT).show()
@@ -56,6 +80,7 @@ class ProfileModifyActivity : AppCompatActivity() {
                 var intent = Intent(this,MainActivity::class.java)
                 intent.putExtra("name",name)
                 intent.putExtra("uri",imageUri)
+                intent.putExtra("email",email)
 
                 Log.e("uri putExtra부분",imageUri)
 

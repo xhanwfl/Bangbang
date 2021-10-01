@@ -128,11 +128,6 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-
-
-
-
-
     //네이버로그인 핸들러
     val mOAuthLoginHandler: OAuthLoginHandler = @SuppressLint("HandlerLeak")
     object : OAuthLoginHandler() {
@@ -161,7 +156,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
 
     //권한 요청 후 mainActivity 실행
     private fun requestPermission(){
@@ -200,6 +194,4 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

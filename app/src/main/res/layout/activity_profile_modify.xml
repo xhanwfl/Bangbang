@@ -87,6 +87,15 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/edittext_border"
         android:hint="    닉네임"/>
+    <EditText
+        android:id="@+id/profile_modify_email_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/edittext_border"
+        android:visibility="gone"
+        android:hint="    이메일"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

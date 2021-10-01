@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.toObject
 import com.jambosoft.bangbang.model.ContentDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
 import java.text.SimpleDateFormat
@@ -142,17 +143,16 @@ class DetailViewActivity : AppCompatActivity() {
                 var timestamp = System.currentTimeMillis()
 
                 //유저정보가져와서
-                db.collection("userInfo").whereEqualTo("email",user!!.email).get().addOnSuccessListener {
-                    for(document in it){
-                        userInfoDTO = document.toObject(UserInfoDTO::class.java)
-                    }
+                db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener { document ->
+                        if(document.exists()){
+                        userInfoDTO = document.toObject<UserInfoDTO>()!!
 
-                    //firestore에 코멘트 올리기
-                    var commentDTO = ContentDTO.Comment(user!!.uid,userInfoDTO.name,comment,timestamp)
-                    db.collection("contents").document(dto.timestamp.toString()).collection("comments").document()
-                        .set(commentDTO)
-
-                    commentEditText.setText("")
+                        //firestore에 코멘트 올리기
+                        var commentDTO = ContentDTO.Comment(user!!.uid,userInfoDTO.name,comment,timestamp)
+                        db.collection("contents").document(dto.timestamp.toString())
+                            .collection("comments").document().set(commentDTO)
+                        commentEditText.setText("")
+                        }
                     }
                 }
             }

@@ -83,7 +83,6 @@ class WriteContentActivity : AppCompatActivity() {
                     Log.e("프로필 가져오기","실패")
                 }else{
                     val contentDTO = ContentDTO(title,content,userInfo.name,timestamp,user!!.uid)
-
                     db.collection("contents").document(timestamp.toString()).set(contentDTO).addOnSuccessListener {
                         Toast.makeText(this,"글쓰기 완료",Toast.LENGTH_SHORT).show()
                         finish()

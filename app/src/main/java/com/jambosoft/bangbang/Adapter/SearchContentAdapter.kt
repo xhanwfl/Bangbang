@@ -37,24 +37,13 @@ class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerV
         holder.itemView.setOnClickListener {
             Log.e("clicked","${position}+번째 아이템")
             val intent = Intent(context,PutUpRoomActivity::class.java)
-
-
-            //나중에 클래스나 array로 넘기는거 해야함
-            /* var array : ArrayList<String> = arrayListOf()
-            array.add(itemList[position].name)
-            array.add(itemList[position].road)
-            array.add(itemList[position].address)
-            array.add(itemList[position].x.toString())
-            array.add(itemList[position].y.toString())*/
             val dto = RoomLocationInfoDTO(
                 itemList[position].name
                 ,itemList[position].road
                 ,itemList[position].address
                 ,itemList[position].y,
                 itemList[position].x)
-
             intent.putExtra("dto",dto)
-
             context?.setResult(RESULT_OK,intent)
             context?.finish()
         }

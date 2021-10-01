@@ -169,6 +169,7 @@ class PutUpRoomActivity : AppCompatActivity() {
         }
         startActivityForResult(intent, 400)
     }
+
     fun getMoreInfo(){
         var intent = Intent(this,PutUpRoomMoreInfoActivity::class.java)
         if(roomMoreInfoDTO!=null){
@@ -179,7 +180,6 @@ class PutUpRoomActivity : AppCompatActivity() {
         }
         startActivityForResult(intent, 500)
     }
-
 
     fun getLocation(){
         startActivityForResult(Intent(this,SearchActivity::class.java),300)
@@ -256,14 +256,7 @@ class PutUpRoomActivity : AppCompatActivity() {
             infoTextView.text = roomMoreInfoDTO!!.kinds
             infoTextView.visibility = View.VISIBLE
 
-
             Log.e("data", roomMoreInfoDTO!!.kinds)
-
         }
-
-
-
-
-
     }
 }

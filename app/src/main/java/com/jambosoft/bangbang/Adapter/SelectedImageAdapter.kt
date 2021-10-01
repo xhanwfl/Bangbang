@@ -24,7 +24,6 @@ class SelectedImageAdapter(list : ArrayList<String>): PagerAdapter(){
     //position에 해당하는 페이지 생성
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view= LayoutInflater.from(container.context).inflate(R.layout.item_putup_room_image,container,false)
-
         var imageView = view.findViewById<ImageView>(R.id.selected_image)
         imageView.setImageURI(list!![position].toUri())
         container.addView(view)

@@ -28,6 +28,7 @@ class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Ada
     lateinit var context : Context
     lateinit var db : FirebaseFirestore
     lateinit var user : FirebaseUser
+
     inner class CustomViewHolder(view : View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -40,8 +41,6 @@ class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Ada
 
         return CustomViewHolder(view)
     }
-
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as CustomViewHolder).itemView
@@ -70,18 +69,9 @@ class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Ada
         }else{
             checkTextView.text = "미열람"
         }
-
-
-
-
-
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
-
-
-
-
 }
