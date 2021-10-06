@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.facebook.login.LoginManager
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -71,32 +72,32 @@ class UserFragment : Fragment() {
                 "n" ->{
                     val mOAuthInstance = OAuthLogin.getInstance()
                     mOAuthInstance.logout(requireContext())
-
                     mOAuthInstance.logoutAndDeleteToken(requireContext())
+                    AuthUI.getInstance()
+                        .signOut(requireContext())
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(),"logout",Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(requireContext(), LoginActivity::class.java))
+                            activity?.finish()
+                        }
+
 
                     Log.e(TAG, "네이버 로그아웃")
-                    startActivity(Intent(requireContext(), LoginActivity::class.java))
-                    activity?.finish()
+
                 }
                 "f" -> {
                     LoginManager.getInstance().logOut()
                     Log.d(TAG,"페이스북로그아웃")
+                    AuthUI.getInstance()
+                        .signOut(requireContext())
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(),"logout",Toast.LENGTH_SHORT).show()
+                        }
+
                     startActivity(Intent(requireContext(), LoginActivity::class.java))
                     activity?.finish()
                 }
             }
-            /*if (userInfoDTO.tokenType.equals("n")){
-                var mOAuthInstance = OAuthLogin.getInstance()
-                mOAuthInstance.logout(requireContext())
-
-                mOAuthInstance.logoutAndDeleteToken(requireContext())
-
-                Log.e("logout", "클릭함")
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-            }else if(userInfoDTO.tokenType.equals("f")){
-
-            }*/
         }
 
         //문의한방 버튼

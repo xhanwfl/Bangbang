@@ -18,6 +18,7 @@ import com.jambosoft.bangbang.Adapter.HomeFragmentRecyclerAdapter
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
 import com.jambosoft.bangbang.FilterActivity
 import com.jambosoft.bangbang.model.RoomDTO
+import kotlinx.coroutines.*
 
 class HomeFragment : Fragment() {
 
@@ -31,13 +32,12 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootView : View = inflater.inflate(R.layout.fragment_home, container, false)
-
-
+        user = FirebaseAuth.getInstance().currentUser
+        db = FirebaseFirestore.getInstance()
         recentItems = arrayListOf()
         favoriteItems = arrayListOf()
 
-        user = FirebaseAuth.getInstance().currentUser
-        db = FirebaseFirestore.getInstance()
+
 
         //쉐어하우스버튼
         val sharehouseButton = rootView.findViewById<ImageView>(R.id.frag_home_sharehouse_imageview)
@@ -64,11 +64,12 @@ class HomeFragment : Fragment() {
         recentView = rootView.findViewById<RecyclerView>(R.id.frag_home_recent_recyclerview)
         recentView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
+
+
+
+
+
         setRecycler()
-
-
-
-
         // Inflate the layout for this fragment
         return rootView
     }
@@ -89,7 +90,7 @@ class HomeFragment : Fragment() {
             recentItems!!.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
-                if(dto.recents[user!!.uid]!=null){  //한번이라도 내가 본방을 다 가져옴
+                if(dto.recents.containsKey(user!!.uid)){  //한번이라도 내가 본방을 다 가져옴
                     recentItems!!.add(dto)
                 }
             }

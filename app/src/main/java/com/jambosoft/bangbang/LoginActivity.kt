@@ -27,8 +27,10 @@ import com.jambosoft.bangbang.model.UserInfoDTO
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton
+import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.util.*
+import kotlin.system.measureTimeMillis
 
 class LoginActivity : AppCompatActivity() {
     lateinit var mOAuthLoginInstance: OAuthLogin
@@ -37,14 +39,20 @@ class LoginActivity : AppCompatActivity() {
     lateinit var auth : FirebaseAuth
     lateinit var db : FirebaseFirestore
     val TAG = "!LoginActivity"
-    val PERMISSIONS_REQUEST_CODE = 100
-    var REQUIRED_PERMISSIONS = arrayOf<String>( Manifest.permission.ACCESS_FINE_LOCATION)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+
+        if(auth.currentUser!=null){
+            //requestPermission()
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+            finish()
+        }
 
         //  네이버 아이디로 로그인
         val naver_client_id = getString(R.string.naver_client_id)
@@ -112,12 +120,20 @@ class LoginActivity : AppCompatActivity() {
 
                     db.collection("userInfo").document(result.user!!.uid).set(userInfoDTO).addOnSuccessListener {
                         Toast.makeText(this,"유저등록 성공",Toast.LENGTH_SHORT).show()
-                        requestPermission() //permission check 후 MainActivity 실행
+                        //requestPermission() //permission check 후 MainActivity 실행
+                        val intent = Intent(applicationContext, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                        startActivity(intent)
+                        finish()
                     }.addOnFailureListener {
                         Toast.makeText(this,"유저등록 실패",Toast.LENGTH_SHORT).show()
                     }
                 }else{// 문서가 존재할 경우
-                    requestPermission()
+                    //requestPermission()
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -131,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
     //네이버로그인 핸들러
     val mOAuthLoginHandler: OAuthLoginHandler = @SuppressLint("HandlerLeak")
     object : OAuthLoginHandler() {
-        override fun run(success: Boolean) {
+        override fun run(success: Boolean) { //naver login success
             if (success) {
 //                val accessToken: String = mOAuthLoginModule.getAccessToken(baseContext)
 //                val refreshToken: String = mOAuthLoginModule.getRefreshToken(baseContext)
@@ -142,9 +158,11 @@ class LoginActivity : AppCompatActivity() {
                 Log.d("Token",accessToken)
 
                 //api통신 , 여기서 firebase아이디를 생성하거나 로그인함
-                var requestApiTask = RequestApiTask(mContext,mOAuthLoginInstance).execute()
+                requestApiTask(mContext,mOAuthLoginInstance)
+                Toast.makeText(applicationContext,"잠시만 기다려 주세요",Toast.LENGTH_SHORT).show()
 
-                requestPermission()
+                Log.d(TAG,"login success")
+
             } else {
                 val errorCode: String = mOAuthLoginInstance.getLastErrorCode(mContext).code
                 val errorDesc = mOAuthLoginInstance.getLastErrorDesc(mContext)
@@ -157,41 +175,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //권한 요청 후 mainActivity 실행
-    private fun requestPermission(){
-        var permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED){
-            //설명이 필요한지
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
-                //설명 필요 (사용자가 요청을 거부한 적이 있음)
-                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE )
-            }else{
-                //설명 필요하지 않음
-                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE )
-            }
-        }else{
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
-            finish()
-            //권한 허용
-        }
+    //naver login api통신
+    fun requestApiTask(context : Context, mOAuthLogin : OAuthLogin) : Unit{
+        var requestApiTask = RequestApiTask(context,mOAuthLogin)
+        requestApiTask.execute()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            PERMISSIONS_REQUEST_CODE -> {
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    val intent = Intent(applicationContext, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
-                    finish()
-                }else{
-                   Toast.makeText(this,"위치 권한을 허용으로 설정해주세요",Toast.LENGTH_SHORT).show()
-                }
-                return
-            }
-        }
-    }
+
 }

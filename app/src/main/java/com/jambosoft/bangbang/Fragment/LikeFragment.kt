@@ -15,6 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
 import com.jambosoft.bangbang.R
 import com.jambosoft.bangbang.model.RoomDTO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,6 +33,10 @@ class LikeFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_like, container, false)
         // Inflate the layout for this fragment
 
+        //Firebase Initialize
+        user = FirebaseAuth.getInstance().currentUser
+        db = FirebaseFirestore.getInstance()
+
         //리사이클러뷰
         recyclerView = view.findViewById(R.id.frag_like_rooms_recycler)
         recyclerView?.layoutManager = LinearLayoutManager(view.context)
@@ -38,19 +46,6 @@ class LikeFragment : Fragment() {
 
         recentItems = arrayListOf()
         favoriteItems = arrayListOf()
-
-        user = FirebaseAuth.getInstance().currentUser
-        db = FirebaseFirestore.getInstance()
-
-        refresh()
-
-
-        //새로고침버튼
-        /*val refreshButton = view.findViewById<Button>(R.id.frag_like_refresh_btn)
-        refreshButton.setOnClickListener {
-            refresh()
-        }*/
-
 
         //최근 본 방
         val favoriteButton = view.findViewById<TextView>(R.id.frag_like_favoriterooms_textview)
@@ -77,7 +72,7 @@ class LikeFragment : Fragment() {
 
 
 
-
+        refresh()
 
         return view
     }
