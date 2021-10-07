@@ -48,6 +48,12 @@ class DetailRoomActivity : AppCompatActivity() {
         //최근본 사람 저장
         setRecentView(dto!!)
 
+        //공유하기버튼
+        val shareButton = findViewById<Button>(R.id.detailroom_share_btn)
+        shareButton.setOnClickListener {
+            Toast.makeText(this,"준비중입니다.",Toast.LENGTH_SHORT).show()
+        }
+
         //back버튼
         val backButton = findViewById<Button>(R.id.detailroom_back_btn)
         backButton.setOnClickListener {

@@ -48,10 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
         if(auth.currentUser!=null){
             //requestPermission()
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
-            finish()
+            moveToMainActivity()
         }
 
         //  네이버 아이디로 로그인
@@ -83,6 +80,13 @@ class LoginActivity : AppCompatActivity() {
             facebookLogin()
         }
 
+    }
+
+    fun moveToMainActivity(){
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
     }
 
     fun facebookLogin(){
@@ -121,19 +125,13 @@ class LoginActivity : AppCompatActivity() {
                     db.collection("userInfo").document(result.user!!.uid).set(userInfoDTO).addOnSuccessListener {
                         Toast.makeText(this,"유저등록 성공",Toast.LENGTH_SHORT).show()
                         //requestPermission() //permission check 후 MainActivity 실행
-                        val intent = Intent(applicationContext, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                        startActivity(intent)
-                        finish()
+                        moveToMainActivity()
                     }.addOnFailureListener {
                         Toast.makeText(this,"유저등록 실패",Toast.LENGTH_SHORT).show()
                     }
                 }else{// 문서가 존재할 경우
                     //requestPermission()
-                    val intent = Intent(applicationContext, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
-                    finish()
+                    moveToMainActivity()
                 }
             }
         }
