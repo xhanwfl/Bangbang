@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#EBEBEB">
+
         <TextView
             android:id="@+id/mycontent_kind_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="본인인증"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
     <TextView
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
-        android:text="휴대전화번호 8글자 (예시 82821515)"/>
+        android:text="휴대전화번호"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +41,7 @@
         android:layout_marginHorizontal="40dp">
         <EditText
             android:id="@+id/hpauth_hp_edittext"
-            android:layout_width="260dp"
+            android:layout_width="230dp"
             android:layout_height="50dp"
             android:background="@drawable/edittext_border_square"
             android:layout_marginTop="5dp"

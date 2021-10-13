@@ -16,8 +16,10 @@
             android:id="@+id/user_profile_modify_btn"
             android:layout_width="25dp"
             android:layout_height="20dp"
-            android:layout_marginTop="46dp"
+            android:layout_marginTop="44dp"
             android:background="@drawable/ic_move"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/user_name"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,12 +38,11 @@
             android:id="@+id/cardView"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            app:cardCornerRadius="100dp"
-            app:layout_constraintHorizontal_bias="0.082"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="30dp">
+            app:cardCornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/frag_user_profile_imageview"
@@ -55,25 +56,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="40dp"
             android:text="userName"
             android:textColor="#AA000000"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.378" />
 
         <TextView
             android:id="@+id/user_email"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
             android:text="userEmail"
             android:textSize="14sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.683"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.181"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,8 +89,10 @@
             android:id="@+id/frag_user_myinquire_btn"
             android:layout_width="25dp"
             android:layout_height="20dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/ic_move"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,7 +117,7 @@
         android:layout_height="70dp"
         android:text="방 내놓기"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
@@ -126,7 +130,7 @@
         android:layout_height="70dp"
         android:text="내놓은 방"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
@@ -139,7 +143,7 @@
         android:layout_height="70dp"
         android:text="내가 쓴 글"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
@@ -152,7 +156,7 @@
         android:layout_height="70dp"
         android:text="설정"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"
@@ -165,7 +169,7 @@
         android:layout_height="70dp"
         android:text="로그아웃"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginLeft="25dp"/>
     <View
         android:layout_width="match_parent"

@@ -71,7 +71,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"/>
 
 </LinearLayout>

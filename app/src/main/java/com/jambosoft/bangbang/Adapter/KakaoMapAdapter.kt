@@ -69,7 +69,6 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
             intent.putExtra("dto",itemList[position])
             context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int {

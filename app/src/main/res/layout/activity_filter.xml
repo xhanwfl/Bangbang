@@ -16,8 +16,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="필터"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"/>
         <Button
             android:id="@+id/filter_back_btn"
             android:layout_width="30dp"
@@ -37,7 +36,7 @@
             android:layout_height="40dp"
             android:text="키워드 검색"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"/>
         <Button
@@ -47,28 +46,30 @@
             android:background="@drawable/edittext_border_square"
             android:layout_marginHorizontal="30dp"
             android:hint="  예) 강남역 2호선"
-            android:textSize="20sp"
-            android:gravity="left"/>
+            android:textSize="14sp"
+            android:gravity="center_vertical" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="130dp">
 
 
         <TextView
+            android:id="@+id/textView6"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
             android:text="보증금"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.16" />
 
         <TextView
             android:id="@+id/filter_seekbar_textview"
@@ -81,6 +82,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/filter_seekbar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -109,33 +112,35 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="36dp"
+            android:max="1100"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:max="1100"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.333" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="130dp">
 
 
         <TextView
+            android:id="@+id/textView5"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
             android:text="월세"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.16" />
 
         <TextView
             android:id="@+id/filter_seekbar2_textview"
@@ -148,6 +153,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/filter_seekbar2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -177,18 +184,19 @@
             android:layout_height="30dp"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="36dp"
+            android:max="110"
+            android:min="10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:max="110"
-            android:min="10"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintVertical_bias="0.944" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

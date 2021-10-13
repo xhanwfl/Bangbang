@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="받은 문의"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
         <Button
             android:id="@+id/inquirelist_close_btn"

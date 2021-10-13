@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="설명 쓰기"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
         <Button
             android:id="@+id/putup_room_info_back_btn"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="방 제목"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"/>
     <EditText
@@ -45,13 +45,15 @@
         android:background="@drawable/edittext_border_square"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="15dp"
-        android:hint=" 예) 지하철역 가까운 원룸"/>
+        android:hint=" 예) 지하철역 가까운 원룸"
+        android:paddingLeft="10dp"
+        android:textSize="12sp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="상세 설명"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"/>
 
@@ -63,7 +65,10 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/edittext_border_square"
         android:gravity="top"
-        android:hint=" 예) 지하철역 가까운 원룸"
+        android:hint=" 예) 풀옵션 지하철 도보 5분거리 @@@@@"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:textSize="12sp"
         android:lines="10"
         android:maxLines="20"
         android:scrollbars="vertical" />

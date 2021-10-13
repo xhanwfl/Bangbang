@@ -19,12 +19,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.*
 import com.jambosoft.bangbang.model.UserInfoDTO
 import com.nhn.android.naverlogin.OAuthLogin
-import net.daum.mf.map.api.MapView
 import java.lang.IllegalStateException
 
 class UserFragment : Fragment() {
@@ -90,7 +88,7 @@ class UserFragment : Fragment() {
                     LoginManager.getInstance().logOut()
                     Log.d(TAG,"페이스북로그아웃")
 
-                    startActivity(Intent(mContext, LogOutActivity::class.java))
+                    startActivity(Intent(mContext, LogoutActivity::class.java))
                     activity?.finish()
                 }
             }

@@ -18,7 +18,10 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".LogOutActivity"
+            android:name=".DetailRoomImageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LogoutActivity"
             android:exported="true" />
         <activity
             android:name=".MyInquireActivity"

@@ -9,9 +9,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.facebook.*
@@ -77,6 +75,10 @@ class LoginActivity : AppCompatActivity() {
         callbackManager = CallbackManager.Factory.create()
         val facebookLoginButton = findViewById<TextView>(R.id.facebook_login_textview)
         facebookLoginButton.setOnClickListener {
+            facebookLogin()
+        }
+        val facebookLoginImageView = findViewById<ImageView>(R.id.facebook_login_imageView)
+        facebookLoginImageView.setOnClickListener {
             facebookLogin()
         }
 

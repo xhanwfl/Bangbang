@@ -1,19 +1,23 @@
 package com.jambosoft.bangbang.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.jambosoft.bangbang.DetailRoomImageActivity
 import com.jambosoft.bangbang.R
 
-class DetailRoomImageAdapter(list : ArrayList<Uri>): PagerAdapter(){
+class DetailRoomImageAdapter(list : ArrayList<String>): PagerAdapter(){
     private var mContext: Context?=null
-    private var list : ArrayList<Uri>? = null
+    private var list : ArrayList<String>? = null
     init{
         this.list = list
     }
@@ -24,11 +28,18 @@ class DetailRoomImageAdapter(list : ArrayList<Uri>): PagerAdapter(){
     //position에 해당하는 페이지 생성
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view= LayoutInflater.from(container.context).inflate(R.layout.item_detailroom_pagerimage,container,false)
-
+        //이미지
         val imageView = view.findViewById<ImageView>(R.id.item_detailroom_image)
-        //imageView.setImageURI(list[position])
-        Glide.with(container.context).load(list!![position]).thumbnail(0.1f).apply(
+        Glide.with(container.context).load(list!![position].toUri()).thumbnail(0.1f).apply(
            RequestOptions().centerCrop()).into(imageView)
+
+        imageView.setOnClickListener {
+            val intent = Intent(mContext,DetailRoomImageActivity::class.java)
+            intent.putExtra("position",position)
+            intent.putExtra("list",list)
+            mContext?.startActivity(intent)
+        }
+
 
         container.addView(view)
         return view

@@ -11,6 +11,7 @@ import androidx.core.net.toUri
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,11 +21,11 @@ import com.jambosoft.bangbang.Adapter.DetailRoomImageAdapter
 import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 import java.text.SimpleDateFormat
 
 class DetailRoomActivity : AppCompatActivity() {
-    var imageViewPager : ViewPager? = null
-    var adapter : DetailRoomImageAdapter? = null
     var uriList : ArrayList<Uri>? = null
     var user : FirebaseUser? = null
     var dto : RoomDTO? = null
@@ -109,9 +110,9 @@ class DetailRoomActivity : AppCompatActivity() {
         val priceTextView = findViewById<TextView>(R.id.detailroom_price_textview)
         priceTextView.text = "월세 ${dto?.deposit}/${dto?.monthlyFee}"
 
-        //주소
-        val addressTextView = findViewById<TextView>(R.id.detailroom_address_textview)
-        addressTextView.text = dto?.address?.address
+        //타이틀2
+        val titleTextView2 = findViewById<TextView>(R.id.detailroom_title_textview2)
+        titleTextView2.text = dto?.info?.title
 
         //방구조
         val roomkindsTextView = findViewById<TextView>(R.id.detailroom_roomkinds_textview)
@@ -123,7 +124,7 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //층 수
         val floorTextView = findViewById<TextView>(R.id.detailroom_floor_textview)
-        floorTextView.text = "${dto?.floorNumber}층"
+        floorTextView.text = "${dto?.floorNumber}"
 
         //제목
         val titleTextView = findViewById<TextView>(R.id.detailroom_title_textview)
@@ -139,26 +140,30 @@ class DetailRoomActivity : AppCompatActivity() {
         var time = sdf.format(dto?.timestamp)
         dateTextView.text = time
 
+        //방 종류
+        val kindTextView = findViewById<TextView>(R.id.detailroom_kind_textview)
+        kindTextView.text = "${dto?.moreInfo?.kinds}"
+
         //면적
         val areaTextView = findViewById<TextView>(R.id.detailroom_area_textview)
-        areaTextView.text = "  ${dto?.moreInfo?.area} (제곱미터)"
+        areaTextView.text = "${dto?.moreInfo?.area} (제곱미터)"
 
         //옵션
         val optionTextView = findViewById<TextView>(R.id.detailroom_option_textview)
-        optionTextView.text = "  ${dto?.moreInfo?.options}"
+        optionTextView.text = "${dto?.moreInfo?.options}"
 
         //주차 여부
         val parkingTextView = findViewById<TextView>(R.id.detailroom_parking_textview)
-        parkingTextView.text = "  ${dto?.moreInfo?.parking}"
+        parkingTextView.text = "${dto?.moreInfo?.parking}"
 
 
         //이용 기간
         val termTextView = findViewById<TextView>(R.id.detailroom_term_textview)
-        termTextView.text = "  ${dto?.moreInfo?.term}"
+        termTextView.text = "${dto?.moreInfo?.term}"
 
         //입주 가능 날짜
         val moveInTextView = findViewById<TextView>(R.id.detailroom_movein_textview)
-        moveInTextView.text = "  ${dto?.moreInfo?.movein}"
+        moveInTextView.text = "${dto?.moreInfo?.movein}"
 
         //유저아이디
         val userIdTextView = findViewById<TextView>(R.id.detailroom_userid_textview)
@@ -172,17 +177,25 @@ class DetailRoomActivity : AppCompatActivity() {
                 RequestOptions().centerCrop()).into(userProfileImageView)
         }
 
+        val addressTextView = findViewById<TextView>(R.id.detailroom_address_textview)
+        addressTextView.text = dto?.address?.address
+
 
 
         //방 이미지 페이저
-        imageViewPager = findViewById(R.id.detailroom_image_pager)
-        //getRoomImages(dto!!)
-        for(i in 0 until dto!!.imageCount){
-            uriList!!.add(dto!!.images[i].toUri())
-        }
+        val imageViewPager = findViewById<ViewPager>(R.id.detailroom_pager)
+//        //getRoomImages(dto!!)
+//        for(i in 0 until dto!!.imageCount){
+//            uriList!!.add(dto!!.images[i].toUri())
+//        }
 
-        adapter = DetailRoomImageAdapter(uriList!!)
+        val adapter = DetailRoomImageAdapter(dto!!.images!!)
+        adapter.ViewPagerAdapter(this)
         imageViewPager!!.adapter = adapter
+
+        //indicator
+        val indicator = findViewById<SpringDotsIndicator>(R.id.detailroom_image_indicator)
+        indicator.setViewPager(imageViewPager)
 
     }
 

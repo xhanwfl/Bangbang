@@ -17,15 +17,15 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="게시판"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/detailview_back_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_centerVertical="true"
             android:background="@drawable/ic_back"
             tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
@@ -47,7 +47,7 @@
                 <TextView
                     android:id="@+id/detailview_title_textview"
                     android:text="title"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -60,12 +60,14 @@
                         android:id="@+id/detailview_userid_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:textSize="12sp"
                         android:text="userId"/>
                     <TextView
                         android:id="@+id/detailview_timestamp_textview"
                         android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:textSize="12sp"
                         android:text="timestamp"/>
                 </LinearLayout>
                 <TextView
@@ -74,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="내용"
+                    android:textSize="12sp"
                     android:textColor="#000000"
                     android:minHeight="150dp"/>
             </LinearLayout>

@@ -108,7 +108,7 @@ class PutUpRoomActivity : AppCompatActivity() {
             val floorNumberEditText = findViewById<EditText>(R.id.putup_room_floornumber_edittext)
             val floorNumber = floorNumberEditText.text.toString()
 
-            if(depositText.equals("")||monthlyfeeText.equals("")||adminfeeText.equals("")){ //edittext를 입력안할경우
+            if(depositText.equals("")||monthlyfeeText.equals("")||adminfeeText.equals("")||floorNumber.equals("")){ //edittext를 입력안할경우
                 Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
 
             }else{ //모두 입력할경우

@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="상세 정보"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
         <Button
             android:id="@+id/putup_room_more_info_back_btn"
@@ -35,10 +35,10 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="방 종류"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp" />
         <EditText
             android:id="@+id/putup_room_more_info_kinds"
@@ -47,6 +47,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="  예)  빌라, 분리형 원룸"
+            android:textSize="12sp"
             android:background="@drawable/edittext_border_square"/>
     </LinearLayout>
     <LinearLayout
@@ -56,10 +57,10 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="면적"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp" />
         <EditText
             android:id="@+id/putup_room_more_info_area"
@@ -68,6 +69,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="  예)  18 (제곱미터)"
+            android:textSize="12sp"
             android:background="@drawable/edittext_border_square"/>
     </LinearLayout>
     <LinearLayout
@@ -77,10 +79,10 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="옵션"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp" />
         <EditText
             android:id="@+id/putup_room_more_info_options"
@@ -89,6 +91,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="  예)  냉장고, 세탁기, 에어컨"
+            android:textSize="12sp"
             android:background="@drawable/edittext_border_square"/>
     </LinearLayout>
     <LinearLayout
@@ -98,10 +101,10 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="주차"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp" />
         <EditText
             android:id="@+id/putup_room_more_info_parking"
@@ -110,6 +113,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="  예)  세대당 1대"
+            android:textSize="12sp"
             android:background="@drawable/edittext_border_square"/>
     </LinearLayout>
     <LinearLayout
@@ -119,10 +123,10 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="기간"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp" />
         <EditText
             android:id="@+id/putup_room_more_info_term"
@@ -131,6 +135,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="  예)  3개월 이상"
+            android:textSize="12sp"
             android:background="@drawable/edittext_border_square"/>
     </LinearLayout>
     <LinearLayout
@@ -140,10 +145,10 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="입주"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp" />
         <EditText
             android:id="@+id/putup_room_more_info_movein"
@@ -152,6 +157,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="  예)  즉시 입주"
+            android:textSize="12sp"
             android:background="@drawable/edittext_border_square"/>
     </LinearLayout>
     <LinearLayout

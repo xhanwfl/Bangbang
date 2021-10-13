@@ -34,9 +34,11 @@
             android:layout_marginStart="16dp"
             android:gravity="left"
             android:text="300/45"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item_mycontentroom_delete_btn"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.177" />
@@ -48,6 +50,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="여러가지여러가지여러가지"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_price_textview"
@@ -73,6 +76,8 @@
             android:background="@drawable/button_shape_gray"
             android:text="문의"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.069"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_comment_btn"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_roominfo_textview"
             app:layout_constraintVertical_bias="1.0" />
@@ -84,6 +89,8 @@
             android:background="@drawable/button_shape_gray"
             android:text="삭제"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_inquire_btn"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.125" />
@@ -94,7 +101,7 @@
     <View
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B7B7B7"/>
+        android:layout_height="1dp"
+        android:background="#EFEFEF"/>
 
 </LinearLayout>

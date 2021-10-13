@@ -11,14 +11,14 @@
     android:layout_height="60dp"
     android:background="#EBEBEB">
 
-    <TextView
-        android:id="@+id/mycontent_kind_textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="내 게시물"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/mycontent_kind_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="내 게시물"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mycontent_recycler"

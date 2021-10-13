@@ -20,21 +20,22 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="게시판"
-                android:textSize="24sp"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
-           <TextView
-               android:id="@+id/frag_community_recent_textview"
-               android:layout_width="80dp"
-               android:layout_height="match_parent"
-               android:gravity="center"
-               android:text="최신글"
-               android:textSize="16sp"
-               android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/frag_community_recent_textview"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="최신글"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/frag_community_favorite_textview"
@@ -43,7 +44,7 @@
                 android:layout_marginLeft="80dp"
                 android:gravity="center"
                 android:text="인기글"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/frag_community_write_btn"
@@ -59,7 +60,6 @@
                 android:textStyle="bold" />
         </RelativeLayout>
         <View
-            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#EFEFEF"/>

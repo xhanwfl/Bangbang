@@ -20,7 +20,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="관심목록"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -34,14 +34,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="찜한 방"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
             <TextView
                 android:id="@+id/frag_like_recentrooms_textview"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="최근 본 방"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"

@@ -52,22 +52,15 @@ class MyContentActivity : AppCompatActivity() {
             kindTextView.text = "내 게시물"
             setContents()
         }
-
-
-
-
     }
 
     fun setRooms(){
         db.collection("rooms").whereEqualTo("userId",user.email).get().addOnSuccessListener {
             roomDTOList.clear()
-
             for(document in it){
                 var dto = document.toObject(RoomDTO::class.java)
                 roomDTOList.add(dto)
-
             }
-
             recyclerView.adapter = MyRoomAdapter(roomDTOList)
         }
     }

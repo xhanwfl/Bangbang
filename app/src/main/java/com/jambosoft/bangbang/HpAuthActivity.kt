@@ -43,10 +43,10 @@ class HpAuthActivity : AppCompatActivity() {
             if(hpText.equals("")){
                 Toast.makeText(this,"전화번호를 입력해주세요",Toast.LENGTH_SHORT).show()
             }else{
-                if(hpText.length!=8){ //8글자가 아닐경우
-                    Toast.makeText(this,"8글자로 입력해주세요",Toast.LENGTH_SHORT).show()
+                if(hpText.length!=11){ //8글자가 아닐경우
+                    Toast.makeText(this,"전화번호는 010으로 시작합니다.",Toast.LENGTH_SHORT).show()
                 }else{
-                    hp = "+8210${hpText}"
+                    hp = "+82${hpText.substring(1)}" //01012341234에서 1012341234로 자른다.
                     val options = PhoneAuthOptions.newBuilder()
                         .setPhoneNumber(hp)       // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
@@ -55,7 +55,6 @@ class HpAuthActivity : AppCompatActivity() {
                         .build()
 
                     PhoneAuthProvider.verifyPhoneNumber(options)
-
                     Log.d("!HpAuthActivity","인증요청 보냄 ${hp}")
                 }
             }
@@ -82,6 +81,7 @@ class HpAuthActivity : AppCompatActivity() {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Log.w("!HpAuthActivity", "인증실패", e)
+                Toast.makeText(applicationContext,"존재하지않는 번호입니다.",Toast.LENGTH_SHORT).show()
 
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -114,6 +114,7 @@ class HpAuthActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) { //인증번호 일치
+                    Toast.makeText(applicationContext,"인증 성공",Toast.LENGTH_SHORT).show()
                     Log.d("!HpAuthActivity", "로그인 인증 성공")
                     val db = FirebaseFirestore.getInstance()
 

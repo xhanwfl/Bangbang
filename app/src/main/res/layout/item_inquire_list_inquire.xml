@@ -56,6 +56,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/button_shape_gray"
             android:text="userId님 연락처 확인"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/inquirelist_profile_cardview"
