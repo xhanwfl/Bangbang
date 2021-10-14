@@ -62,8 +62,8 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
         latitude = intent.getStringExtra("latitude")!!.toDouble()
         longitude = intent.getStringExtra("longitude")!!.toDouble()
-        depositFee = intent.getIntExtra("depositFee",0)
-        monthlyFee = intent.getIntExtra("monthlyFee",0)
+        depositFee = intent.getIntExtra("depositFee",1000000) //default를 전체보기로 해놓음
+        monthlyFee = intent.getIntExtra("monthlyFee",1000000)
         roomkinds = intent.getBooleanExtra("roomkinds",false)
 
         recyclerView = findViewById(R.id.kakaomap_content_recycler)

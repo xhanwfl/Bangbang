@@ -181,11 +181,13 @@ class PutUpRoomActivity : AppCompatActivity() {
         startActivityForResult(intent, 500)
     }
 
+    //방 위치정보 가져오기
     fun getLocation(){
         startActivityForResult(Intent(this,SearchActivity::class.java),300)
 
     }
 
+    //방사진 가져오기
     fun getImage(){
         var intent = Intent(Intent.ACTION_PICK)
         intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -222,11 +224,6 @@ class PutUpRoomActivity : AppCompatActivity() {
             val adapter = SelectedImageAdapter(listUri!!)
             val pager = findViewById<ViewPager>(R.id.putup_room_image_pager)
             pager.adapter = adapter
-
-
-
-
-
         }
 
 

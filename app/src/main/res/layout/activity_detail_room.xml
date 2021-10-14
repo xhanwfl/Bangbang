@@ -44,8 +44,8 @@
 
                     <Button
                         android:id="@+id/detailroom_back_btn"
-                        android:layout_width="25dp"
-                        android:layout_height="22dp"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_marginStart="5dp"
@@ -53,19 +53,20 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/ic_back_white"
                         tools:ignore="SpeakableTextPresentCheck" />
+
                     <Button
                         android:id="@+id/detailroom_favorite_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/ic_favorite_white"
-                        android:layout_toLeftOf="@+id/detailroom_share_btn"/>
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/detailroom_share_btn"
+                        android:background="@drawable/ic_favorite_white" />
 
                     <Button
                         android:id="@+id/detailroom_share_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:background="@drawable/ic_share"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
@@ -480,11 +481,13 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:layout_marginHorizontal="15dp">
+
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/ic_bottom_location_clicked"
-                        android:layout_toLeftOf="@+id/detailroom_location_btn"/>
+                        android:layout_width="27dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toLeftOf="@+id/detailroom_location_btn"
+                        android:background="@drawable/ic_bottom_location_clicked" />
                     <TextView
                         android:id="@+id/detailroom_location_btn"
                         android:layout_width="wrap_content"

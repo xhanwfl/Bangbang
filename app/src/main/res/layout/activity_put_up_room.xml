@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PutUpRoomActivity">
+    tools:context=".PutUpRoomActivity"
+    android:background="#FFFFFF">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -60,7 +61,7 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="70dp">
+                    android:layout_height="60dp">
 
                     <TextView
                         android:id="@+id/putup_room_findaddress_textview"
@@ -102,14 +103,15 @@
                     android:layout_height="1dp"
                     android:background="#EFEFEF" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="10dp"
                         android:text="보증금"
@@ -118,71 +120,75 @@
 
                     <EditText
                         android:id="@+id/putup_room_deposit_edittext"
-                        android:layout_width="200dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="70dp"
+                        android:layout_width="160dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="7dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toLeftOf="@+id/putup_room_deposit_mw"
                         android:background="@drawable/edittext_border_square"
                         android:inputType="number"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/putup_room_deposit_mw"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="20dp"
                         android:text="만원"
                         android:textColor="#28C3C5"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="5dp">
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="10dp"
+                        android:layout_alignParentLeft="true"
                         android:text="월세"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/putup_room_monthlyfee_edittext"
-                        android:layout_width="200dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="70dp"
+                        android:layout_width="160dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="7dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toLeftOf="@+id/putup_room_monthlyfee_mw"
                         android:background="@drawable/edittext_border_square"
                         android:inputType="number"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/putup_room_monthlyfee_mw"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="20dp"
                         android:text="만원"
                         android:textColor="#28C3C5"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="10dp"
                         android:text="관리비"
@@ -191,56 +197,67 @@
 
                     <EditText
                         android:id="@+id/putup_room_adminfee_edittext"
-                        android:layout_width="200dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="70dp"
+                        android:layout_width="160dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="7dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toLeftOf="@+id/putup_room_adminfee_mw"
                         android:background="@drawable/edittext_border_square"
                         android:inputType="number"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/putup_room_adminfee_mw"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="20dp"
                         android:text="만원"
                         android:textColor="#28C3C5"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#EFEFEF" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="10dp"
                         android:text="층 수"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/putup_room_floornumber_edittext"
-                        android:layout_width="200dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_width="160dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toLeftOf="@+id/putup_room_floornumber_ch"
                         android:background="@drawable/edittext_border_square"
-                        android:hint="  예) 3층"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/putup_room_floornumber_ch"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:text="  층  "
+                        android:textColor="#28C3C5"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -249,29 +266,32 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp">
+                    android:layout_height="115dp">
 
                     <TextView
+                        android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:text="방 유형"
                         android:textSize="18sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.097"
+                        app:layout_constraintHorizontal_bias="0.086"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.186" />
 
                     <RadioGroup
                         android:id="@+id/radioGroup"
                         android:layout_width="350dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="52dp"
+                        android:layout_height="35dp"
                         android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@+id/textView8"
+                        android:paddingHorizontal="15dp">
 
                         <RadioButton
                             android:id="@+id/putup_room_oneroom_radiobtn"
@@ -283,7 +303,7 @@
                             android:button="@null"
                             android:gravity="center"
                             android:text="원룸"
-                            android:textColor="@drawable/selector_radio_text" />
+                            android:textColor="#BB000000" />
 
                         <RadioButton
                             android:id="@+id/putup_room_sharehouse_radiobtn"
@@ -294,7 +314,7 @@
                             android:button="@null"
                             android:gravity="center"
                             android:text="쉐어하우스"
-                            android:textColor="@drawable/selector_radio_text" />
+                            android:textColor="#BB000000" />
                     </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -305,13 +325,13 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="70dp">
+                    android:layout_height="60dp">
 
                     <TextView
                         android:id="@+id/putup_room_explain_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="25dp"
+                        android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:text="설명 쓰기"
                         android:textSize="18sp"
@@ -350,13 +370,13 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="70dp">
+                    android:layout_height="60dp">
 
                     <TextView
                         android:id="@+id/putup_room_info_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="25dp"
+                        android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:text="상세 정보"
                         android:textSize="18sp"
@@ -394,7 +414,7 @@
                     android:background="#EFEFEF" />
                 <TextView
                     android:id="@+id/putup_room_btn"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="60dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="#79CCC8"

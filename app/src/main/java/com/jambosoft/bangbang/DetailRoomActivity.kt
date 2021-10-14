@@ -124,7 +124,7 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //층 수
         val floorTextView = findViewById<TextView>(R.id.detailroom_floor_textview)
-        floorTextView.text = "${dto?.floorNumber}"
+        floorTextView.text = "${dto?.floorNumber}층"
 
         //제목
         val titleTextView = findViewById<TextView>(R.id.detailroom_title_textview)

@@ -50,7 +50,7 @@ class FilterActivity : AppCompatActivity() {
                     depositFee = progress-(progress%100)
                     text.text = "${depositFee}만원 이하"
                 } else {
-                    depositFee = 10000
+                    depositFee = 100000
                     text.text = "전체보기"
                 }
             }
@@ -71,7 +71,7 @@ class FilterActivity : AppCompatActivity() {
                     monthlyFee = progress
                     text2.text = "${monthlyFee}만원 이하"
                 }else{
-                    monthlyFee = 500
+                    monthlyFee = 10000
                     text2.text = "전체보기"
                 }
             }
