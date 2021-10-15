@@ -35,37 +35,42 @@ class PutUpRoomActivity : AppCompatActivity() {
         listUri = arrayListOf()
 
         //뒤로가기 버튼
-        var backButton = findViewById<Button>(R.id.putup_room_back_btn)
+        val backButton = findViewById<Button>(R.id.putup_room_back_btn)
         backButton.setOnClickListener {
             finish()
         }
 
-        //이미지 올리기 버튼
-        var cameraButton = findViewById<TextView>(R.id.putup_room_camera_textview)
+        //이미지 올리기
+        val cameraButton = findViewById<TextView>(R.id.putup_room_camera_textview)
         cameraButton.setOnClickListener {
             getImage()
         }
+        val cameraImage = findViewById<ImageView>(R.id.putup_room_camera_imageview)
+        cameraImage.setOnClickListener {
+            getImage()
+        }
+
 
         //주소찾기 버튼
-        var locationButton = findViewById<Button>(R.id.putup_room_location_btn)
+        val locationButton = findViewById<Button>(R.id.putup_room_location_btn)
         locationButton.setOnClickListener {
             getLocation()
         }
 
         //설명쓰기 버튼
-        var roomInfoButton = findViewById<Button>(R.id.putup_room_info_btn)
+        val roomInfoButton = findViewById<Button>(R.id.putup_room_info_btn)
         roomInfoButton.setOnClickListener {
             getInfo()
         }
 
         //상세정보 버튼
-        var roomMoreInfoButton = findViewById<Button>(R.id.putup_room_more_info_btn)
+        val roomMoreInfoButton = findViewById<Button>(R.id.putup_room_more_info_btn)
         roomMoreInfoButton.setOnClickListener {
             getMoreInfo()
         }
 
         //방 올리기 버튼
-        var putUpRoomButton = findViewById<TextView>(R.id.putup_room_btn)
+        val putUpRoomButton = findViewById<TextView>(R.id.putup_room_btn)
         putUpRoomButton.setOnClickListener {
             putUpRoom()
         }

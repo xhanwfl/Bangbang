@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="휴대폰 번호(필수)"
         android:textStyle="bold"
-        android:textSize="17sp"/>
+        android:textSize="14sp"/>
     <EditText
         android:id="@+id/dialog_inquire_hp_edittext"
         android:layout_marginTop="5dp"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:text="문의 내용"
         android:textStyle="bold"
-        android:textSize="17sp"/>
+        android:textSize="14sp"/>
     <EditText
         android:id="@+id/dialog_inquire_message_edittext"
         android:layout_width="match_parent"
@@ -60,6 +60,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/edittext_border_square"
         android:gravity="top"
+        android:textSize="12sp"
         android:hint="  방 관련 문의사항 입력\n  ex) 반려동물을 키워도 되나요 ?"
         android:lines="7"
         android:maxLines="12"

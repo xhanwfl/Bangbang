@@ -99,27 +99,24 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="170dp"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="구조"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"/>
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_oneroomicon"/>
                     <TextView
                         android:id="@+id/detailroom_roomkinds_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="15dp"
                         android:text="원룸"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -127,7 +124,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="70dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:background="#B7B7B7"/>
                 <LinearLayout
@@ -135,20 +132,17 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="관리비"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"/>
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_adminfee"/>
                     <TextView
                         android:id="@+id/detailroom_adminfee_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="15dp"
                         android:text="히히"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -156,7 +150,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="70dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:background="#B7B7B7"/>
                 <LinearLayout
@@ -164,20 +158,17 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="층 수"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"/>
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_floornum"/>
                     <TextView
                         android:id="@+id/detailroom_floor_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="15dp"
                         android:text="250층"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -211,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:padding="1dp"
                     android:background="#DFDFDF"
-                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginHorizontal="15dp"
                     android:layout_marginVertical="15dp">
                     <TableRow
                         android:minHeight="45dp">
@@ -370,7 +361,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="left"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="30dp"
                     android:text="타이틀"
                     android:textStyle="bold"
@@ -383,15 +374,17 @@
                     android:layout_marginTop="20dp"
                     android:textSize="12sp"
                     android:text="내용"
-                    android:layout_marginHorizontal="35dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:paddingHorizontal="3dp"
                     android:minHeight="100dp"/>
+
                 <TextView
                     android:id="@+id/detailroom_date_textview"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="21-07-14"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="21-07-14" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

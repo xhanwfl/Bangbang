@@ -41,7 +41,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="#A0D1CE">
+                    android:background="#d2d2d2">
+                    <ImageView
+                        android:id="@+id/putup_room_camera_imageview"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/ic_picture"
+                        android:layout_centerInParent="true"/>
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/putup_room_image_pager"
@@ -303,7 +309,8 @@
                             android:button="@null"
                             android:gravity="center"
                             android:text="원룸"
-                            android:textColor="#BB000000" />
+                            android:textColor="#BB000000"
+                            android:checked="true"/>
 
                         <RadioButton
                             android:id="@+id/putup_room_sharehouse_radiobtn"
