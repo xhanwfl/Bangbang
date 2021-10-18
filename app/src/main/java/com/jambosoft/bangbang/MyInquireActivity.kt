@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,7 +24,7 @@ class MyInquireActivity : AppCompatActivity() {
         user = FirebaseAuth.getInstance().currentUser!!
         db = FirebaseFirestore.getInstance()
         itemList = arrayListOf()
-
+        val glideRequestManager = Glide.with(this)
 
         //닫기버튼
         val closeButton = findViewById<Button>(R.id.myinquire_close_btn)
@@ -42,7 +43,7 @@ class MyInquireActivity : AppCompatActivity() {
                 itemList.add(inquireDTO)
                 Log.d("!MyInquireActivity",inquireDTO.message)
             }
-           myInquireRecyclerView.adapter = MyInquireAdapter(itemList)
+           myInquireRecyclerView.adapter = MyInquireAdapter(itemList,glideRequestManager)
 
         }
 

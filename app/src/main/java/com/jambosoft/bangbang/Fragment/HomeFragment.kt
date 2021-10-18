@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.jambosoft.bangbang.R
 import com.jambosoft.bangbang.Adapter.HomeFragmentRecyclerAdapter
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
 import com.jambosoft.bangbang.FilterActivity
+import com.jambosoft.bangbang.RoomListActivity
 import com.jambosoft.bangbang.model.RoomDTO
 import kotlinx.coroutines.*
 
@@ -54,7 +56,21 @@ class HomeFragment : Fragment() {
             intent.putExtra("roomkinds",false)
             startActivity(intent)
         }
-
+        
+        
+        //더보기 버튼
+        val moreFavoriteRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_favoriteroom_textview)
+        moreFavoriteRoomTextView.setOnClickListener { 
+            val intent = Intent(rootView.context,RoomListActivity::class.java)
+            intent.putExtra("type","favorite")
+            startActivity(intent)
+        }
+        val moreRecentRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_recentroom_textview)
+        moreRecentRoomTextView.setOnClickListener {
+            val intent = Intent(rootView.context,RoomListActivity::class.java)
+            intent.putExtra("type","recent")
+            startActivity(intent)
+        }
 
         //추천리스트
         recommendView = rootView.findViewById<RecyclerView>(R.id.frag_home_recommend_recyclerview)
@@ -64,7 +80,7 @@ class HomeFragment : Fragment() {
         recentView = rootView.findViewById<RecyclerView>(R.id.frag_home_recent_recyclerview)
         recentView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
-
+        
 
 
 

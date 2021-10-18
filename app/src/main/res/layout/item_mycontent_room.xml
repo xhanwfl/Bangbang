@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="127dp"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:layout_height="150dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="match_parent">
+
         <androidx.cardview.widget.CardView
-            android:layout_marginLeft="15dp"
             android:id="@+id/item_mycontentroom_room_cardview"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.051"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:cardCornerRadius="20dp">
+            app:layout_constraintVertical_bias="0.42">
             <ImageView
                 android:id="@+id/item_mycontentroom_room_imageview"
                 android:layout_width="match_parent"
@@ -52,56 +56,68 @@
             android:text="여러가지여러가지여러가지"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_price_textview"
             app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/item_mycontentroom_comment_btn"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="165dp"
+            android:layout_height="35dp"
             android:background="@drawable/button_shape_gray"
-            android:text="댓글"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
-            app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_roominfo_textview"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Button
-            android:id="@+id/item_mycontentroom_inquire_btn"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/button_shape_gray"
-            android:text="문의"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.069"
-            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_comment_btn"
+            app:layout_constraintHorizontal_bias="0.123"
+            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_room_cardview"
             app:layout_constraintTop_toBottomOf="@+id/item_mycontentroom_roominfo_textview"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.384">
+
+            <TextView
+                android:id="@+id/item_mycontentroom_comment_textview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="댓글" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="#AFAFAF" />
+
+            <TextView
+                android:id="@+id/item_mycontentroom_inquire_textview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="문의" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/item_mycontentroom_delete_btn"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:background="@drawable/button_shape_gray"
-            android:text="삭제"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/item_mycontentroom_inquire_btn"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.125" />
+            app:layout_constraintVertical_bias="0.133" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#EFEFEF"/>
+        android:layout_marginTop="5dp"
+        android:background="#EFEFEF" />
 
 </LinearLayout>

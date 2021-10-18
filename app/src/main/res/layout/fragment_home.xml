@@ -157,6 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                     <TextView
+                        android:id="@+id/frag_home_more_favoriteroom_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="더보기"
@@ -191,6 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                     <TextView
+                        android:id="@+id/frag_home_more_recentroom_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="더보기"

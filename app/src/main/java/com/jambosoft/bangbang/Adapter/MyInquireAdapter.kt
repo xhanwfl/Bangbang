@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,7 +24,7 @@ import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
 
-class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyInquireAdapter (val itemList : ArrayList<InquireDTO>, val glideRequestManager : RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var storage : FirebaseStorage
     lateinit var context : Context
     lateinit var db : FirebaseFirestore
@@ -56,7 +57,7 @@ class MyInquireAdapter (val itemList : ArrayList<InquireDTO>) : RecyclerView.Ada
             roomPriceTextView.text = "${roomDTO?.deposit}/${roomDTO?.monthlyFee}"
 
             //방 이미지
-            Glide.with(context).load(roomDTO!!.images[0].toUri()).thumbnail(0.1f).apply(
+            glideRequestManager.load(roomDTO!!.images[0].toUri()).thumbnail(0.1f).apply(
                 RequestOptions().centerCrop()).into(roomImageView)
         }
 

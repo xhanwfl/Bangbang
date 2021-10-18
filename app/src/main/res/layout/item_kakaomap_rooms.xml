@@ -10,7 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="5dp"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:id="@+id/item_kakaomap_item_layout">
     <androidx.cardview.widget.CardView
         android:id="@+id/item_kakaomap_room_cardview"
         android:layout_width="120dp"

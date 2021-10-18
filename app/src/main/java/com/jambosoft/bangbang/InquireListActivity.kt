@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jambosoft.bangbang.Adapter.InquireListAdapter
 import com.jambosoft.bangbang.model.InquireDTO
@@ -19,6 +20,7 @@ class InquireListActivity : AppCompatActivity() {
 
         val timestamp = intent.getStringExtra("timestamp").toString()  //방 id를 가져옴
         var itemList : ArrayList<InquireDTO> = arrayListOf()
+        val glideRequestManager = Glide.with(this)
 
         //닫기버튼
         val closeButton = findViewById<Button>(R.id.inquirelist_close_btn)
@@ -34,7 +36,7 @@ class InquireListActivity : AppCompatActivity() {
                 var inquire = document.toObject(InquireDTO::class.java)
                 itemList.add(inquire)
             }
-            recyclerView.adapter = InquireListAdapter(itemList)
+            recyclerView.adapter = InquireListAdapter(itemList,glideRequestManager) // glideRequestManager을 사용해야 로딩중 activity가 종료됐을경우 exception을 발생시키지않음
         }
 
 

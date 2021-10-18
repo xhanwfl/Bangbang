@@ -51,10 +51,10 @@ class MyRoomAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<Re
         val viewHolder = (holder as CustomViewHolder).itemView
 
         //댓글
-        val commentButton = viewHolder.findViewById<Button>(R.id.item_mycontentroom_comment_btn)
+        val commentButton = viewHolder.findViewById<TextView>(R.id.item_mycontentroom_comment_textview)
 
         //문의
-        val inquireButton = viewHolder.findViewById<Button>(R.id.item_mycontentroom_inquire_btn)
+        val inquireButton = viewHolder.findViewById<TextView>(R.id.item_mycontentroom_inquire_textview)
         inquireButton.setText("문의 ${itemList[position].inquireCount}")
         inquireButton.setOnClickListener {
             var intent = Intent(context,InquireListActivity::class.java)

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -44,9 +45,12 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as CustomViewHolder).itemView
 
+        val itemLayout = viewHolder.findViewById<ConstraintLayout>(R.id.item_kakaomap_item_layout)
+
+
         //설명
-        val explainTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_explain_textview)
-        explainTextView.text = itemList[position].info.explain
+        val titleTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_explain_textview)
+        titleTextView.text = itemList[position].info.title
         // 보증금/월세
         val priceTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_price_textview)
         priceTextView.text = "${itemList[position].deposit}/${itemList[position].monthlyFee}"
@@ -65,9 +69,10 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
             RequestOptions().centerCrop()).into(imageView)
 
         imageView.setOnClickListener {
-            var intent = Intent(context,DetailRoomActivity::class.java)
-            intent.putExtra("dto",itemList[position])
-            context.startActivity(intent)
+            openDetailRoom(position)
+        }
+        itemLayout.setOnClickListener {
+            openDetailRoom(position)
         }
     }
 
@@ -76,6 +81,10 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
     }
 
 
-
+    fun openDetailRoom(position : Int){
+        var intent = Intent(context,DetailRoomActivity::class.java)
+        intent.putExtra("dto",itemList[position])
+        context.startActivity(intent)
+    }
 
 }

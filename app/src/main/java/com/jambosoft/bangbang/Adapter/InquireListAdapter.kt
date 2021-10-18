@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,7 +24,7 @@ import com.jambosoft.bangbang.model.InquireDTO
 import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.UserInfoDTO
 
-class InquireListAdapter(val itemList : ArrayList<InquireDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class InquireListAdapter(val itemList : ArrayList<InquireDTO>,val glideRequestManager : RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var storage : FirebaseStorage
     lateinit var context : Context
     lateinit var db : FirebaseFirestore
@@ -86,7 +87,7 @@ class InquireListAdapter(val itemList : ArrayList<InquireDTO>) : RecyclerView.Ad
         val profileImageView = viewHolder.findViewById<ImageView>(R.id.inquirelist_profile_imageview)
         FirebaseFirestore.getInstance().collection("userInfo").document(itemList[position].uid).get().addOnSuccessListener {
            var dto = it.toObject(UserInfoDTO::class.java)
-            Glide.with(context).load(dto!!.profileUrl.toUri()).thumbnail(0.1f)
+            glideRequestManager.load(dto!!.profileUrl.toUri()).thumbnail(0.1f)
                 .apply(
                     RequestOptions().centerCrop()
                 ).into(profileImageView!!)

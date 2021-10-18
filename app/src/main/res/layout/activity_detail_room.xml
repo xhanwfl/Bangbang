@@ -407,6 +407,18 @@
                     android:layout_marginTop="15dp"
                     android:background="#FFFFFF">
 
+                    <Button
+                        android:id="@+id/detailroom_call_btn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_call"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.865"
+                        app:layout_constraintStart_toEndOf="@+id/textView7"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.38" />
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView2"
                         android:layout_width="50dp"

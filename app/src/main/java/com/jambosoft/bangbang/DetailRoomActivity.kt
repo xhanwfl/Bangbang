@@ -177,9 +177,18 @@ class DetailRoomActivity : AppCompatActivity() {
                 RequestOptions().centerCrop()).into(userProfileImageView)
         }
 
+        //주소
         val addressTextView = findViewById<TextView>(R.id.detailroom_address_textview)
         addressTextView.text = dto?.address?.address
 
+
+
+        //전화걸기
+        /*val callButton = findViewById<Button>(R.id.detailroom_call_btn)
+        callButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL,Uri.parse("tel:01089103858"))
+            startActivity(intent)
+        }*/
 
 
         //방 이미지 페이저
