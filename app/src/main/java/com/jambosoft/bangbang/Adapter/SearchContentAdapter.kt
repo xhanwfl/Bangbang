@@ -46,6 +46,7 @@ class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerV
             intent.putExtra("dto",dto)
             context?.setResult(RESULT_OK,intent)
             context?.finish()
+
         }
     }
 

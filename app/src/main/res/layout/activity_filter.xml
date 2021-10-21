@@ -34,20 +34,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="키워드 검색"
+            android:text="방 종류"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"/>
-        <Button
-            android:id="@+id/filter_search_btn"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/edittext_border_square"
-            android:layout_marginHorizontal="30dp"
-            android:hint="  예) 강남역 2호선"
-            android:textSize="14sp"
-            android:gravity="center_vertical" />
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="30dp">
+            <TextView
+                android:id="@+id/filter_all_textview"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_border_square"
+                android:hint="전체"
+                android:textSize="14sp"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/filter_sharehouse_textview"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_border_square"
+                android:hint="쉐어하우스"
+                android:textSize="14sp"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/filter_oneroom_textview"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_border_square"
+                android:hint="원룸"
+                android:textSize="14sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

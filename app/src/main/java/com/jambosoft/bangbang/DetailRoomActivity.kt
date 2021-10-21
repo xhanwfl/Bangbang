@@ -184,11 +184,11 @@ class DetailRoomActivity : AppCompatActivity() {
 
 
         //전화걸기
-        /*val callButton = findViewById<Button>(R.id.detailroom_call_btn)
+        val callButton = findViewById<Button>(R.id.detailroom_call_btn)
         callButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL,Uri.parse("tel:01089103858"))
+            val intent = Intent(Intent.ACTION_DIAL,Uri.parse("tel:${dto?.hp}"))
             startActivity(intent)
-        }*/
+        }
 
 
         //방 이미지 페이저
@@ -205,6 +205,7 @@ class DetailRoomActivity : AppCompatActivity() {
         //indicator
         val indicator = findViewById<SpringDotsIndicator>(R.id.detailroom_image_indicator)
         indicator.setViewPager(imageViewPager)
+
 
     }
 

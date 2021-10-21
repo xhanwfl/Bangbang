@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,12 +16,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.jambosoft.bangbang.R
+import com.jambosoft.bangbang.*
 import com.jambosoft.bangbang.Adapter.HomeFragmentRecyclerAdapter
 import com.jambosoft.bangbang.Adapter.KakaoMapAdapter
-import com.jambosoft.bangbang.FilterActivity
-import com.jambosoft.bangbang.RoomListActivity
 import com.jambosoft.bangbang.model.RoomDTO
+import com.jambosoft.bangbang.model.RoomLocationInfoDTO
 import kotlinx.coroutines.*
 
 class HomeFragment : Fragment() {
@@ -44,17 +45,11 @@ class HomeFragment : Fragment() {
         //쉐어하우스버튼
         val sharehouseButton = rootView.findViewById<ImageView>(R.id.frag_home_sharehouse_imageview)
         sharehouseButton.setOnClickListener {
-            var intent = Intent(rootView.context,FilterActivity::class.java)
-            intent.putExtra("roomkinds",true)
-            startActivity(intent)
         }
 
         //원룸버튼
         val oneroomButton = rootView.findViewById<ImageView>(R.id.frag_home_oneroom_imageview)
         oneroomButton.setOnClickListener {
-            var intent = Intent(rootView.context,FilterActivity::class.java)
-            intent.putExtra("roomkinds",false)
-            startActivity(intent)
         }
         
         
@@ -80,7 +75,16 @@ class HomeFragment : Fragment() {
         recentView = rootView.findViewById<RecyclerView>(R.id.frag_home_recent_recyclerview)
         recentView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
-        
+        //검색
+        val searchButton = rootView.findViewById<Button>(R.id.frag_home_search_btn)
+        val searchImageView = rootView.findViewById<ImageView>(R.id.frag_home_search_imageview)
+        searchButton.setOnClickListener {
+            startActivityForResult(Intent(context, SearchActivity::class.java),300)
+        }
+        searchImageView.setOnClickListener {
+            startActivityForResult(Intent(context, SearchActivity::class.java),300)
+        }
+
 
 
 
@@ -129,5 +133,17 @@ class HomeFragment : Fragment() {
         }
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode==AppCompatActivity.RESULT_OK&&requestCode==300){
+            val roomLocationInfoDTO = data?.getSerializableExtra("dto") as RoomLocationInfoDTO
+            val intent = Intent(context, KakaoMapActivity::class.java)
+            intent.putExtra("latitude",roomLocationInfoDTO.latitude)
+            intent.putExtra("longitude",roomLocationInfoDTO.longitude)
+            startActivity(intent)
+        }
+    }
+
 
 }

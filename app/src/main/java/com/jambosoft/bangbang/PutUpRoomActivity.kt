@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.jambosoft.bangbang.Adapter.SelectedImageAdapter
 import com.jambosoft.bangbang.Dialog.LoadingDialog
@@ -136,24 +137,32 @@ class PutUpRoomActivity : AppCompatActivity() {
                                 listUrl!!.add(it.toString())
 
                                 if(listUrl!!.size==listUri!!.size){//url이 리스트에 다 추가되었을때
-                                    roomDTO = RoomDTO(listUrl!!,roomLocationInfoDTO!!,deposit,monthlyfee, adminfee, //roomDTO 초기화
-                                        floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user!!.email!!,user.uid,currentTime,imageCount)
-
-                                    //firestore에 업로드
                                     val db = FirebaseFirestore.getInstance()
-                                    db.collection("rooms").document(roomDTO!!.timestamp.toString())
-                                        .set(roomDTO!!).addOnSuccessListener {
-                                            Log.d("!PutUpRoomActivity","성공")
-                                            Toast.makeText(this,"업로드 성공",Toast.LENGTH_SHORT).show()
-                                            loadingDialog.cancel()
-                                            finish()
-                                        }.addOnFailureListener{
-                                            Log.d("!PutUpRoomActivity","실패")
-                                            Toast.makeText(this,"업로드 실패",Toast.LENGTH_SHORT).show()
+                                    db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener {  //전화번호 가져옴
+                                        val userInfo = it.toObject<UserInfoDTO>()
+                                        roomDTO = RoomDTO(listUrl!!,roomLocationInfoDTO!!,deposit,monthlyfee, adminfee, //roomDTO 초기화
+                                            floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user!!.email!!,user.uid,currentTime,imageCount)
 
-                                        }
+                                        roomDTO?.hp = userInfo!!.hp
 
-                                    Log.e("dto","${roomDTO!!.info.title} \n ${roomDTO!!.moreInfo.movein} \n ${roomkinds}")
+                                        //firestore에 업로드
+                                        db.collection("rooms").document(roomDTO!!.timestamp.toString())
+                                            .set(roomDTO!!).addOnSuccessListener {
+                                                Log.d("!PutUpRoomActivity","성공")
+                                                Toast.makeText(this,"업로드 성공",Toast.LENGTH_SHORT).show()
+                                                loadingDialog.cancel()
+                                                finish()
+                                            }.addOnFailureListener{
+                                                Log.d("!PutUpRoomActivity","실패")
+                                                Toast.makeText(this,"업로드 실패",Toast.LENGTH_SHORT).show()
+
+                                            }
+
+                                        Log.e("dto","${roomDTO!!.info.title} \n ${roomDTO!!.moreInfo.movein} \n ${roomkinds}")
+                                    }
+
+
+
                                 }
                             }
                     }
@@ -189,7 +198,6 @@ class PutUpRoomActivity : AppCompatActivity() {
     //방 위치정보 가져오기
     fun getLocation(){
         startActivityForResult(Intent(this,SearchActivity::class.java),300)
-
     }
 
     //방사진 가져오기
@@ -239,7 +247,6 @@ class PutUpRoomActivity : AppCompatActivity() {
             val addressTextView = findViewById<TextView>(R.id.putup_room_address_textview)
             addressTextView.text = roomLocationInfoDTO!!.address
             addressTextView.visibility = View.VISIBLE
-
         }
 
         //설명 쓰기 이벤트
@@ -254,10 +261,10 @@ class PutUpRoomActivity : AppCompatActivity() {
         //상세 정보 이벤트
         if(resultCode==RESULT_OK && requestCode == 500){
             roomMoreInfoDTO = data?.getSerializableExtra("dto") as RoomMoreInfoDTO
+
             val infoTextView = findViewById<TextView>(R.id.putup_room_moreinfo_textview)
             infoTextView.text = roomMoreInfoDTO!!.kinds
             infoTextView.visibility = View.VISIBLE
-
             Log.e("data", roomMoreInfoDTO!!.kinds)
         }
     }

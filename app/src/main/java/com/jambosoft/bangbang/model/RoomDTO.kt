@@ -20,7 +20,8 @@ data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올�
     var favoriteCount : Int = 0,
     var favorites : MutableMap<String,Boolean> = HashMap(),
     var recents : MutableMap<String,Long> = HashMap(),
-    var inquireCount : Int = 0
+    var inquireCount : Int = 0,
+    var hp : String = ""
 ) : Serializable {
     data class Comment(var uid : String = "",
                        var userId : String = "",

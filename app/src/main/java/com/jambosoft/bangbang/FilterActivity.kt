@@ -11,21 +11,37 @@ import android.widget.Toast
 import com.jambosoft.bangbang.model.RoomLocationInfoDTO
 
 class FilterActivity : AppCompatActivity() {
-    var latitude : String? = null
-    var longitude : String? = null
     var depositFee : Int = 0
     var monthlyFee : Int = 0
-    var roomkinds : Boolean = false
+    var roomkinds : Int = 0
+    lateinit var allTextView: TextView
+    lateinit var sharehouseTextView: TextView
+    lateinit var oneroomTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-        roomkinds = intent.getBooleanExtra("roomkinds",false)
 
-        //검색 버튼
-        var locationButton = findViewById<Button>(R.id.filter_search_btn)
-        locationButton.setOnClickListener {
-            getLocation()
+        //방 종류
+        allTextView = findViewById(R.id.filter_all_textview)
+        sharehouseTextView = findViewById(R.id.filter_sharehouse_textview)
+        oneroomTextView = findViewById(R.id.filter_oneroom_textview)
+
+        //모두보기
+        allTextView.setOnClickListener {
+            setRoomKindBackgroundColor(0)
+            roomkinds = 0
         }
+        //쉐어하우스
+        sharehouseTextView.setOnClickListener {
+            setRoomKindBackgroundColor(1)
+            roomkinds = 1
+        }
+        //원룸
+        oneroomTextView.setOnClickListener {
+            setRoomKindBackgroundColor(2)
+            roomkinds = 2
+        }
+
 
         //적용하기 버튼
         var applyButton = findViewById<Button>(R.id.filter_apply_btn)
@@ -87,34 +103,29 @@ class FilterActivity : AppCompatActivity() {
 
     //적용하기 -> 맵으로이동
     fun applyFilter(){
-        if(latitude==null||longitude==null){
-            Toast.makeText(this,"주소를 입력해주세요",Toast.LENGTH_SHORT).show()
-        }else{
-            val intent = Intent(this,KakaoMapActivity::class.java)
-            intent.putExtra("latitude",latitude)
-            intent.putExtra("longitude",longitude)
-            intent.putExtra("depositFee",depositFee)
-            intent.putExtra("monthlyFee",monthlyFee)
-            intent.putExtra("roomkinds",roomkinds)
-            startActivity(intent)
-            finish()
-        }
+        val intent = Intent(this,KakaoMapActivity::class.java)
+        intent.putExtra("depositFee",depositFee)
+        intent.putExtra("monthlyFee",monthlyFee)
+        intent.putExtra("roomkinds",roomkinds)
+        startActivity(intent)
+        finish()
+
     }
 
-    //검색기능 -> 검색창으로이동
-    fun getLocation(){
-        startActivityForResult(Intent(this,SearchActivity::class.java),300)
-    }
-
-    //검색결과 받아오기
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //주소 검색 이벤트
-        if(resultCode == RESULT_OK && requestCode == 300){
-            var dto = data?.getSerializableExtra("dto") as RoomLocationInfoDTO
-            latitude = dto.latitude
-            longitude = dto.longitude
-
+    fun setRoomKindBackgroundColor(position : Int){
+        allTextView.setBackgroundColor(this.resources.getColor(R.color.white))
+        sharehouseTextView.setBackgroundColor(this.resources.getColor(R.color.white))
+        oneroomTextView.setBackgroundColor(this.resources.getColor(R.color.white))
+        when(position){
+            0 ->{
+                allTextView.setBackgroundColor(this.resources.getColor(R.color.gray))
+            }
+            1 ->{
+                sharehouseTextView.setBackgroundColor(this.resources.getColor(R.color.gray))
+            }
+            2 ->{
+                oneroomTextView.setBackgroundColor(this.resources.getColor(R.color.gray))
+            }
         }
     }
 }
