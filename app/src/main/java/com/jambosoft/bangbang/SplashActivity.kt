@@ -111,6 +111,9 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                 }else{
                     Toast.makeText(this,"위치 권한을 허용으로 설정해주세요", Toast.LENGTH_SHORT).show()
+                    Handler().postDelayed({
+                        finish()
+                    },DURATION)
                 }
                 return
             }

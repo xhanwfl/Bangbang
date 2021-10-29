@@ -45,11 +45,17 @@ class HomeFragment : Fragment() {
         //쉐어하우스버튼
         val sharehouseButton = rootView.findViewById<ImageView>(R.id.frag_home_sharehouse_imageview)
         sharehouseButton.setOnClickListener {
+            val intent = Intent(rootView.context,KakaoMapActivity::class.java)
+            intent.putExtra("roomkinds",1)
+            startActivity(intent)
         }
 
         //원룸버튼
         val oneroomButton = rootView.findViewById<ImageView>(R.id.frag_home_oneroom_imageview)
         oneroomButton.setOnClickListener {
+            val intent = Intent(rootView.context,KakaoMapActivity::class.java)
+            intent.putExtra("roomkinds",2)
+            startActivity(intent)
         }
         
         

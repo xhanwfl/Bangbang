@@ -41,16 +41,19 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.hypot
+import kotlin.properties.Delegates
 
 
 class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapView.POIItemEventListener {
-    var latitude : Double = 0.0
-    var longitude : Double = 0.0
+    var latitude : Double = 37.53737528
+    var longitude : Double = 127.00557633
     var depositFee : Int = 0
     var monthlyFee : Int = 0
     var roomkinds : Int = 0
-    var roomDTOList : ArrayList<RoomDTO>? = null
-    var roomDTOs : ArrayList<RoomDTO>? = null
+    var roomDTOList : ArrayList<RoomDTO> = arrayListOf()
+    var roomDTOs : ArrayList<RoomDTO> = arrayListOf()
+    var clusterList : ArrayList<RoomDTO> = arrayListOf()
     var mapView : MapView? = null
     var mapViewContainer : ViewGroup? = null
     var recyclerView : RecyclerView? = null
@@ -58,8 +61,12 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var isFirstClicked = false
     var adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
     val myLocMarkerTag = 1000
+    val clusterTag = 2000
     var isFilterVisible = false
     var isSearchVisible = false
+    var isClusterVisible = false
+    var clusterCount = 3
+    val positionCluster : ArrayList<Int> = arrayListOf()
     lateinit var filterLayout : LinearLayout
     lateinit var allTextView: TextView
     lateinit var sharehouseTextView: TextView
@@ -68,10 +75,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     private val listAdapter = SearchContentAdapter(listItems)
     private var keyword = ""
     lateinit var searchLayout : LinearLayout
-    init{
-        roomDTOList = arrayListOf()
-        roomDTOs = arrayListOf()
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_map)
@@ -79,11 +82,22 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         mapView = MapView(this)
         mapViewContainer = findViewById(R.id.map_view)
 
-        latitude = intent.getStringExtra("latitude")!!.toDouble()
-        longitude = intent.getStringExtra("longitude")!!.toDouble()
+
         depositFee = intent.getIntExtra("depositFee",1000000) //default를 전체보기로 해놓음
         monthlyFee = intent.getIntExtra("monthlyFee",1000000)
         roomkinds = intent.getIntExtra("roomkinds", 0)
+
+        if(roomkinds == 0){
+            latitude = intent.getStringExtra("latitude")!!.toDouble()
+            longitude = intent.getStringExtra("longitude")!!.toDouble()
+        }else{ //쉐어하우스, 원룸 버튼으로 지도를 켰을경우
+            val loc = getCurrentLatLng()  //현재위치 가져와서
+
+            if(loc!=null){  //null체크 후 좌표이동
+                latitude = loc.latitude
+                longitude = loc.longitude
+            }
+        }
 
         recyclerView = findViewById(R.id.kakaomap_content_recycler)
         recyclerView?.layoutManager = LinearLayoutManager(this)
@@ -97,10 +111,18 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         //val myMapViewEventListener = MyMapViewEventListener()
 
 
+
+        //뒤로가기 버튼
+        val backButton = findViewById<Button>(R.id.kakaomap_back_btn)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+
         //검색
         val searchRecyclerView = findViewById<RecyclerView>(R.id.kakaomap_search_recycler)
         val searchEditText = findViewById<EditText>(R.id.kakaomap_search_edittext)
-        searchLayout = findViewById<LinearLayout>(R.id.kakaomap_search_layout)
+        searchLayout = findViewById(R.id.kakaomap_search_layout)
         val searchCancelTextView = findViewById<TextView>(R.id.kakaomap_search_cancel_textview)
         val searchButton = findViewById<Button>(R.id.kakaomap_search_btn)
         searchButton.setOnClickListener {
@@ -113,9 +135,11 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-
             }
         }
+
+
+
 
         //검색 취소버튼
         searchCancelTextView.setOnClickListener {
@@ -129,22 +153,15 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         searchEditText.imeOptions = EditorInfo.IME_ACTION_DONE  //키보드 다음버튼을 확인으로 바꿔줌
         searchEditText.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-
                 keyword = searchEditText.text.toString()
                 searchKeyword(keyword)
-
             }
-
             false
         }
 
         //검색목록 recycler
         searchRecyclerView.layoutManager = LinearLayoutManager(this)
         searchRecyclerView.adapter = listAdapter
-
-
-
-
 
         //필터
         val filterButton = findViewById<Button>(R.id.kakaomap_filter_btn)
@@ -169,7 +186,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
         }
 
-
         //방 종류
         allTextView = findViewById(R.id.kakaomap_filter_all_textview)
         sharehouseTextView = findViewById(R.id.kakaomap_filter_sharehouse_textview)
@@ -180,24 +196,24 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             setRoomKindBackgroundColor(0)
             roomkinds = 0
         }
+
         //쉐어하우스
         sharehouseTextView.setOnClickListener {
             setRoomKindBackgroundColor(1)
             roomkinds = 1
         }
+
         //원룸
         oneroomTextView.setOnClickListener {
             setRoomKindBackgroundColor(2)
             roomkinds = 2
         }
 
-
         //적용하기 버튼
         val applyButton = findViewById<Button>(R.id.kakaomap_filter_apply_btn)
         applyButton.setOnClickListener {
             applyFilter()
         }
-
 
         //보증금 seekBar
         val text = findViewById<TextView>(R.id.kakaomap_filter_seekbar_textview)
@@ -215,12 +231,8 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                     text.text = "전체보기"
                 }
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
         //월세 seekBar
@@ -237,18 +249,15 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                     text2.text = "전체보기"
                 }
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
 
 
         mapView?.apply {
             //중심점변경 + 줌레벨 변경
+
             mapView?.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(latitude,longitude),4,true)
 
             //줌 인
@@ -282,8 +291,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
         }
 
-
-
         //방 정보 가져와서 roomDTOList에 추가
         getRooms()
 
@@ -315,7 +322,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 mapView?.setMapCenterPoint(mapPoint,true)
                 searchLayout.visibility=View.GONE
                 isSearchVisible = false
-
             }
         }
 
@@ -375,6 +381,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         getRooms()
         filterLayout.visibility=View.GONE
     }
+
     //필터 방종류 구분함수
     fun setRoomKindBackgroundColor(position : Int){
         allTextView.setBackgroundColor(this.resources.getColor(R.color.white))
@@ -431,6 +438,112 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 setCustomImageAnchor(0.5f, 1.0f)
                 }
             mapView?.addPOIItem(marker)
+            marker.isShowDisclosureButtonOnCalloutBalloon
+        }
+        setRecyclerAdapter()
+    }
+
+    fun findAndSetClusters(){
+         //해당 방의 가장 가까운 cluster를 표시하는역할
+        clusterList.clear()
+        clusterCount = roomDTOList.size/3
+        Log.e("얍","clusterCount : $clusterCount")
+
+
+        if(clusterCount>0){
+            var clusteringCount = 0
+
+            //step 1 임의의 roomDTO를 center로 설정
+            for(i in 0 until clusterCount){
+                clusterList.add(roomDTOList[i])
+            }
+
+
+            // 5번 반복한다.
+            while(clusteringCount!=5){
+                positionCluster.clear()
+                //step 2 roomDTOList를 순회하며 각각 가장 가까운 cluster를 찾는다.
+                for(i in 0 until roomDTOList.size){
+                    var distance = 10000.01
+                    var position = 0
+                    for(j in 0 until clusterCount){
+                        val d = calculateDistance(roomDTOList[i],clusterList[j])  //클러스터와 방사이의 거리를 구함
+                        if(d<distance){
+                            distance = d
+                            position = j
+                        }
+                    }
+                    positionCluster.add(position)
+                }
+
+                //step 3 해당 방들로 cluster중심값을 다시 지정
+                for(i in 0 until clusterCount){
+                    var centerX = 0.0
+                    var centerY = 0.0
+                    var count = 0
+                    for(j in 0 until roomDTOList.size){
+                        if(positionCluster[j]==i){
+                            //해당 클러스터의 마커 중심 구하기
+                            centerX += roomDTOList[j].address.longitude.toDouble()
+                            centerY += roomDTOList[j].address.latitude.toDouble()
+                            count++
+                        }
+                    }
+                    //클러스터 중심점 변경
+                    clusterList[i].address.latitude = (centerY/count.toDouble()).toString()
+                    clusterList[i].address.longitude = (centerX/count.toDouble()).toString()
+                }
+
+                clusteringCount++
+            }
+
+            setClusters(positionCluster)
+
+
+        }else{ // 방 갯수가 부족할경우
+
+        }
+    }
+
+    //두 좌표 사이의 거리를 구하는 함수
+    fun calculateDistance(a : RoomDTO, b : RoomDTO) : Double{
+        val x = a.address.latitude.toFloat() - b.address.latitude.toFloat()
+        val y = a.address.longitude.toFloat() - b.address.longitude.toFloat()
+
+        Log.e("얍","두점사이 거리 : ${hypot(x,y)}")
+        return hypot(x,y).toDouble() // 두 수의 제곱의 합의 제곱근을 구하는 함수
+    }
+
+    fun setClusters(positionCluster : ArrayList<Int>){
+        mapView?.removeAllPOIItems()
+        val clusterItems : ArrayList<RoomDTO> = arrayListOf()
+        for(i in 0 until clusterList.size){
+            clusterItems.clear()
+
+            //클러스터단위로 방을 묶는다
+            for(j in 0 until positionCluster.size){
+                if(positionCluster[j] == i){
+                    clusterItems.add(roomDTOList[j])
+                }
+            }
+
+            var marker = MapPOIItem()
+            marker.apply {
+                itemName = "방보기" // 마커 이름
+                marker.tag = clusterTag
+                mapPoint = MapPoint.mapPointWithGeoCoord(clusterList[i].address.latitude.toDouble()//마커 좌표
+                    ,clusterList[i].address.longitude.toDouble())
+                Log.e("어디갔어","${clusterList[i].address.latitude}   ,  ${clusterList[i].address.longitude}")
+                markerType = MapPOIItem.MarkerType.CustomImage
+                customImageResourceId = R.drawable.ic_cluster
+                selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                customSelectedImageResourceId = R.drawable.ic_cluster_selected
+                isCustomImageAutoscale = false
+                userObject = clusterItems
+                setCustomImageAnchor(0.5f, 1.0f)
+            }
+            mapView?.addPOIItem(marker)
+            marker.isShowDisclosureButtonOnCalloutBalloon
         }
         setRecyclerAdapter()
     }
@@ -441,15 +554,14 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
     fun getRooms(){
         val db =FirebaseFirestore.getInstance()
-
         when(roomkinds){
             0 ->{ //모두보기
                 db.collection("rooms").get().addOnSuccessListener { documents ->
-                    roomDTOList?.clear()
+                    roomDTOList.clear()
                     for(document in documents){
                         val dto = document.toObject(RoomDTO::class.java)
                         if(dto.deposit<=depositFee&&dto.monthlyFee<=monthlyFee){
-                            roomDTOList?.add(dto)
+                            roomDTOList.add(dto)
                         }
                     }
                     setMarkers()
@@ -457,11 +569,11 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
             1 ->{ //쉐어하우스
                 db.collection("rooms").whereEqualTo("roomKinds",true).get().addOnSuccessListener { documents ->
-                    roomDTOList?.clear()
+                    roomDTOList.clear()
                     for(document in documents){
                         val dto = document.toObject(RoomDTO::class.java)
                         if(dto.deposit<=depositFee&&dto.monthlyFee<=monthlyFee){
-                            roomDTOList?.add(dto)
+                            roomDTOList.add(dto)
                         }
                     }
                     setMarkers()
@@ -469,11 +581,11 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
             2 ->{ //원룸
                 db.collection("rooms").whereEqualTo("roomKinds",false).get().addOnSuccessListener { documents ->
-                    roomDTOList?.clear()
+                    roomDTOList.clear()
                     for(document in documents){
                         val dto = document.toObject(RoomDTO::class.java)
                         if(dto.deposit<=depositFee&&dto.monthlyFee<=monthlyFee){
-                            roomDTOList?.add(dto)
+                            roomDTOList.add(dto)
                         }
                     }
                     setMarkers()
@@ -482,32 +594,37 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         }
     }
 
-
     //커스텀 말풍선 클래스
     class CustomBalloonAdapter : CalloutBalloonAdapter{
         override fun getCalloutBalloon(p0: MapPOIItem?) : View?{
             //마커 클릭시 나오는 말풍선
             return null
         }
-
         override fun getPressedCalloutBalloon(p0: MapPOIItem?): View? {
             //말풍선 클릭 시
             return null
         }
-
     }
 
     //mapViewEventListener
-    override fun onMapViewInitialized(p0: MapView?) {
-       Log.e("감지","맵뷰리스너 초기화")
-    }
+    override fun onMapViewInitialized(p0: MapView?) {}
 
-    override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
-
-    }
+    override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {}
 
     override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
         Log.e("감지","줌레벨 ${p1}")
+
+        if(p1>=7&&!isClusterVisible){ //클러스터 보여주는 부분
+            findAndSetClusters()
+            isClusterVisible = true
+            Log.e("얍","나와라클러스터")
+        }
+
+        if(p1<=6&&isClusterVisible){//클러스터 지우는부분
+            setMarkers()
+            isClusterVisible = false
+            Log.e("얍","없어져라클러스터")
+        }
     }
 
     override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
@@ -521,45 +638,54 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         }
     }
 
-    override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
+    override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {}
 
-    }
+    override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {}
 
-    override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
+    override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {}
 
-    }
+    override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {}
 
-    override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
-
-    }
-
+    override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {}
 
     //마커 클릭이벤트 리스너
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
 
         if (p1 != null) {
-            if(p1.tag==myLocMarkerTag){ //내위치 마커일경우
+            if(p1.tag==myLocMarkerTag){ //내위치 마커
 
-            }else{ //내위치 마커가 아닐경우
-                roomDTOList!![p1!!.tag]
+            }else if(p1.tag == clusterTag){//클러스터 마커
+                val clusterItems = p1.userObject as ArrayList<RoomDTO>
 
                 if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
                     isMarkerClicked = true
-                    Log.e("감지","마커클릭이벤트 ${isMarkerClicked}")
-                    roomDTOs?.clear()
-                    roomDTOs?.add(roomDTOList!![p1.tag])
 
                     mapView?.setMapCenterPoint(p1.mapPoint,true)
                     if(!isFirstClicked){ //초기화는 맨처음 한번만
-                        adapter = KakaoMapAdapter(roomDTOs!!)
+                        adapter = KakaoMapAdapter(clusterItems)
+                        setRecyclerAdapter()
+                        isFirstClicked = true
+                    }else{
+                        adapter?.notifyDataSetChanged()
+                    }
+                    recyclerView?.visibility = View.VISIBLE
+
+                }else if(isMarkerClicked){ //마커를 다시 클릭시 recyclerview 끄기
+                    isMarkerClicked = false
+                    recyclerView?.visibility = View.GONE
+                }
+
+            } else{ //방 마커
+                roomDTOList[p1.tag]
+
+                if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
+                    isMarkerClicked = true
+                    roomDTOs.clear()
+                    roomDTOs.add(roomDTOList[p1.tag])
+
+                    mapView?.setMapCenterPoint(p1.mapPoint,true)
+                    if(!isFirstClicked){ //초기화는 맨처음 한번만
+                        adapter = KakaoMapAdapter(roomDTOs)
                         setRecyclerAdapter()
                         isFirstClicked = true
                     }else{
@@ -573,33 +699,11 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 }
             }
         }
-
-
     }
 
-    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
+    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {}
 
-    }
+    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?, p2: MapPOIItem.CalloutBalloonButtonType?) {}
 
-    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?, p2: MapPOIItem.CalloutBalloonButtonType?) {
-
-    }
-
-    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
-
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //필터
-        if(resultCode==RESULT_OK&&requestCode==300){
-            depositFee = intent.getIntExtra("depositFee",1000000) //default를 전체보기로 해놓음
-            monthlyFee = intent.getIntExtra("monthlyFee",1000000)
-            roomkinds = intent.getIntExtra("roomkinds", 0)
-            Log.e("!sibal","roomKinds : $roomkinds    depositFee : $depositFee")
-            getRooms()
-        }
-    }
-
+    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {}
 }
