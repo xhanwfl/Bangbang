@@ -29,6 +29,7 @@ class PutUpRoomActivity : AppCompatActivity() {
     var roomMoreInfoDTO : RoomMoreInfoDTO? = null
     var roomLocationInfoDTO : RoomLocationInfoDTO? = null
     var roomkinds : Boolean = false
+    lateinit var cameraImageView : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +92,7 @@ class PutUpRoomActivity : AppCompatActivity() {
             }
         }
 
-
+        cameraImageView = findViewById(R.id.putup_room_camera_imageview)
 
 
 
@@ -237,6 +238,7 @@ class PutUpRoomActivity : AppCompatActivity() {
             val adapter = SelectedImageAdapter(listUri!!)
             val pager = findViewById<ViewPager>(R.id.putup_room_image_pager)
             pager.adapter = adapter
+            cameraImageView.visibility = View.GONE
         }
 
 

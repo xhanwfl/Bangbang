@@ -1,8 +1,12 @@
 package com.jambosoft.bangbang
 
 import android.content.Intent
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -43,6 +47,20 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
         }
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val focusView : View? = currentFocus
+        val rect = Rect()
+        focusView?.getGlobalVisibleRect(rect)
+        val x = ev?.x?.toInt()
+        val y = ev?.y?.toInt()
+        if(!rect.contains(x!!,y!!)){
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(focusView?.windowToken,0)
+            focusView?.clearFocus()
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
     fun setting(){
        val dto = intent.getSerializableExtra("dto") as RoomMoreInfoDTO
         kindsEditText?.setText(dto.kinds)
@@ -51,32 +69,23 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
         parkingEditText?.setText(dto.parking)
         termEditText?.setText(dto.term)
         moveinEditText?.setText(dto.movein)
-
     }
 
     fun getMoreInfo(){
-
         val kinds = kindsEditText?.text.toString()
-
         val area = areaEditText?.text.toString()
-
         val options = optionsEditText?.text.toString()
-
         val parking = parkingEditText?.text.toString()
-
         val term = termEditText?.text.toString()
-
         val movein = moveinEditText?.text.toString()
 
         if(kinds.equals("")||area.equals("")||options.equals("")||  //하나라도 입력안했을경우
             parking.equals("")||term.equals("")||movein.equals("")){
             Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
         }else{ //모두 정상입력
-            var intent = Intent(this, PutUpRoomActivity::class.java)
-
-            var dto = RoomMoreInfoDTO(kinds,area, options, parking, term, movein)
+            val intent = Intent(this, PutUpRoomActivity::class.java)
+            val dto = RoomMoreInfoDTO(kinds,area, options, parking, term, movein)
             intent.putExtra("dto",dto)
-
             setResult(RESULT_OK,intent)
             finish()
         }

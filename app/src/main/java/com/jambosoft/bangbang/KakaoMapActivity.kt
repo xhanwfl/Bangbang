@@ -371,7 +371,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                     document.y)
                 listItems.add(item)
             }
-
             listAdapter.notifyDataSetChanged()
         }
     }
@@ -420,14 +419,14 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     fun setMarkers(){
         //마커 추가
         mapView?.removeAllPOIItems()
-        for(i in 0..roomDTOList!!.size-1){
-            var marker = MapPOIItem()
+        for(i in 0..roomDTOList.size-1){
+            val marker = MapPOIItem()
             marker?.apply {
-                itemName = "${roomDTOList!![i].deposit}/${roomDTOList!![i].monthlyFee}" // 마커 이름
+                itemName = "${roomDTOList[i].deposit}/${roomDTOList[i].monthlyFee}" // 마커 이름
                 marker.tag = i
-                mapPoint = MapPoint.mapPointWithGeoCoord(roomDTOList!![i].address.latitude.toDouble()//마커 좌표
-                        ,roomDTOList!![i].address.longitude.toDouble())
-                Log.e("lati",roomDTOList!![i].address.latitude+"\t"+roomDTOList!![i].address.longitude)
+                mapPoint = MapPoint.mapPointWithGeoCoord(roomDTOList[i].address.latitude.toDouble()//마커 좌표
+                        ,roomDTOList[i].address.longitude.toDouble())
+                Log.e("lati",roomDTOList[i].address.latitude+"\t"+roomDTOList[i].address.longitude)
                 /*markerType = MapPOIItem.MarkerType.BluePin
                 selectedMarkerType = MapPOIItem.MarkerType.RedPin*/
                 markerType = MapPOIItem.MarkerType.CustomImage
