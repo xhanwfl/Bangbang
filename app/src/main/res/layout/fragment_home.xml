@@ -19,7 +19,7 @@
                 android:orientation="vertical"
                 android:background="#EFEFEF">
                 <!--상단 바-->
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="#79CCC8"
@@ -34,10 +34,11 @@
                         android:layout_width="210dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"/>
-                </LinearLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
+                </LinearLayout>-->
+
+                <!--<androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="85dp"
                     android:background="#FFFFFF">
 
                     <ImageView
@@ -68,7 +69,7 @@
                     <Button
                         android:id="@+id/frag_home_search_btn"
                         android:layout_width="350dp"
-                        android:layout_height="45dp"
+                        android:layout_height="43dp"
                         android:background="@drawable/search_btn_shape"
                         android:gravity="center_vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -138,83 +139,265 @@
                         app:layout_constraintTop_toBottomOf="@+id/frag_home_oneroom_imageview"
                         app:layout_constraintVertical_bias="0.0" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:background="@drawable/main_background">
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전세·월세·쉐어하우스+"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.106"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.261" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="어디에 살고 싶은 가요?"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.131"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        app:layout_constraintVertical_bias="0.0" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.566"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2"
+                        app:layout_constraintVertical_bias="0.0">
+                        <LinearLayout
+                            android:id="@+id/frag_home_openmap_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                app:cardCornerRadius="100dp">
+                                <ImageView
+                                    android:id="@+id/frag_home_openmap_imageview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/ic_main_map"/>
+                            </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="지도 찾기"
+                                android:textStyle="bold"
+                                android:textColor="#79CCC8"
+                                android:layout_marginTop="5dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/frag_home_findsubway_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                app:cardCornerRadius="100dp">
+                                <ImageView
+                                    android:id="@+id/frag_home_findsubway_imageview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/ic_main_subway"/>
+                            </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="지하철역 찾기"
+                                android:textColor="#79CCC8"
+                                android:textStyle="bold"
+                                android:layout_marginTop="5dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="이 구역 인기 매물 :)"
-                        android:textStyle="bold"
-                        android:textColor="#7e7e7e"
-                        android:textSize="18sp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/frag_home_more_favoriteroom_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="더보기"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="15dp"/>
+                    android:layout_height="60dp"
+                    android:background="#AEAEAE"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:id="@+id/frag_home_putuproom_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="40dp"
+                        android:layout_marginVertical="10dp"
+                        android:background="@drawable/button_shape_main_putuproom"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_home_gray"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="방 내놓기"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="#9D9D9D"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
                 </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/frag_home_recommend_recyclerview"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scrollbars="none"/>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp">
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_recentroom"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="최근 본 공간"
-                        android:textStyle="bold"
-                        android:textColor="#7e7e7e"
+                        android:text="최근 본 방"
+                        android:textColor="#000000"
                         android:textSize="18sp"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/frag_home_more_recentroom_textview"
+                        app:layout_constraintHorizontal_bias="0.031"
+                        app:layout_constraintStart_toEndOf="@+id/imageView3"
+                        app:layout_constraintTop_toTopOf="parent" />
                     <TextView
                         android:id="@+id/frag_home_more_recentroom_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
                         android:text="더보기"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginRight="15dp"/>
-                </LinearLayout>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.612" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/frag_home_recent_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scrollbars="none"/>
-                <LinearLayout
+                    android:layout_height="190dp"
+                    android:scrollbars="none"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"/>
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:background="#000000">
+                    android:layout_height="10dp"
+                    android:background="#FFFFFF"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/banner_bangbang"/>
-                </LinearLayout>
-
+                        android:id="@+id/imageView4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_main_recommend"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="지금 인기"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/frag_home_more_recommendroom_textview"
+                        app:layout_constraintHorizontal_bias="0.031"
+                        app:layout_constraintStart_toEndOf="@+id/imageView4"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/frag_home_more_recommendroom_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="더보기"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.612" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/frag_home_recommend_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:scrollbars="none"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#FFFFFF"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_main_favorite"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="찜한 방"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/frag_home_more_favoriteroom_textview"
+                        app:layout_constraintHorizontal_bias="0.031"
+                        app:layout_constraintStart_toEndOf="@+id/imageView5"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/frag_home_more_favoriteroom_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="더보기"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.612" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/frag_home_favorite_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:scrollbars="none"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

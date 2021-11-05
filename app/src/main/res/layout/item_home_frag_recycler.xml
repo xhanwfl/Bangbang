@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
-    android:layout_height="match_parent"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:layout_marginHorizontal="5dp"
+    android:padding="5dp">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="5dp"
-        android:layout_height="125dp"
-        app:cardCornerRadius="15dp">
+        android:layout_marginHorizontal="3dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="9dp">
         <ImageView
             android:id="@+id/item_homefrag_recycler_imageview"
             android:layout_width="match_parent"
@@ -21,18 +23,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="월세 100/20"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="8dp"
         android:textColor="#000000"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EFEFEF"
+        android:layout_marginTop="5dp"/>
     <TextView
         android:id="@+id/item_homefrag_address_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="서초구 반포동"
         android:textSize="10sp"
-        android:layout_marginLeft="16dp"/>
-
-
-
+        android:lines="1"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"/>
 </LinearLayout>

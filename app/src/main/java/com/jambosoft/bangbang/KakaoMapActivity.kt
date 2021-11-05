@@ -48,12 +48,13 @@ import kotlin.properties.Delegates
 class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapView.POIItemEventListener {
     var latitude : Double = 37.53737528
     var longitude : Double = 127.00557633
-    var depositFee : Int = 0
-    var monthlyFee : Int = 0
+    var depositFee : Int = 1000000
+    var monthlyFee : Int = 1000000
     var roomkinds : Int = 0
     var roomDTOList : ArrayList<RoomDTO> = arrayListOf()
     var roomDTOs : ArrayList<RoomDTO> = arrayListOf()
     var clusterList : ArrayList<RoomDTO> = arrayListOf()
+    var currentItems : ArrayList<RoomDTO> = arrayListOf()
     var mapView : MapView? = null
     var mapViewContainer : ViewGroup? = null
     var recyclerView : RecyclerView? = null
@@ -83,20 +84,17 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         mapViewContainer = findViewById(R.id.map_view)
 
 
-        depositFee = intent.getIntExtra("depositFee",1000000) //default를 전체보기로 해놓음
-        monthlyFee = intent.getIntExtra("monthlyFee",1000000)
-        roomkinds = intent.getIntExtra("roomkinds", 0)
+        val btnKinds = intent.getIntExtra("btnKinds", 0)
 
-        if(roomkinds == 0){
-            latitude = intent.getStringExtra("latitude")!!.toDouble()
-            longitude = intent.getStringExtra("longitude")!!.toDouble()
-        }else{ //쉐어하우스, 원룸 버튼으로 지도를 켰을경우
+        if(btnKinds == 0){ // 지도로찾기로 들어올경우
             val loc = getCurrentLatLng()  //현재위치 가져와서
-
             if(loc!=null){  //null체크 후 좌표이동
                 latitude = loc.latitude
                 longitude = loc.longitude
             }
+        }else{ //지하철역찾기로 들어올경우
+            latitude = intent.getStringExtra("latitude")!!.toDouble()
+            longitude = intent.getStringExtra("longitude")!!.toDouble()
         }
 
         recyclerView = findViewById(R.id.kakaomap_content_recycler)
@@ -658,10 +656,11 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
                 if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
                     isMarkerClicked = true
-
+                    currentItems.clear()
+                    currentItems.addAll(clusterItems)
                     mapView?.setMapCenterPoint(p1.mapPoint,true)
                     if(!isFirstClicked){ //초기화는 맨처음 한번만
-                        adapter = KakaoMapAdapter(clusterItems)
+                        adapter = KakaoMapAdapter(currentItems)
                         setRecyclerAdapter()
                         isFirstClicked = true
                     }else{
@@ -681,10 +680,11 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                     isMarkerClicked = true
                     roomDTOs.clear()
                     roomDTOs.add(roomDTOList[p1.tag])
-
+                    currentItems.clear()
+                    currentItems.addAll(roomDTOs)
                     mapView?.setMapCenterPoint(p1.mapPoint,true)
                     if(!isFirstClicked){ //초기화는 맨처음 한번만
-                        adapter = KakaoMapAdapter(roomDTOs)
+                        adapter = KakaoMapAdapter(currentItems)
                         setRecyclerAdapter()
                         isFirstClicked = true
                     }else{

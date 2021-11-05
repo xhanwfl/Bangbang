@@ -1,5 +1,6 @@
 package com.jambosoft.bangbang.Fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -32,7 +34,6 @@ class HomeFragment : Fragment() {
     var recommendView : RecyclerView ? = null
     var recentView : RecyclerView ? = null
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootView : View = inflater.inflate(R.layout.fragment_home, container, false)
         user = FirebaseAuth.getInstance().currentUser
@@ -41,7 +42,17 @@ class HomeFragment : Fragment() {
         favoriteItems = arrayListOf()
 
 
+        //지도로 찾기
+        val openMapLayout = rootView.findViewById<LinearLayout>(R.id.frag_home_openmap_layout)
+        openMapLayout.setOnClickListener{
+            openMap()
+        }
+        val openMapImageView = rootView.findViewById<ImageView>(R.id.frag_home_openmap_imageview)
+        openMapImageView.setOnClickListener {
+            openMap()
+        }
 
+/*
         //쉐어하우스버튼
         val sharehouseButton = rootView.findViewById<ImageView>(R.id.frag_home_sharehouse_imageview)
         sharehouseButton.setOnClickListener {
@@ -57,13 +68,21 @@ class HomeFragment : Fragment() {
             intent.putExtra("roomkinds",2)
             startActivity(intent)
         }
-        
+        */
+
+        //방올리기 버튼
+        val putupRoomLayout = rootView.findViewById<LinearLayout>(R.id.frag_home_putuproom_layout)
+        putupRoomLayout.setOnClickListener{
+
+        }
+
+
         
         //더보기 버튼
-        val moreFavoriteRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_favoriteroom_textview)
-        moreFavoriteRoomTextView.setOnClickListener { 
+        val moreRecommendRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_recommendroom_textview)
+        moreRecommendRoomTextView.setOnClickListener {
             val intent = Intent(rootView.context,RoomListActivity::class.java)
-            intent.putExtra("type","favorite")
+            intent.putExtra("type","recommend")
             startActivity(intent)
         }
         val moreRecentRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_recentroom_textview)
@@ -82,14 +101,14 @@ class HomeFragment : Fragment() {
         recentView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
         //검색
-        val searchButton = rootView.findViewById<Button>(R.id.frag_home_search_btn)
+        /*val searchButton = rootView.findViewById<Button>(R.id.frag_home_search_btn)
         val searchImageView = rootView.findViewById<ImageView>(R.id.frag_home_search_imageview)
         searchButton.setOnClickListener {
             startActivityForResult(Intent(context, SearchActivity::class.java),300)
         }
         searchImageView.setOnClickListener {
             startActivityForResult(Intent(context, SearchActivity::class.java),300)
-        }
+        }*/
 
 
 
@@ -98,6 +117,13 @@ class HomeFragment : Fragment() {
         setRecycler()
         // Inflate the layout for this fragment
         return rootView
+    }
+
+    fun openMap(){
+        val intent = Intent(requireContext(),KakaoMapActivity::class.java)
+        //지도버튼 클릭 구분
+        intent.putExtra("btnKinds",0)
+        startActivity(intent)
     }
 
     fun setRecycler(){

@@ -41,7 +41,7 @@ class RoomListActivity : AppCompatActivity() {
         roomListRecyclerView = findViewById(R.id.roomlist_recycler)
         roomListRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        if(type.equals("favorite")){
+        if(type.equals("recommend")){
             roomListTextView.text = "인기 매물"
             setFavoriteItems()
         }else if (type.equals("recent")){
