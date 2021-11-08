@@ -26,13 +26,14 @@ import com.jambosoft.bangbang.model.RoomLocationInfoDTO
 import kotlinx.coroutines.*
 
 class HomeFragment : Fragment() {
-
     var recentItems : ArrayList<RoomDTO>? = null
+    var recommendItems : ArrayList<RoomDTO>? = null
     var favoriteItems : ArrayList<RoomDTO>? = null
     var user : FirebaseUser? = null
     var db : FirebaseFirestore? = null
     var recommendView : RecyclerView ? = null
     var recentView : RecyclerView ? = null
+    var favoriteView : RecyclerView ? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootView : View = inflater.inflate(R.layout.fragment_home, container, false)
@@ -40,7 +41,7 @@ class HomeFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         recentItems = arrayListOf()
         favoriteItems = arrayListOf()
-
+        recommendItems = arrayListOf()
 
         //지도로 찾기
         val openMapLayout = rootView.findViewById<LinearLayout>(R.id.frag_home_openmap_layout)
@@ -50,6 +51,16 @@ class HomeFragment : Fragment() {
         val openMapImageView = rootView.findViewById<ImageView>(R.id.frag_home_openmap_imageview)
         openMapImageView.setOnClickListener {
             openMap()
+        }
+
+        //지하철역으로 찾기
+        val findSubwayLayout = rootView.findViewById<LinearLayout>(R.id.frag_home_findsubway_layout)
+        findSubwayLayout.setOnClickListener {
+            startSearchActivity()
+        }
+        val findSubwayImageView = rootView.findViewById<ImageView>(R.id.frag_home_findsubway_imageview)
+        findSubwayImageView.setOnClickListener {
+            startSearchActivity()
         }
 
 /*
@@ -69,14 +80,6 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
         */
-
-        //방올리기 버튼
-        val putupRoomLayout = rootView.findViewById<LinearLayout>(R.id.frag_home_putuproom_layout)
-        putupRoomLayout.setOnClickListener{
-
-        }
-
-
         
         //더보기 버튼
         val moreRecommendRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_recommendroom_textview)
@@ -91,24 +94,25 @@ class HomeFragment : Fragment() {
             intent.putExtra("type","recent")
             startActivity(intent)
         }
+        val moreFavoriteRoomTextView = rootView.findViewById<TextView>(R.id.frag_home_more_favoriteroom_textview)
+        moreFavoriteRoomTextView.setOnClickListener {
+            val intent = Intent(rootView.context,RoomListActivity::class.java)
+            intent.putExtra("type","favorite")
+            startActivity(intent)
+        }
 
         //추천리스트
-        recommendView = rootView.findViewById<RecyclerView>(R.id.frag_home_recommend_recyclerview)
+        recommendView = rootView.findViewById(R.id.frag_home_recommend_recyclerview)
         recommendView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
         //최근에 본 리스트
-        recentView = rootView.findViewById<RecyclerView>(R.id.frag_home_recent_recyclerview)
+        recentView = rootView.findViewById(R.id.frag_home_recent_recyclerview)
         recentView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
-        //검색
-        /*val searchButton = rootView.findViewById<Button>(R.id.frag_home_search_btn)
-        val searchImageView = rootView.findViewById<ImageView>(R.id.frag_home_search_imageview)
-        searchButton.setOnClickListener {
-            startActivityForResult(Intent(context, SearchActivity::class.java),300)
-        }
-        searchImageView.setOnClickListener {
-            startActivityForResult(Intent(context, SearchActivity::class.java),300)
-        }*/
+        //찜한 방
+        favoriteView = rootView.findViewById(R.id.frag_home_favorite_recyclerview)
+        favoriteView?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+
 
 
 
@@ -117,6 +121,10 @@ class HomeFragment : Fragment() {
         setRecycler()
         // Inflate the layout for this fragment
         return rootView
+    }
+
+    fun startSearchActivity(){
+        startActivityForResult(Intent(context, SearchActivity::class.java),300)
     }
 
     fun openMap(){
@@ -128,13 +136,13 @@ class HomeFragment : Fragment() {
 
     fun setRecycler(){
         db!!.collection("rooms").orderBy("favoriteCount",Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
-            favoriteItems!!.clear()
+            recommendItems!!.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
-                favoriteItems!!.add(dto)
+                recommendItems!!.add(dto)
             }
 
-            recommendView?.adapter = HomeFragmentRecyclerAdapter(favoriteItems!!)
+            recommendView?.adapter = HomeFragmentRecyclerAdapter(recommendItems!!)
         }
 
 
@@ -151,6 +159,22 @@ class HomeFragment : Fragment() {
             sortRecentItems()
             recentView?.adapter = HomeFragmentRecyclerAdapter(recentItems!!)
         }
+
+        db!!.collection("rooms").get().addOnSuccessListener { documents ->
+            favoriteItems!!.clear()
+            for(document in documents){
+                val dto = document.toObject(RoomDTO::class.java)
+                if(dto.favorites.isNotEmpty()){ //favorite null체크
+                    if(dto.favorites.containsKey(user!!.uid)){ //해당 key값이 있는지 체크
+                        if(dto.favorites[user!!.uid]!!){ //key가 있을경우 true이면 list에 추가
+                            favoriteItems!!.add(dto)
+                        }
+                    }
+                }
+            }
+            favoriteView?.adapter = HomeFragmentRecyclerAdapter(favoriteItems!!)
+        }
+
     }
 
 

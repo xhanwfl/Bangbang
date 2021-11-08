@@ -43,15 +43,35 @@ class RoomListActivity : AppCompatActivity() {
 
         if(type.equals("recommend")){
             roomListTextView.text = "인기 매물"
-            setFavoriteItems()
+            setRecommendItems()
         }else if (type.equals("recent")){
             roomListTextView.text = "최근 본 방"
             setRecentItems()
+        }else if(type.equals("favorite")){
+            roomListTextView.text = "찜한 방"
+            setFavoriteItems()
         }
 
     }
 
     fun setFavoriteItems(){
+        db!!.collection("rooms").get().addOnSuccessListener { documents ->
+            roomItems!!.clear()
+            for(document in documents){
+                val dto = document.toObject(RoomDTO::class.java)
+                if(dto.favorites.isNotEmpty()){ //favorite null체크
+                    if(dto.favorites.containsKey(user!!.uid)){ //해당 key값이 있는지 체크
+                        if(dto.favorites[user!!.uid]!!){ //key가 있을경우 true이면 list에 추가
+                            roomItems!!.add(dto)
+                        }
+                    }
+                }
+            }
+            roomListRecyclerView?.adapter = HomeFragmentRecyclerAdapter(roomItems!!)
+        }
+    }
+
+    fun setRecommendItems(){
         db.collection("rooms").orderBy("favoriteCount",
             Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
             roomItems.clear()

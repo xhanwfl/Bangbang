@@ -140,30 +140,33 @@
                         app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>-->
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="300dp"
                     android:background="@drawable/main_background">
+
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="전세·월세·쉐어하우스+"
                         android:textColor="@color/white"
-                        android:textSize="10sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.106"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.261" />
+
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어디에 살고 싶은 가요?"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="24sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -171,6 +174,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView"
                         app:layout_constraintVertical_bias="0.0" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
@@ -179,90 +183,72 @@
                         android:background="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.566"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView2"
-                        app:layout_constraintVertical_bias="0.0">
+                        app:layout_constraintVertical_bias="0.448">
                         <LinearLayout
                             android:id="@+id/frag_home_openmap_layout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
+
                             <androidx.cardview.widget.CardView
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 app:cardCornerRadius="100dp">
+
                                 <ImageView
                                     android:id="@+id/frag_home_openmap_imageview"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/ic_main_map"/>
+                                    android:src="@drawable/ic_main_map" />
                             </androidx.cardview.widget.CardView>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12sp"
+                                android:layout_marginTop="5dp"
                                 android:text="지도 찾기"
-                                android:textStyle="bold"
                                 android:textColor="#79CCC8"
-                                android:layout_marginTop="5dp"/>
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/frag_home_findsubway_layout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
+
                             <androidx.cardview.widget.CardView
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 app:cardCornerRadius="100dp">
+
                                 <ImageView
                                     android:id="@+id/frag_home_findsubway_imageview"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/ic_main_subway"/>
+                                    android:src="@drawable/ic_main_subway" />
                             </androidx.cardview.widget.CardView>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12sp"
+                                android:layout_marginTop="5dp"
                                 android:text="지하철역 찾기"
                                 android:textColor="#79CCC8"
-                                android:textStyle="bold"
-                                android:layout_marginTop="5dp"/>
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
+
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="#AEAEAE"
-                    android:gravity="center">
-                    <LinearLayout
-                        android:id="@+id/frag_home_putuproom_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="40dp"
-                        android:layout_marginVertical="10dp"
-                        android:background="@drawable/button_shape_main_putuproom"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_home_gray"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="방 내놓기"
-                            android:layout_marginLeft="5dp"
-                            android:textColor="#9D9D9D"
-                            android:layout_marginRight="10dp"/>
-                    </LinearLayout>
-                </LinearLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -396,7 +382,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/frag_home_favorite_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="190dp"
                     android:scrollbars="none"/>
             </LinearLayout>
         </ScrollView>
