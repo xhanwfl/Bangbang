@@ -197,6 +197,7 @@ class HomeFragment : Fragment() {
             val intent = Intent(context, KakaoMapActivity::class.java)
             intent.putExtra("latitude",roomLocationInfoDTO.latitude)
             intent.putExtra("longitude",roomLocationInfoDTO.longitude)
+            intent.putExtra("btnKinds",1)
             startActivity(intent)
         }
     }

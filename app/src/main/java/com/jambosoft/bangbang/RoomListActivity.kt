@@ -51,23 +51,22 @@ class RoomListActivity : AppCompatActivity() {
             roomListTextView.text = "찜한 방"
             setFavoriteItems()
         }
-
     }
 
     fun setFavoriteItems(){
-        db!!.collection("rooms").get().addOnSuccessListener { documents ->
-            roomItems!!.clear()
+        db.collection("rooms").get().addOnSuccessListener { documents ->
+            roomItems.clear()
             for(document in documents){
                 val dto = document.toObject(RoomDTO::class.java)
                 if(dto.favorites.isNotEmpty()){ //favorite null체크
-                    if(dto.favorites.containsKey(user!!.uid)){ //해당 key값이 있는지 체크
-                        if(dto.favorites[user!!.uid]!!){ //key가 있을경우 true이면 list에 추가
-                            roomItems!!.add(dto)
+                    if(dto.favorites.containsKey(user.uid)){ //해당 key값이 있는지 체크
+                        if(dto.favorites[user.uid]!!){ //key가 있을경우 true이면 list에 추가
+                            roomItems.add(dto)
                         }
                     }
                 }
             }
-            roomListRecyclerView?.adapter = HomeFragmentRecyclerAdapter(roomItems!!)
+            roomListRecyclerView.adapter = HomeFragmentRecyclerAdapter(roomItems)
         }
     }
 
@@ -79,7 +78,6 @@ class RoomListActivity : AppCompatActivity() {
                 val dto = document.toObject(RoomDTO::class.java)
                 roomItems.add(dto)
             }
-
             roomListRecyclerView.adapter = KakaoMapAdapter(roomItems)
         }
     }

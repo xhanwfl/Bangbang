@@ -289,6 +289,16 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
         }
 
+        //확대 , 축소버튼
+        val zoomInButton = findViewById<Button>(R.id.kakaomap_plus_btn)
+        zoomInButton.setOnClickListener {
+            mapView?.zoomIn(true)
+        }
+        val zoomOutButton = findViewById<Button>(R.id.kakaomap_minus_btn)
+        zoomOutButton.setOnClickListener {
+            mapView?.zoomOut(true)
+        }
+
         //방 정보 가져와서 roomDTOList에 추가
         getRooms()
 

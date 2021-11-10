@@ -80,17 +80,35 @@ class PutUpRoomActivity : AppCompatActivity() {
 
 
         //라디오 버튼
-        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
-        radioGroup.setOnCheckedChangeListener{ radioGroup, i ->
+        val roomKindRadioGroup = findViewById<RadioGroup>(R.id.putup_room_roomkind_radioGroup)
+        roomKindRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
             when(i){
                 R.id.putup_room_oneroom_radiobtn ->{
                     roomkinds = false
+                }
+                R.id.putup_room_tworoom_radiobtn ->{
+
+                }
+                R.id.putup_room_officetel_radiobtn ->{
+
                 }
                 R.id.putup_room_sharehouse_radiobtn ->{
                     roomkinds = true
                 }
             }
         }
+        val tradeTypeRadioGroup = findViewById<RadioGroup>(R.id.putup_room_tradetype_radioGroup)
+        tradeTypeRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
+            when(i){
+                R.id.putup_room_monthlyfee_radiobtn ->{
+
+                }
+                R.id.putup_room_charter_radiobtn ->{
+
+                }
+            }
+        }
+
 
         cameraImageView = findViewById(R.id.putup_room_camera_imageview)
 
