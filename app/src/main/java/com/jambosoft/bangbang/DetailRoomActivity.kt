@@ -108,7 +108,11 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //보증금, 월세
         val priceTextView = findViewById<TextView>(R.id.detailroom_price_textview)
-        priceTextView.text = "월세 ${dto?.deposit}/${dto?.monthlyFee}"
+        if(dto!!.contractType==0){ //월세
+            priceTextView.text = "월세 ${dto?.deposit}/${dto?.monthlyFee}"
+        }else{
+            priceTextView.text = "전세 ${dto?.deposit}"
+        }
 
         //타이틀2
         val titleTextView2 = findViewById<TextView>(R.id.detailroom_title_textview2)
@@ -116,7 +120,14 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //방구조
         val roomkindsTextView = findViewById<TextView>(R.id.detailroom_roomkinds_textview)
-        roomkindsTextView.text = if(dto!!.roomKinds) "쉐어하우스" else "원룸"
+        var roomKindsText = "원룸"
+        when(dto!!.roomKinds){
+            0 ->{ roomKindsText = "원룸" }
+            1 ->{ roomKindsText = "투·쓰리룸" }
+            2 ->{ roomKindsText = "오피스텔" }
+            3 ->{ roomKindsText = "쉐어하우스" }
+        }
+        roomkindsTextView.text = roomKindsText
 
         //관리비
         val adminFeeTextView = findViewById<TextView>(R.id.detailroom_adminfee_textview)
@@ -124,7 +135,11 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //층 수
         val floorTextView = findViewById<TextView>(R.id.detailroom_floor_textview)
-        floorTextView.text = "${dto?.floorNumber}층"
+        if(dto!!.floorNumber==0){
+            floorTextView.text = "반지층"
+        }else{
+            floorTextView.text = "${dto?.floorNumber}층"
+        }
 
         //제목
         val titleTextView = findViewById<TextView>(R.id.detailroom_title_textview)
@@ -142,7 +157,7 @@ class DetailRoomActivity : AppCompatActivity() {
 
         //방 종류
         val kindTextView = findViewById<TextView>(R.id.detailroom_kind_textview)
-        kindTextView.text = "${dto?.moreInfo?.kinds}"
+        kindTextView.text = "${roomKindsText}"
 
         //면적
         val areaTextView = findViewById<TextView>(R.id.detailroom_area_textview)

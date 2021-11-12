@@ -66,7 +66,9 @@
                     android:textSize="16sp"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="115dp">
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="25dp">
 
                     <ImageView
                         android:id="@+id/imageView6"
@@ -95,21 +97,21 @@
 
                     <RadioGroup
                         android:id="@+id/putup_room_roomkind_radioGroup"
-                        android:layout_width="350dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView8"
-                        android:paddingHorizontal="15dp">
+                        android:paddingLeft="15dp">
 
                         <RadioButton
                             android:id="@+id/putup_room_oneroom_radiobtn"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginHorizontal="5dp"
-                            android:background="@drawable/button_shape_gray2"
+                            android:background="@drawable/selector_putuproom_radio_button"
                             android:button="@null"
                             android:gravity="center"
                             android:text="   원룸   "
@@ -120,29 +122,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginHorizontal="5dp"
-                            android:background="@drawable/button_shape_gray2"
+                            android:background="@drawable/selector_putuproom_radio_button"
                             android:button="@null"
                             android:gravity="center"
                             android:text="   투·쓰리룸   "
-                            android:textColor="#BB000000"
-                            android:checked="true"/>
+                            android:textColor="#BB000000" />
                         <RadioButton
                             android:id="@+id/putup_room_officetel_radiobtn"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginHorizontal="5dp"
-                            android:background="@drawable/button_shape_gray2"
+                            android:background="@drawable/selector_putuproom_radio_button"
                             android:button="@null"
                             android:gravity="center"
                             android:text="   오피스텔   "
-                            android:textColor="#BB000000"
-                            android:checked="true"/>
+                            android:textColor="#BB000000" />
+
                         <RadioButton
                             android:id="@+id/putup_room_sharehouse_radiobtn"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginHorizontal="5dp"
-                            android:background="@drawable/button_shape_gray2"
+                            android:background="@drawable/selector_putuproom_radio_button"
                             android:button="@null"
                             android:gravity="center"
                             android:text="   쉐어하우스   "
@@ -183,38 +184,37 @@
                         app:layout_constraintVertical_bias="0.0" />
 
                     <RadioGroup
-                        android:id="@+id/putup_room_tradetype_radioGroup"
-                        android:layout_width="350dp"
+                        android:id="@+id/putup_room_contracttype_radioGroup"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView9"
-                        android:paddingHorizontal="15dp">
+                        android:paddingLeft="15dp">
 
                         <RadioButton
                             android:id="@+id/putup_room_monthlyfee_radiobtn"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginHorizontal="5dp"
-                            android:background="@drawable/button_shape_gray2"
+                            android:background="@drawable/selector_putuproom_radio_button"
                             android:button="@null"
                             android:gravity="center"
-                            android:text="    월세    "
+                            android:text="   월세   "
                             android:textColor="#BB000000"
                             android:checked="true"/>
                         <RadioButton
                             android:id="@+id/putup_room_charter_radiobtn"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:background="@drawable/button_shape_gray2"
+                            android:background="@drawable/selector_putuproom_radio_button"
                             android:button="@null"
                             android:gravity="center"
                             android:layout_marginHorizontal="5dp"
-                            android:text="    전세    "
-                            android:textColor="#BB000000"
-                            android:checked="true"/>
+                            android:text="   전세   "
+                            android:textColor="#BB000000" />
                     </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <View
@@ -248,7 +248,7 @@
                         android:id="@+id/putup_room_findaddress_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="25dp"
+                        android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:text="주소 찾기"
                         android:textSize="18sp" />
@@ -292,7 +292,7 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="35dp"
                         android:layout_marginTop="10dp"
                         android:text="보증금"
                         android:textSize="18sp" />
@@ -305,6 +305,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_toLeftOf="@+id/putup_room_deposit_mw"
                         android:background="@drawable/edittext_border_square"
+                        android:gravity="center"
                         android:inputType="number"
                         android:textSize="14sp" />
 
@@ -322,6 +323,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/putup_room_monthlyfee_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
@@ -330,7 +332,7 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="35dp"
                         android:layout_marginTop="10dp"
                         android:text="월세"
                         android:textSize="18sp" />
@@ -343,6 +345,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_toLeftOf="@+id/putup_room_monthlyfee_mw"
                         android:background="@drawable/edittext_border_square"
+                        android:gravity="center"
                         android:inputType="number"
                         android:textSize="14sp" />
 
@@ -368,7 +371,7 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="35dp"
                         android:layout_marginTop="10dp"
                         android:text="관리비"
                         android:textSize="18sp" />
@@ -381,6 +384,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_toLeftOf="@+id/putup_room_adminfee_mw"
                         android:background="@drawable/edittext_border_square"
+                        android:gravity="center"
                         android:inputType="number"
                         android:textSize="14sp" />
 
@@ -409,30 +413,52 @@
 
                     <TextView
                         android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="35dp"
                         android:text="층 수"
                         android:textSize="18sp" />
 
+                    <CheckBox
+                        android:id="@+id/putup_room_floornumber_checkbox"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="15dp"
+                        android:layout_toLeftOf="@id/textview10" />
+
+                    <TextView
+                        android:id="@+id/textview10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@id/putup_room_floornumber_edittext"
+                        android:gravity="center_vertical"
+                        android:text="반지층"
+                        android:layout_marginRight="30dp"
+                        android:textColor="#28C3C5" />
+
                     <EditText
                         android:id="@+id/putup_room_floornumber_edittext"
-                        android:layout_width="160dp"
-                        android:layout_height="30dp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_toLeftOf="@+id/putup_room_floornumber_ch"
                         android:background="@drawable/edittext_border_square"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/putup_room_floornumber_ch"
                         android:layout_width="50dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="20dp"
                         android:text="  층  "
                         android:textColor="#28C3C5"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"/>
 
                 </RelativeLayout>
 
@@ -456,7 +482,7 @@
                         android:id="@+id/putup_room_explain_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="35dp"
                         android:gravity="center"
                         android:text="설명 쓰기"
                         android:textSize="18sp" />
@@ -500,7 +526,7 @@
                         android:id="@+id/putup_room_info_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="35dp"
                         android:gravity="center"
                         android:text="상세 정보"
                         android:textSize="18sp" />

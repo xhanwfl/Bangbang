@@ -24,7 +24,6 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_put_up_room_more_info)
 
         //editText 초기화
-        kindsEditText = findViewById(R.id.putup_room_more_info_kinds)
         areaEditText = findViewById(R.id.putup_room_more_info_area)
         optionsEditText = findViewById(R.id.putup_room_more_info_options)
         parkingEditText = findViewById(R.id.putup_room_more_info_parking)
@@ -63,7 +62,6 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
 
     fun setting(){
        val dto = intent.getSerializableExtra("dto") as RoomMoreInfoDTO
-        kindsEditText?.setText(dto.kinds)
         areaEditText?.setText(dto.area)
         optionsEditText?.setText(dto.options)
         parkingEditText?.setText(dto.parking)
@@ -72,19 +70,18 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
     }
 
     fun getMoreInfo(){
-        val kinds = kindsEditText?.text.toString()
-        val area = areaEditText?.text.toString()
+        val area = areaEditText?.text.toString().toInt()
         val options = optionsEditText?.text.toString()
         val parking = parkingEditText?.text.toString()
         val term = termEditText?.text.toString()
         val movein = moveinEditText?.text.toString()
 
-        if(kinds.equals("")||area.equals("")||options.equals("")||  //하나라도 입력안했을경우
+        if(area==0||options.equals("")||  //하나라도 입력안했을경우
             parking.equals("")||term.equals("")||movein.equals("")){
             Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
         }else{ //모두 정상입력
             val intent = Intent(this, PutUpRoomActivity::class.java)
-            val dto = RoomMoreInfoDTO(kinds,area, options, parking, term, movein)
+            val dto = RoomMoreInfoDTO(area, options, parking, term, movein)
             intent.putExtra("dto",dto)
             setResult(RESULT_OK,intent)
             finish()

@@ -31,6 +31,7 @@ import com.jambosoft.bangbang.model.ResultSearchKeyword
 import com.jambosoft.bangbang.model.RoomDTO
 import com.jambosoft.bangbang.model.RoomLocationInfoDTO
 import com.jambosoft.bangbang.model.SearchContentDTO
+import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapView
 
@@ -214,30 +215,24 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         }
 
         //보증금 seekBar
-        val text = findViewById<TextView>(R.id.kakaomap_filter_seekbar_textview)
-        val seekBar = findViewById<SeekBar>(R.id.kakaomap_filter_seekbar)
-        seekBar.setProgress(1001,true)
-        seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if(progress<100){
-                    text.text = "없음"
-                } else if(progress<=1000){
-                    depositFee = progress-(progress%100)
-                    text.text = "${depositFee}만원 이하"
-                } else {
-                    depositFee = 100000
-                    text.text = "전체보기"
-                }
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
+        val depositMinTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar_min_textview)
+        val depositMaxTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar_max_textview)
+        val seekBar = findViewById<RangeSeekBar<Int>>(R.id.kakaomap_filter_seekbar)
+        seekBar.setOnRangeSeekBarChangeListener { bar, minValue, maxValue ->
+
+        }
 
         //월세 seekBar
-        val text2 = findViewById<TextView>(R.id.kakaomap_filter_seekbar2_textview)
-        val seekBar2 = findViewById<SeekBar>(R.id.kakaomap_filter_seekbar2)
-        seekBar2.setProgress(1001,true)
-        seekBar2.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+        val monthlyMinTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar2_min_textview)
+        val monthlyMaxTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar2_max_textview)
+        val seekBar2 = findViewById<RangeSeekBar<Int>>(R.id.kakaomap_filter_seekbar2)
+
+        seekBar2.setOnRangeSeekBarChangeListener{ bar, minValue, maxValue ->
+
+        }
+
+
+        /*seekBar2.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if(progress<=100){
                     monthlyFee = progress
@@ -249,7 +244,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
+        })*/
 
 
 
@@ -575,7 +570,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 }
             }
             1 ->{ //쉐어하우스
-                db.collection("rooms").whereEqualTo("roomKinds",true).get().addOnSuccessListener { documents ->
+                db.collection("rooms").whereEqualTo("roomKinds",3).get().addOnSuccessListener { documents ->
                     roomDTOList.clear()
                     for(document in documents){
                         val dto = document.toObject(RoomDTO::class.java)
@@ -587,7 +582,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 }
             }
             2 ->{ //원룸
-                db.collection("rooms").whereEqualTo("roomKinds",false).get().addOnSuccessListener { documents ->
+                db.collection("rooms").whereEqualTo("roomKinds",0).get().addOnSuccessListener { documents ->
                     roomDTOList.clear()
                     for(document in documents){
                         val dto = document.toObject(RoomDTO::class.java)

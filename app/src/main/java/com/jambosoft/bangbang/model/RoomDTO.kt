@@ -9,8 +9,9 @@ data class RoomDTO( //전부다 초기화 해야 쿼리로 객체를 가져올�
     var deposit : Int = 0,
     var monthlyFee : Int = 0,
     var adminFee : Int = 0,
-    var floorNumber : String = "",
-    var roomKinds : Boolean = false,
+    var floorNumber : Int = 1,
+    var roomKinds : Int = 0,
+    var contractType : Int = 0,
     var info : RoomInfoDTO = RoomInfoDTO(),
     var moreInfo : RoomMoreInfoDTO = RoomMoreInfoDTO(),
     var userId : String = "",
@@ -43,8 +44,7 @@ data class RoomInfoDTO(
 ) : Serializable
 
 data class RoomMoreInfoDTO(
-    var kinds : String="",
-    var area : String="",
+    var area : Int = 0,
     var options : String="",
     var parking : String="",
     var term : String="",

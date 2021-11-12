@@ -1,5 +1,6 @@
 package com.jambosoft.bangbang.Adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -53,13 +54,19 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
         titleTextView.text = itemList[position].info.title
         // 보증금/월세
         val priceTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_price_textview)
-        priceTextView.text = "${itemList[position].deposit}/${itemList[position].monthlyFee}"
+        if(itemList[position].contractType==0){ //월세
+            priceTextView.text = "월세 ${itemList[position].deposit}/${itemList[position].monthlyFee}"
+        }else{
+            priceTextView.text = "전세 ${itemList[position].deposit}"
+        }
+
         //정보
         var roomkinds = ""
-        if(itemList[position].roomKinds){
-            roomkinds = "쉐어하우스"
-        }else{
-            roomkinds = "원룸"
+        when(itemList[position].roomKinds){
+            0 ->{ roomkinds = "원룸" }
+            1 ->{ roomkinds = "투·쓰리룸" }
+            2 ->{ roomkinds = "오피스텔" }
+            3 ->{ roomkinds = "쉐어하우스" }
         }
         val infoTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_roominfo_textview)
         infoTextView.text = "${roomkinds} | 관리비 ${itemList[position].adminFee}만"

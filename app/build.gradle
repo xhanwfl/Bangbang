@@ -108,4 +108,7 @@ dependencies {
 
     //indicator
     implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    //seek bar
+    implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
 }

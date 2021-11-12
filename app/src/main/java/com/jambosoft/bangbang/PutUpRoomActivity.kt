@@ -1,5 +1,6 @@
 package com.jambosoft.bangbang
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -28,13 +29,26 @@ class PutUpRoomActivity : AppCompatActivity() {
     var roomInfoDTO : RoomInfoDTO? = null
     var roomMoreInfoDTO : RoomMoreInfoDTO? = null
     var roomLocationInfoDTO : RoomLocationInfoDTO? = null
-    var roomkinds : Boolean = false
+    var roomkinds : Int = 0
+    var contractType : Int = 0
+    var monthlyfeeEditText : EditText? = null
+    var floorNumberEditText : EditText? = null
+    var monthlyFeeLayout : RelativeLayout? = null
+    var floorNumber : Int = 1
+    var monthlyfeeText = ""
+    var monthlyfee = 0
     lateinit var cameraImageView : ImageView
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_put_up_room)
         listUri = arrayListOf()
+
+        monthlyFeeLayout = findViewById(R.id.putup_room_monthlyfee_layout)
+        floorNumberEditText = findViewById(R.id.putup_room_floornumber_edittext)
+        cameraImageView = findViewById(R.id.putup_room_camera_imageview)
+
 
         //뒤로가기 버튼
         val backButton = findViewById<Button>(R.id.putup_room_back_btn)
@@ -47,8 +61,7 @@ class PutUpRoomActivity : AppCompatActivity() {
         cameraButton.setOnClickListener {
             getImage()
         }
-        val cameraImage = findViewById<ImageView>(R.id.putup_room_camera_imageview)
-        cameraImage.setOnClickListener {
+        cameraImageView.setOnClickListener {
             getImage()
         }
 
@@ -77,40 +90,64 @@ class PutUpRoomActivity : AppCompatActivity() {
             putUpRoom()
         }
 
+        //월세 editText
+        monthlyfeeEditText = findViewById(R.id.putup_room_monthlyfee_edittext)
 
-
-        //라디오 버튼
+        //라디오 버튼 (방종류)
         val roomKindRadioGroup = findViewById<RadioGroup>(R.id.putup_room_roomkind_radioGroup)
         roomKindRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
             when(i){
                 R.id.putup_room_oneroom_radiobtn ->{
-                    roomkinds = false
+                    roomkinds = 0
                 }
                 R.id.putup_room_tworoom_radiobtn ->{
-
+                    roomkinds = 1
                 }
                 R.id.putup_room_officetel_radiobtn ->{
-
+                    roomkinds = 2
                 }
                 R.id.putup_room_sharehouse_radiobtn ->{
-                    roomkinds = true
+                    roomkinds = 3
                 }
             }
         }
-        val tradeTypeRadioGroup = findViewById<RadioGroup>(R.id.putup_room_tradetype_radioGroup)
-        tradeTypeRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
+
+        //라디오 버튼 (전,월세)
+        val contractTypeRadioGroup = findViewById<RadioGroup>(R.id.putup_room_contracttype_radioGroup)
+        contractTypeRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
             when(i){
-                R.id.putup_room_monthlyfee_radiobtn ->{
-
+                R.id.putup_room_monthlyfee_radiobtn ->{  //월세
+                    contractType = 0
+                    monthlyfeeEditText?.setText("")
+                    monthlyFeeLayout?.visibility = View.VISIBLE
                 }
-                R.id.putup_room_charter_radiobtn ->{
+                R.id.putup_room_charter_radiobtn -> {  //전세
+                    contractType = 1
+                    monthlyfeeEditText?.setText("")
+                    monthlyFeeLayout?.visibility = View.GONE
+                }
+            }
+        }
 
+        //체크박스(반지층)
+        val floorCheckBox = findViewById<CheckBox>(R.id.putup_room_floornumber_checkbox)
+        floorCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            when(isChecked){
+                true ->{
+                    floorNumberEditText?.setText("")
+                    floorNumberEditText?.isClickable = false
+                    floorNumberEditText?.focusable = EditText.NOT_FOCUSABLE
+                }
+                false ->{
+                    floorNumberEditText?.setText("")
+                    floorNumberEditText?.isClickable = true
+                    floorNumberEditText?.isFocusableInTouchMode=true
                 }
             }
         }
 
 
-        cameraImageView = findViewById(R.id.putup_room_camera_imageview)
+
 
 
 
@@ -122,20 +159,32 @@ class PutUpRoomActivity : AppCompatActivity() {
             val depositText = depositEditText.text.toString()
             val deposit = depositEditText.text.toString().toInt()
 
-            val monthlyfeeEditText = findViewById<EditText>(R.id.putup_room_monthlyfee_edittext)
-            val monthlyfeeText = monthlyfeeEditText.text.toString()
-            val monthlyfee = monthlyfeeEditText.text.toString().toInt()
-
             val adminfeeEditText = findViewById<EditText>(R.id.putup_room_adminfee_edittext)
             val adminfeeText = adminfeeEditText.text.toString()
             val adminfee = adminfeeEditText.text.toString().toInt()
 
-            val floorNumberEditText = findViewById<EditText>(R.id.putup_room_floornumber_edittext)
-            val floorNumber = floorNumberEditText.text.toString()
+            if(!floorNumberEditText!!.isClickable){
+                floorNumber = 0
+            }else{
+                floorNumber = floorNumberEditText?.text.toString().toInt()
+            }
 
-            if(depositText.equals("")||monthlyfeeText.equals("")||adminfeeText.equals("")||floorNumber.equals("")){ //edittext를 입력안할경우
+            //전월세 입력 체크
+            var isReadyToPost = false
+            if(monthlyFeeLayout!!.visibility==View.VISIBLE){
+                monthlyfeeText = monthlyfeeEditText?.text.toString()
+                monthlyfee = monthlyfeeEditText?.text.toString().toInt()
+            }
+            if(monthlyfeeText.equals("")&&contractType==1){  //전세 , 월세입력 x
+                isReadyToPost = true
+            }else if(!monthlyfeeText.equals("")&&contractType==0){ //월세, 월세입력 o
+                isReadyToPost = true
+            }
+
+
+
+            if(depositText.equals("")||!isReadyToPost||adminfeeText.equals("")||floorNumber.equals("")){ //edittext를 입력안할경우
                 Toast.makeText(this,"내용을 모두 입력해주세요",Toast.LENGTH_SHORT).show()
-
             }else{ //모두 입력할경우
                 val loadingDialog = LoadingDialog(this) //로딩 보여주기
                 loadingDialog.show()
@@ -159,10 +208,29 @@ class PutUpRoomActivity : AppCompatActivity() {
                                     val db = FirebaseFirestore.getInstance()
                                     db.collection("userInfo").document(user!!.uid).get().addOnSuccessListener {  //전화번호 가져옴
                                         val userInfo = it.toObject<UserInfoDTO>()
+                                        roomDTO = RoomDTO()
+                                        roomDTO?.apply {
+                                            this.images = listUrl!!
+                                            this.address = roomLocationInfoDTO!!
+                                            this.deposit = deposit
+                                            this.monthlyFee = monthlyfee
+                                            this.adminFee = adminfee
+                                            this.floorNumber = this@PutUpRoomActivity.floorNumber
+                                            this.roomKinds = roomkinds
+                                            this.info = roomInfoDTO!!
+                                            this.moreInfo = roomMoreInfoDTO!!
+                                            this.userId = user.email!!
+                                            this.uid = user.uid
+                                            this.timestamp = currentTime
+                                            this.imageCount = imageCount
+                                            this.hp = userInfo!!.hp
+                                            this.contractType = this@PutUpRoomActivity.contractType
+                                        }
+                                        /*
                                         roomDTO = RoomDTO(listUrl!!,roomLocationInfoDTO!!,deposit,monthlyfee, adminfee, //roomDTO 초기화
                                             floorNumber, roomkinds,roomInfoDTO!!,roomMoreInfoDTO!!,user!!.email!!,user.uid,currentTime,imageCount)
 
-                                        roomDTO?.hp = userInfo!!.hp
+                                        roomDTO?.hp = userInfo!!.hp*/
 
                                         //firestore에 업로드
                                         db.collection("rooms").document(roomDTO!!.timestamp.toString())
@@ -174,7 +242,6 @@ class PutUpRoomActivity : AppCompatActivity() {
                                             }.addOnFailureListener{
                                                 Log.d("!PutUpRoomActivity","실패")
                                                 Toast.makeText(this,"업로드 실패",Toast.LENGTH_SHORT).show()
-
                                             }
 
                                         Log.e("dto","${roomDTO!!.info.title} \n ${roomDTO!!.moreInfo.movein} \n ${roomkinds}")
@@ -283,9 +350,8 @@ class PutUpRoomActivity : AppCompatActivity() {
             roomMoreInfoDTO = data?.getSerializableExtra("dto") as RoomMoreInfoDTO
 
             val infoTextView = findViewById<TextView>(R.id.putup_room_moreinfo_textview)
-            infoTextView.text = roomMoreInfoDTO!!.kinds
+            infoTextView.text = roomMoreInfoDTO?.movein
             infoTextView.visibility = View.VISIBLE
-            Log.e("data", roomMoreInfoDTO!!.kinds)
         }
     }
 }
