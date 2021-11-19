@@ -177,212 +177,489 @@
 
 
     <!--필터 레이아웃-->
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/kakaomap_filter_layout"
         android:layout_width="match_parent"
         android:layout_height="640dp"
-        android:layout_alignParentBottom="true">
-        <LinearLayout
-            android:id="@+id/kakaomap_filter_layout"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:background="#FFFFFF"
-            android:visibility="visible">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#EBEBEB">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="필터"
-                    android:textSize="20sp" />
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="방 종류"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginHorizontal="30dp">
-                    <TextView
-                        android:id="@+id/kakaomap_filter_all_textview"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_border_square"
-                        android:hint="전체"
-                        android:textSize="14sp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/kakaomap_filter_sharehouse_textview"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_border_square"
-                        android:hint="쉐어하우스"
-                        android:textSize="14sp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/kakaomap_filter_oneroom_textview"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_border_square"
-                        android:hint="원룸"
-                        android:textSize="14sp"
-                        android:gravity="center"/>
-
-                </LinearLayout>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="130dp">
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="28dp"
-                    android:text="보증금"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.16" />
-
-
-                <TextView
-                    android:id="@+id/kakaomap_filter_seekbar_min_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="0만원"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.18"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/kakaomap_filter_seekbar_max_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="212dp"
-                    android:text="0만원"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/kakaomap_filter_seekbar_min_textview" />
-
-                <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
-                    android:id="@+id/kakaomap_filter_seekbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
-                    app:absoluteMaxValue="100"
-                    app:absoluteMinValue="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="130dp">
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="28dp"
-                    android:text="월세"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.16" />
-
-
-                <TextView
-                    android:id="@+id/kakaomap_filter_seekbar2_min_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="0만원"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.18"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/kakaomap_filter_seekbar2_max_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="212dp"
-                    android:text="0만원"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/kakaomap_filter_seekbar2_min_textview" />
-
-                <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
-                    android:id="@+id/kakaomap_filter_seekbar2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
-                    app:absoluteMaxValue="100"
-                    app:absoluteMinValue="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <Button
-                android:id="@+id/kakaomap_filter_apply_btn"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="#79CCC8"
-                android:text="적용하기"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"/>
-        </LinearLayout>
-    </ScrollView>
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:background="#FFFFFF"
+                android:visibility="visible">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#EBEBEB">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="필터"
+                        android:textSize="20sp" />
+                </RelativeLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="25dp">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="14dp"
+                        android:src="@drawable/ic_putuproom_home"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="방 종류"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.023"
+                        app:layout_constraintStart_toEndOf="@+id/imageView6"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <RadioGroup
+                        android:id="@+id/kakaomap_roomkind_radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8"
+                        android:paddingLeft="15dp">
+
+                        <RadioButton
+                            android:id="@+id/kakaomap_oneroom_radiobtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/selector_putuproom_radio_button"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="   원룸   "
+                            android:textColor="@color/white"
+                            android:checked="true"/>
+                        <RadioButton
+                            android:id="@+id/kakaomap_tworoom_radiobtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/selector_putuproom_radio_button"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="   투·쓰리룸   "
+                            android:textColor="@color/white" />
+                        <RadioButton
+                            android:id="@+id/kakaomap_officetel_radiobtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/selector_putuproom_radio_button"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="   오피스텔   "
+                            android:textColor="@color/white" />
+
+                        <RadioButton
+                            android:id="@+id/kakaomap_sharehouse_radiobtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/selector_putuproom_radio_button"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="   쉐어하우스   "
+                            android:textColor="@color/white" />
+                    </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#EFEFEF"/>
+               <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="14dp"
+                        android:src="@drawable/ic_putuproom_home"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="거래 종류"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.023"
+                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <RadioGroup
+                        android:id="@+id/kakaomap_contracttype_radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9"
+                        android:paddingLeft="15dp">
+
+                        <RadioButton
+                            android:id="@+id/kakaomap_monthlyfee_radiobtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/selector_putuproom_radio_button"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="   월세   "
+                            android:textColor="@color/white"
+                            android:checked="true"/>
+                        <RadioButton
+                            android:id="@+id/kakaomap_charter_radiobtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:background="@drawable/selector_putuproom_radio_button"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:layout_marginHorizontal="5dp"
+                            android:text="   전세   "
+                            android:textColor="@color/white" />
+                    </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#EFEFEF"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EFEFEF"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="28dp"
+                        android:text="보증금"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.16" />
+
+
+                    <TextView
+                        android:id="@+id/kakaomap_filter_seekbar_min_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="0만원"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.18"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/kakaomap_filter_seekbar_max_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="212dp"
+                        android:text="~"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_filter_seekbar_min_textview" />
+
+                    <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
+                        android:id="@+id/kakaomap_filter_seekbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        app:absoluteMinValue="10500"
+                        app:absoluteMaxValue="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EFEFEF"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/kakaomap_monthlyfee_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="28dp"
+                        android:text="월세"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.16" />
+
+
+                    <TextView
+                        android:id="@+id/kakaomap_filter_seekbar2_min_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="0만원"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.18"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/kakaomap_filter_seekbar2_max_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="212dp"
+                        android:text="~"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_filter_seekbar2_min_textview" />
+
+                    <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
+                        android:id="@+id/kakaomap_filter_seekbar2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        app:absoluteMinValue="105"
+                        app:absoluteMaxValue="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/kakaomap_adminfee_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="28dp"
+                        android:text="관리비"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.16" />
+
+
+                    <TextView
+                        android:id="@+id/kakaomap_filter_seekbar3_min_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="0만원"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.18"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/kakaomap_filter_seekbar3_max_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="212dp"
+                        android:text="~"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_filter_seekbar3_min_textview" />
+
+                    <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
+                        android:id="@+id/kakaomap_filter_seekbar3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        app:absoluteMinValue="45"
+                        app:absoluteMaxValue="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="층 수"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.175" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_all_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="60dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="전체"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_one_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="60dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="1층"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_floornum_all_btn"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_two_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="60dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="2층"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_floornum_one_btn"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_three_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="60dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="3층"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_floornum_two_btn"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_four_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="4층"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/kakaomap_floornum_all_btn"
+                        app:layout_constraintVertical_bias="0.272" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_five_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="5층 이상"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_floornum_four_btn"
+                        app:layout_constraintTop_toBottomOf="@+id/kakaomap_floornum_one_btn"
+                        app:layout_constraintVertical_bias="0.166" />
+
+                    <Button
+                        android:id="@+id/kakaomap_floornum_underground_btn"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/selector_kakaomap_filter_button"
+                        android:text="반지층"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/kakaomap_floornum_five_btn"
+                        app:layout_constraintTop_toBottomOf="@+id/kakaomap_floornum_two_btn"
+                        app:layout_constraintVertical_bias="0.466" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:background="#EFEFEF"/>
+
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:id="@+id/kakaomap_filter_apply_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#79CCC8"
+            android:text="적용하기"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -393,7 +670,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/kakaomap_content_recycler"

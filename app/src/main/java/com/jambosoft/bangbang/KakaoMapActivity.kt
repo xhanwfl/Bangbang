@@ -14,9 +14,12 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,13 +52,19 @@ import kotlin.properties.Delegates
 class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapView.POIItemEventListener {
     var latitude : Double = 37.53737528
     var longitude : Double = 127.00557633
-    var depositFee : Int = 1000000
-    var monthlyFee : Int = 1000000
-    var roomkinds : Int = 0
+    var maxDepositFee : Int = 1000000
+    var minDepositFee : Int = 0
+    var maxMonthlyFee : Int = 1000000
+    var minMonthlyFee : Int = 0
+    var minAdminFee : Int = 0
+    var maxAdminFee : Int = 1000
+    var roomkinds : Int = -1
     var roomDTOList : ArrayList<RoomDTO> = arrayListOf()
     var roomDTOs : ArrayList<RoomDTO> = arrayListOf()
+    var contractType : Int = 0
     var clusterList : ArrayList<RoomDTO> = arrayListOf()
     var currentItems : ArrayList<RoomDTO> = arrayListOf()
+    var floorNum : Int = -1
     var mapView : MapView? = null
     var mapViewContainer : ViewGroup? = null
     var recyclerView : RecyclerView? = null
@@ -69,17 +78,31 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     var isClusterVisible = false
     var clusterCount = 3
     val positionCluster : ArrayList<Int> = arrayListOf()
+    val floorNumArr : Array<Int> = arrayOf(1,1,1,1,1,1)
+    val flooNumAll : Int = 1
     lateinit var filterLayout : LinearLayout
     lateinit var allTextView: TextView
     lateinit var sharehouseTextView: TextView
     lateinit var oneroomTextView: TextView
+    lateinit var floorNumAllButton : Button
+    lateinit var floorNumOneButton : Button
+    lateinit var floorNumTwoButton : Button
+    lateinit var floorNumThreeButton : Button
+    lateinit var floorNumFourButton : Button
+    lateinit var floorNumFiveButton : Button
+    lateinit var floorNumUndergroundButton : Button
+    lateinit var slide_up : Animation
+    lateinit var slide_down : Animation
     private val listItems = arrayListOf<SearchContentDTO>()
     private val listAdapter = SearchContentAdapter(listItems)
     private var keyword = ""
     lateinit var searchLayout : LinearLayout
+    lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_map)
+        db = FirebaseFirestore.getInstance()
+
         //맵뷰 초기화
         mapView = MapView(this)
         mapViewContainer = findViewById(R.id.map_view)
@@ -101,7 +124,10 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         recyclerView = findViewById(R.id.kakaomap_content_recycler)
         recyclerView?.layoutManager = LinearLayoutManager(this)
 
-        Log.e("wow","latitude : ${latitude}\nlongitude : ${longitude}\ndepositFee : ${depositFee}\nmonthlyFee : ${monthlyFee}\nroomkinds : ${roomkinds}\n")
+
+        //슬라이드
+        slide_down = AnimationUtils.loadAnimation(applicationContext,R.anim.slide_down)
+        slide_up = AnimationUtils.loadAnimation(applicationContext,R.anim.slide_up)
 
         //마커 이벤트 리스너
         //val myPOIItemEventListener = MyPOIItemEventListener()
@@ -133,7 +159,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
                 searchEditText.requestFocus()
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY)
-
             }
         }
 
@@ -163,49 +188,15 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         searchRecyclerView.adapter = listAdapter
 
         //필터
+
         val filterButton = findViewById<Button>(R.id.kakaomap_filter_btn)
         val filterButton2 = findViewById<Button>(R.id.kakaomap_filter_btn2)
         filterLayout = findViewById(R.id.kakaomap_filter_layout)
         filterButton.setOnClickListener {
-            if(!isFilterVisible){
-                filterLayout.visibility = View.VISIBLE
-                isFilterVisible = true
-            }else{
-                filterLayout.visibility = View.GONE
-                isFilterVisible = false
-            }
+            showOrHideFilterLayout()
         }
         filterButton2.setOnClickListener {
-            if(!isFilterVisible){
-                filterLayout.visibility = View.VISIBLE
-                isFilterVisible = true
-            }else{
-                filterLayout.visibility = View.GONE
-                isFilterVisible = false
-            }
-        }
-
-        //방 종류
-        allTextView = findViewById(R.id.kakaomap_filter_all_textview)
-        sharehouseTextView = findViewById(R.id.kakaomap_filter_sharehouse_textview)
-        oneroomTextView = findViewById(R.id.kakaomap_filter_oneroom_textview)
-
-        //모두보기
-        allTextView.setOnClickListener {
-            setRoomKindBackgroundColor(0)
-            roomkinds = 0
-        }
-
-        //쉐어하우스
-        sharehouseTextView.setOnClickListener {
-            setRoomKindBackgroundColor(1)
-            roomkinds = 1
-        }
-
-        //원룸
-        oneroomTextView.setOnClickListener {
-            setRoomKindBackgroundColor(2)
-            roomkinds = 2
+            showOrHideFilterLayout()
         }
 
         //적용하기 버튼
@@ -214,12 +205,71 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             applyFilter()
         }
 
+        //라디오 버튼 (방종류)
+        val roomKindRadioGroup = findViewById<RadioGroup>(R.id.kakaomap_roomkind_radioGroup)
+        roomKindRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
+            when(i){
+                R.id.kakaomap_oneroom_radiobtn ->{
+                    roomkinds = 0
+                }
+                R.id.kakaomap_tworoom_radiobtn ->{
+                    roomkinds = 1
+                }
+                R.id.kakaomap_officetel_radiobtn ->{
+                    roomkinds = 2
+                }
+                R.id.kakaomap_sharehouse_radiobtn ->{
+                    roomkinds = 3
+                }
+            }
+        }
+
+        //라디오 버튼 (전,월세)
+        val monthlyFeeLayout = findViewById<ConstraintLayout>(R.id.kakaomap_monthlyfee_layout)
+        val contractTypeRadioGroup = findViewById<RadioGroup>(R.id.kakaomap_contracttype_radioGroup)
+        contractTypeRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
+            when(i){
+                R.id.kakaomap_monthlyfee_radiobtn ->{  //월세
+                    contractType = 0
+                    monthlyFeeLayout.visibility = View.VISIBLE
+                }
+                R.id.kakaomap_charter_radiobtn -> {  //전세
+                    contractType = 1
+                    monthlyFeeLayout.visibility = View.INVISIBLE
+                }
+            }
+        }
+
+
         //보증금 seekBar
         val depositMinTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar_min_textview)
         val depositMaxTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar_max_textview)
         val seekBar = findViewById<RangeSeekBar<Int>>(R.id.kakaomap_filter_seekbar)
         seekBar.setOnRangeSeekBarChangeListener { bar, minValue, maxValue ->
-
+            minDepositFee = calculateSeekBarValue(minValue)
+            when(minDepositFee){
+                10000 ->{
+                    depositMinTextView.text = "1억원"
+                }
+                100000 ->{
+                    depositMinTextView.text = "10억원"
+                }
+                else ->{
+                    depositMinTextView.text = "${minDepositFee}만원"
+                }
+            }
+            maxDepositFee = calculateSeekBarValue(maxValue)
+            when(maxDepositFee){
+                10000 ->{
+                    depositMaxTextView.text = "1억원"
+                }
+                100000 ->{
+                    depositMaxTextView.text = "~"
+                }
+                else ->{
+                    depositMaxTextView.text = "${maxDepositFee}만원"
+                }
+            }
         }
 
         //월세 seekBar
@@ -228,23 +278,82 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         val seekBar2 = findViewById<RangeSeekBar<Int>>(R.id.kakaomap_filter_seekbar2)
 
         seekBar2.setOnRangeSeekBarChangeListener{ bar, minValue, maxValue ->
+            monthlyMinTextView.text = "${minValue}만원"
+            minMonthlyFee = minValue
+            if(maxValue<100){
+                monthlyMaxTextView.text = "${maxValue}만원"
+                maxMonthlyFee = maxValue
+            }else if(maxValue<104){
+                monthlyMaxTextView.text = "100만원"
+                maxMonthlyFee = 100
+            }else{
+                monthlyMaxTextView.text = "~"
+                maxMonthlyFee = 10000
+            }
+        }
 
+        //월세 seekBar
+        val adminFeeMinTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar3_min_textview)
+        val adminFeeMaxTextView = findViewById<TextView>(R.id.kakaomap_filter_seekbar3_max_textview)
+        val seekBar3 = findViewById<RangeSeekBar<Int>>(R.id.kakaomap_filter_seekbar3)
+
+        seekBar3.setOnRangeSeekBarChangeListener{ bar, minValue, maxValue ->
+            adminFeeMinTextView.text = "${minValue}만원"
+            minAdminFee = minValue
+            if(maxValue<40){
+                adminFeeMaxTextView.text = "${maxValue}만원"
+                maxAdminFee = maxValue
+            }else if(maxValue<45){
+                adminFeeMaxTextView.text = "40만원"
+                maxAdminFee = 40
+            }else{
+                adminFeeMaxTextView.text = "~"
+                maxAdminFee = 10000
+            }
         }
 
 
-        /*seekBar2.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if(progress<=100){
-                    monthlyFee = progress
-                    text2.text = "${monthlyFee}만원 이하"
-                }else{
-                    monthlyFee = 10000
-                    text2.text = "전체보기"
-                }
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })*/
+
+        //층수 button
+        floorNumAllButton = findViewById(R.id.kakaomap_floornum_all_btn)
+        floorNumUndergroundButton = findViewById(R.id.kakaomap_floornum_underground_btn)
+        floorNumOneButton = findViewById(R.id.kakaomap_floornum_one_btn)
+        floorNumTwoButton = findViewById(R.id.kakaomap_floornum_two_btn)
+        floorNumThreeButton = findViewById(R.id.kakaomap_floornum_three_btn)
+        floorNumFourButton = findViewById(R.id.kakaomap_floornum_four_btn)
+        floorNumFiveButton = findViewById(R.id.kakaomap_floornum_five_btn)
+
+        //초기화
+        floorNumAllButton.isSelected = true
+        floorNumOneButton.isSelected = true
+        floorNumTwoButton.isSelected = true
+        floorNumThreeButton.isSelected = true
+        floorNumFourButton.isSelected = true
+        floorNumFiveButton.isSelected = true
+        floorNumUndergroundButton.isSelected = true
+
+        //클릭리스너
+        floorNumAllButton.setOnClickListener {
+            checkViewSelected(it,-1)
+        }
+        floorNumUndergroundButton.setOnClickListener {
+            checkViewSelected(it,0)
+        }
+        floorNumOneButton.setOnClickListener {
+            checkViewSelected(it,1)
+        }
+        floorNumTwoButton.setOnClickListener {
+            checkViewSelected(it,2)
+        }
+        floorNumThreeButton.setOnClickListener {
+            checkViewSelected(it,3)
+        }
+        floorNumFourButton.setOnClickListener {
+            checkViewSelected(it,4)
+        }
+        floorNumFiveButton.setOnClickListener {
+            checkViewSelected(it,5)
+        }
 
 
 
@@ -300,6 +409,82 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
         mapViewContainer?.addView(mapView)
 
     }
+
+    fun showOrHideFilterLayout(){
+        if(!isFilterVisible){
+            filterLayout.visibility = View.VISIBLE
+            filterLayout.startAnimation(slide_up)
+            isFilterVisible = true
+            filterLayout.isClickable = true
+            recyclerView?.visibility = View.GONE
+        }else{
+            filterLayout.visibility = View.INVISIBLE
+            filterLayout.startAnimation(slide_down)
+            isFilterVisible = false
+            filterLayout.isClickable = false
+        }
+    }
+
+    fun checkViewSelected(view : View, num : Int){
+        view.isSelected = !view.isSelected
+
+        if(view==floorNumAllButton){ //전체 버튼 일경우
+            if(view.isSelected){ //전체체크
+                floorNumOneButton.isSelected = true
+                floorNumTwoButton.isSelected = true
+                floorNumThreeButton.isSelected = true
+                floorNumFourButton.isSelected = true
+                floorNumFiveButton.isSelected = true
+                floorNumUndergroundButton.isSelected = true
+                for(i in floorNumArr.indices){
+                    floorNumArr[i]=1
+                }
+            }else{ //체크해제
+                floorNumOneButton.isSelected = false
+                floorNumTwoButton.isSelected = false
+                floorNumThreeButton.isSelected = false
+                floorNumFourButton.isSelected = false
+                floorNumFiveButton.isSelected = false
+                floorNumUndergroundButton.isSelected = false
+                for(i in floorNumArr.indices){
+                    floorNumArr[i]=0
+                }
+            }
+        }else{ //전체버튼이 아닐경우
+            if(view.isSelected){
+                floorNumArr[num] = 1
+            }else{
+                floorNumArr[num] = 0
+            }
+
+            //전체체크 확인
+            var isAllChecked = true
+            for(i in floorNumArr.indices){
+                if(floorNumArr[i]==0){
+                    isAllChecked = false
+                }
+            }
+            floorNumAllButton.isSelected = isAllChecked
+        }
+
+
+    }
+
+    fun calculateSeekBarValue(value : Int) : Int{
+        var result = 0
+        if(value<5000){
+            result = value/5 - (value/5)%100
+        }else if(value<9000){
+            result = ((value-5000)/500 + 1)*1000
+        }else if(value<10400){
+            result = 10000
+        }else{
+            result = 100000
+        }
+
+        return result
+    }
+
 
     //검색기능 이너클래스
     inner class SearchContentAdapter(val itemList: ArrayList<SearchContentDTO>): RecyclerView.Adapter<SearchContentAdapter.ViewHolder>() {
@@ -555,44 +740,113 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
     }
 
     fun getRooms(){
-        val db =FirebaseFirestore.getInstance()
         when(roomkinds){
-            0 ->{ //모두보기
-                db.collection("rooms").get().addOnSuccessListener { documents ->
-                    roomDTOList.clear()
-                    for(document in documents){
-                        val dto = document.toObject(RoomDTO::class.java)
-                        if(dto.deposit<=depositFee&&dto.monthlyFee<=monthlyFee){
+            -1 ->{ //모두보기
+                getRoomDTOListAndSetMarkers(-1)
+            }
+            0 ->{ //원룸
+                getRoomDTOListAndSetMarkers(0)
+            }
+            1 ->{ //투, 쓰리룸
+                getRoomDTOListAndSetMarkers(1)
+            }
+            2 ->{ //오피스텔
+                getRoomDTOListAndSetMarkers(2)
+            }
+            3 ->{ //쉐어하우스
+                getRoomDTOListAndSetMarkers(3)
+            }
+        }
+
+
+    }
+    fun getRoomDTOListAndSetMarkers(roomKinds : Int){
+        db.collection("rooms").get().addOnSuccessListener { documents ->
+            roomDTOList.clear()
+            for(document in documents){
+                val dto = document.toObject(RoomDTO::class.java)
+                if(contractType==0){ //월세
+                    if(roomKinds== -1){ //모두보기
+                        if(dto.deposit<=maxDepositFee&&dto.deposit>=minDepositFee
+                            &&dto.adminFee>=minAdminFee&&dto.adminFee<=maxAdminFee
+                            &&dto.monthlyFee<=maxMonthlyFee&&dto.monthlyFee>=minMonthlyFee
+                            &&dto.contractType==contractType){
+                            roomDTOList.add(dto)
+                        }
+                    }else{ //방타입에 맞게 보기
+                        if(dto.deposit<=maxDepositFee&&dto.deposit>=minDepositFee
+                            &&dto.adminFee>=minAdminFee&&dto.adminFee<=maxAdminFee
+                        &&dto.monthlyFee<=maxMonthlyFee&&dto.monthlyFee>=minMonthlyFee
+                        &&dto.contractType==contractType&&dto.roomKinds==roomKinds){
                             roomDTOList.add(dto)
                         }
                     }
-                    setMarkers()
-                }
-            }
-            1 ->{ //쉐어하우스
-                db.collection("rooms").whereEqualTo("roomKinds",3).get().addOnSuccessListener { documents ->
-                    roomDTOList.clear()
-                    for(document in documents){
-                        val dto = document.toObject(RoomDTO::class.java)
-                        if(dto.deposit<=depositFee&&dto.monthlyFee<=monthlyFee){
+                }else{ //전세
+                    if(roomKinds== -1){ //모두보기
+                        if(dto.deposit<=maxDepositFee&&dto.deposit>=minDepositFee
+                            &&dto.adminFee>=minAdminFee&&dto.adminFee<=maxAdminFee
+                            &&dto.contractType==contractType){
+                            roomDTOList.add(dto)
+                        }
+                    }else{ //방타입에 맞게 보기
+                        if(dto.deposit<=maxDepositFee&&dto.deposit>=minDepositFee
+                            &&dto.adminFee>=minAdminFee&&dto.adminFee<=maxAdminFee
+                            &&dto.contractType==contractType&&dto.roomKinds==roomKinds){
                             roomDTOList.add(dto)
                         }
                     }
-                    setMarkers()
                 }
             }
-            2 ->{ //원룸
-                db.collection("rooms").whereEqualTo("roomKinds",0).get().addOnSuccessListener { documents ->
-                    roomDTOList.clear()
-                    for(document in documents){
-                        val dto = document.toObject(RoomDTO::class.java)
-                        if(dto.deposit<=depositFee&&dto.monthlyFee<=monthlyFee){
-                            roomDTOList.add(dto)
-                        }
+
+            filteringForFloorNum()
+
+
+            setMarkers()
+        }
+    }
+
+    fun filteringForFloorNum(){
+        var j = 0
+        for(i in 0 until roomDTOList.size){
+            when(roomDTOList[j].floorNumber){
+                0 ->{
+                    if(floorNumArr[0]!=1){ //반지층 보기 설정 안되있을경우
+                        roomDTOList.removeAt(j)
+                        j--
                     }
-                    setMarkers()
+                }
+                1 ->{
+                    if(floorNumArr[1]!=1){ //1층 보기 설정 안되있을경우
+                        roomDTOList.removeAt(j)
+                        j--
+                    }
+                }
+                2 ->{
+                    if(floorNumArr[2]!=1){ //2층 보기 설정 안되있을경우
+                        roomDTOList.removeAt(j)
+                        j--
+                    }
+                }
+                3 ->{
+                    if(floorNumArr[3]!=1){ //3층 보기 설정 안되있을경우
+                        roomDTOList.removeAt(j)
+                        j--
+                    }
+                }
+                4 ->{
+                    if(floorNumArr[4]!=1){ //4층 보기 설정 안되있을경우
+                        roomDTOList.removeAt(j)
+                        j--
+                    }
+                }
+                else ->{
+                    if(floorNumArr[5]!=1){ //5층 이상 보기 설정 안도있을경우
+                        roomDTOList.removeAt(j)
+                        j--
+                    }
                 }
             }
+            j++
         }
     }
 
