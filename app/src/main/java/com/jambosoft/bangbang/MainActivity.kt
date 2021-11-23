@@ -9,18 +9,12 @@ import com.google.android.material.tabs.TabLayout
 import com.jambosoft.bangbang.Adapter.MainFragmentStatePagerAdapter
 import android.widget.Toast
 
-
-
-
 class MainActivity : AppCompatActivity() {
     private var backKeyPressedTime: Long = 0
     private var toast: Toast? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
 
         //하단 메뉴바
         configureBottomNavigation()
@@ -39,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         tl_ac_main_bottom_menu.getTabAt(1)!!.customView = bottomNaviLayout.findViewById(R.id.btn_bottom_navi_add_tab) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(2)!!.customView = bottomNaviLayout.findViewById(R.id.btn_bottom_navi_like_tab) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(3)!!.customView = bottomNaviLayout.findViewById(R.id.btn_bottom_navi_user_tab) as RelativeLayout
-
     }
 
 
@@ -64,5 +57,4 @@ class MainActivity : AppCompatActivity() {
             toast?.cancel()
         }
     }
-
 }

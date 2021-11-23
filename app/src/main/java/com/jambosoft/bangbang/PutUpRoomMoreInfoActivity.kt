@@ -62,7 +62,9 @@ class PutUpRoomMoreInfoActivity : AppCompatActivity() {
 
     fun setting(){
        val dto = intent.getSerializableExtra("dto") as RoomMoreInfoDTO
-        areaEditText?.setText(dto.area)
+        if(dto.area!=0){
+            areaEditText?.setText(dto.area.toString())
+        }
         optionsEditText?.setText(dto.options)
         parkingEditText?.setText(dto.parking)
         termEditText?.setText(dto.term)

@@ -52,7 +52,7 @@ class KakaoMapAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerView.Adapter<
         //설명
         val titleTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_explain_textview)
         titleTextView.text = itemList[position].info.title
-        // 보증금/월세
+        // 보증금
         val priceTextView = viewHolder.findViewById<TextView>(R.id.item_kakaomap_price_textview)
         if(itemList[position].contractType==0){ //월세
             priceTextView.text = "월세 ${itemList[position].deposit}/${itemList[position].monthlyFee}"
