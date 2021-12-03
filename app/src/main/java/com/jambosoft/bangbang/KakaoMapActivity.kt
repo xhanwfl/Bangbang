@@ -466,8 +466,6 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
             }
             floorNumAllButton.isSelected = isAllChecked
         }
-
-
     }
 
     fun calculateSeekBarValue(value : Int) : Int{
@@ -934,6 +932,7 @@ class KakaoMapActivity : AppCompatActivity(), MapView.MapViewEventListener, MapV
 
             } else{ //방 마커
                 roomDTOList[p1.tag]
+
 
                 if(!isMarkerClicked) { //마커클릭시 recyclerview 초기화
                     isMarkerClicked = true

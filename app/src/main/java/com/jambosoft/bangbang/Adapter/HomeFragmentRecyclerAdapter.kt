@@ -41,7 +41,11 @@ class HomeFragmentRecyclerAdapter(val itemList : ArrayList<RoomDTO>) : RecyclerV
 
         //가격
         val priceTextView = viewHolder.findViewById<TextView>(R.id.item_homfrag_price_textview)
-        priceTextView.text = "월세 ${itemList[position].deposit}/${itemList[position].monthlyFee}"
+        if(itemList[position].contractType==0){ //월세
+            priceTextView.text = "월세 ${itemList[position].deposit}/${itemList[position].monthlyFee}"
+        }else{
+            priceTextView.text = "전세 ${itemList[position].deposit}"
+        }
 
         //방사진
         val imageView = viewHolder.findViewById<ImageView>(R.id.item_homefrag_recycler_imageview)

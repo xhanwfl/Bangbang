@@ -66,7 +66,7 @@ class RoomListActivity : AppCompatActivity() {
                     }
                 }
             }
-            roomListRecyclerView.adapter = HomeFragmentRecyclerAdapter(roomItems)
+            roomListRecyclerView.adapter = KakaoMapAdapter(roomItems)
         }
     }
 

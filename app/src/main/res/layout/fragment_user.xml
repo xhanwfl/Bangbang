@@ -151,19 +151,6 @@
         android:background="#EFEFEF"
         android:layout_marginHorizontal="5dp"/>
     <TextView
-        android:id="@+id/frag_user_setting_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:text="설정"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_marginLeft="25dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EFEFEF"
-        android:layout_marginHorizontal="5dp"/>
-    <TextView
         android:id="@+id/frag_user_logout_textview"
         android:layout_width="wrap_content"
         android:layout_height="70dp"

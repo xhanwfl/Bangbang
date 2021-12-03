@@ -1,8 +1,6 @@
 package com.jambosoft.bangbang.Adapter
 
 import android.content.Context
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +12,11 @@ import com.jambosoft.bangbang.R
 class SelectedImageAdapter(list : ArrayList<String>): PagerAdapter(){
     private var mContext: Context?=null
     private var list : ArrayList<String>? = null
+
     init{
         this.list = list
     }
+
     fun ViewPagerAdapter(context: Context){
         mContext=context;
     }
@@ -34,7 +34,6 @@ class SelectedImageAdapter(list : ArrayList<String>): PagerAdapter(){
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View?)
     }
-
 
     //사용가능한 뷰 개수 리턴
     override fun getCount(): Int {

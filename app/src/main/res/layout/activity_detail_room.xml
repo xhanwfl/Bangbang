@@ -59,18 +59,19 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@+id/detailroom_share_btn"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
                         android:background="@drawable/ic_favorite_white" />
 
                     <Button
+                        android:visibility="gone"
                         android:id="@+id/detailroom_share_btn"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:background="@drawable/ic_share"
-                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ic_share" />
                 </RelativeLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -479,6 +480,7 @@
                         app:layout_constraintVertical_bias="0.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -493,14 +495,15 @@
                         android:layout_marginTop="5dp"
                         android:layout_toLeftOf="@+id/detailroom_location_btn"
                         android:background="@drawable/ic_bottom_location_clicked" />
+
                     <TextView
                         android:id="@+id/detailroom_location_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
                         android:gravity="center"
                         android:text="지도에서 위치 확인"
-                        android:textColor="#000000"
-                        android:layout_centerInParent="true"/>
+                        android:textColor="#000000" />
                 </RelativeLayout>
 
                 <androidx.cardview.widget.CardView

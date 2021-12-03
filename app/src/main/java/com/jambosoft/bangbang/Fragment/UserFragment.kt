@@ -61,7 +61,7 @@ class UserFragment : Fragment() {
         //프로필수정 버튼
         val profileModifyButton = rootView?.findViewById<Button>(R.id.user_profile_modify_btn)
         profileModifyButton?.setOnClickListener {
-            startActivityForResult(Intent(mContext, ProfileModifyActivity::class.java), 200)
+            startActivityForResult(Intent(mContext, ModifyProfileActivity::class.java), 200)
         }
 
         //로그아웃 버튼
@@ -131,11 +131,11 @@ class UserFragment : Fragment() {
             intent.putExtra("kind", "rooms")
             startActivity(intent)
         }
-        //설정 버튼
+        /*설정 버튼
         val settingButton = rootView?.findViewById<TextView>(R.id.frag_user_setting_textview)
         settingButton?.setOnClickListener {
             Toast.makeText(mContext,"준비중입니다.",Toast.LENGTH_SHORT).show()
-        }
+        }*/
 
 
         // Inflate the layout for this fragment
@@ -151,7 +151,7 @@ class UserFragment : Fragment() {
                 Log.e("프로필", "가져오기 성공")
                 userInfoDTO = document.toObject<UserInfoDTO>()!!
                 if (userInfoDTO!!.name.equals("이름을 변경해주세요")) { //이름이 null일경우 이름수정이벤트
-                    startActivityForResult(Intent(mContext, ProfileModifyActivity::class.java), 200)
+                    startActivityForResult(Intent(mContext, ModifyProfileActivity::class.java), 200)
                 } else { //이름이 null이 아닐경우
 
                     //email, profile 설정

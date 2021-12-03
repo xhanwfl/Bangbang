@@ -18,9 +18,6 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MapActivity"
-            android:exported="true" />
-        <activity
             android:name=".RoomListActivity"
             android:exported="true" />
         <activity
@@ -54,9 +51,6 @@
             android:name=".WriteContentActivity"
             android:exported="true" />
         <activity
-            android:name=".FilterActivity"
-            android:exported="true" />
-        <activity
             android:name=".PutUpRoomMoreInfoActivity"
             android:exported="true" />
         <activity
@@ -66,7 +60,7 @@
             android:name=".PutUpRoomActivity"
             android:exported="true" />
         <activity
-            android:name=".ProfileModifyActivity"
+            android:name=".ModifyProfileActivity"
             android:exported="true" />
         <activity
             android:name=".SearchActivity"
